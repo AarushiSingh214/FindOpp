@@ -1,20 +1,24 @@
 package com.example.findopp;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button logoutButton;
+    public static final String TAG = "Main Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        
+        queryPosts();
 
     }
+
+    private void queryPosts() {
+        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+        query.include(Opportunity.KEY_NAME);
+        query.findInBackground(new FindCallback<Opportunity>() {
+
+            @Override
+            public void done(List<Opportunity> opportunities, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every post description to logcat
+                for (Opportunity opportunity : opportunities) {
+                    Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName());
+                }
+
+            }
+        });
+    }
+
 }
