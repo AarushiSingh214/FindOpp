@@ -1,13 +1,22 @@
 package com.example.findopp;
 
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.findopp.fragments.HomeFragment;
+import com.example.findopp.fragments.SearchFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -17,50 +26,40 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logoutButton;
+    private BottomNavigationView bottomNavigationView;
     public static final String TAG = "Main Activity";
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logoutButton = findViewById(R.id.btnLogout);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-                Intent i = new Intent(MainActivity.this, OpeningActivity.class);
-                startActivity(i);
-            }
-        });
-        
-        queryPosts();
-
-    }
-
-    private void queryPosts() {
-        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-        query.include(Opportunity.KEY_NAME);
-        query.findInBackground(new FindCallback<Opportunity>() {
-
-            @Override
-            public void done(List<Opportunity> opportunities, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home:
+                        Log.i(TAG, "going to home fragment");
+                        Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
+                        fragment = new HomeFragment();
+                        break;
+                    case R.id.action_search:
+                        Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();
+                        fragment = new SearchFragment();
+                        break;
+                    case R.id.action_profile:
+                    default:
+                        Toast.makeText(MainActivity.this, "profile", Toast.LENGTH_SHORT).show();
+                        fragment = new ProfileFragment();
+                        break;
                 }
-
-                // for debugging purposes let's print every post description to logcat
-                for (Opportunity opportunity : opportunities) {
-                    Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName());
-                }
-
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
     }
-
 }
