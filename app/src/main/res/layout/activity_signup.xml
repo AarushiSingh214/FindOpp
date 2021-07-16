@@ -37,8 +37,6 @@
         android:layout_below="@id/etUsername"
         android:inputType="textPassword"/>
 
-
-
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"

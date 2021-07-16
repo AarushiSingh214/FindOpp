@@ -8,6 +8,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
 <!--    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">-->
 <!--        <item name="android:textColor">@color/black</item>-->
 <!--    </style>-->

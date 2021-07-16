@@ -8,16 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.findopp.MainActivity;
 import com.example.findopp.OpeningActivity;
 import com.example.findopp.OppAdapter;
+import com.example.findopp.OppDetailsActivity;
 import com.example.findopp.Opportunity;
 import com.example.findopp.R;
 import com.parse.FindCallback;
@@ -31,10 +35,14 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private Button logoutButton;
+    private TextView tvRecommendation;
     public static final String TAG = "Home Fragment";
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
+
+    private static final String KEY_LIKES = "likes";
+    //private ImageView ivExit;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -71,9 +79,14 @@ public class HomeFragment extends Fragment {
         logoutButton = view.findViewById(R.id.btnLogout);
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), allOpps);
+        tvRecommendation = view.findViewById(R.id.tvRecommendation);
+        tvRecommendation.setText("Recommendations");
+        //ivExit = view.findViewById(R.id.ivExit);
+        //Glide.with(context).load(drawa).into(ivExit);
 
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
+        queryPosts();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +97,14 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
-        queryPosts();
-
-
     }
+
+
     private void queryPosts() {
         ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+        Log.i(TAG, "query posts");
         query.include(Opportunity.KEY_NAME);
+        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Opportunity>() {
 
             @Override
@@ -99,15 +113,23 @@ public class HomeFragment extends Fragment {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
+                }else{
+
+                    Log.i(TAG, "size of opportunities " + opportunities.size());
+                    // for debugging purposes let's print every post description to logcat
+                    for (Opportunity opportunity : opportunities) {
+                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
+                    }
+                    //this line is trying to get opportunities to appear when u go on home screen
+                    //adapter.clear();
+                    allOpps.addAll(opportunities);
+                    Log.i(TAG, "size of opps " + allOpps.size());
+                    adapter.notifyDataSetChanged();
+
                 }
 
-                // for debugging purposes let's print every post description to logcat
-                for (Opportunity opportunity : opportunities) {
-                    Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName());
-                }
-                allOpps.addAll(opportunities);
-                adapter.notifyDataSetChanged();
             }
         });
     }
 }
+

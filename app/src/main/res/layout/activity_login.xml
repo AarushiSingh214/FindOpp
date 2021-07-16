@@ -9,6 +9,8 @@
     tools:context=".LoginActivity">
 
 
+
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="83dp"

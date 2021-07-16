@@ -1,14 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/findopp_green"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:src="@drawable/lightbulb3" />
+
+        <TextView
+            android:id="@+id/findOpp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FindOpp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:text="Username Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/tvEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserName"
+        android:layout_alignStart="@+id/tvUserName"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="2dp"
+        android:text="Edit" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="73dp"
+        android:layout_height="75dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/userfragment" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEdit"
+        android:layout_alignStart="@+id/tvEdit"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:text="Email" />
+
+    <TextView
+        android:id="@+id/tvRealEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignStart="@+id/tvEmail"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:text="real email" />
+
+    <TextView
+        android:id="@+id/tvLocation2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="38dp"
+        android:layout_toEndOf="@+id/tvEmail"
+        android:text="Location" />
+
+    <TextView
+        android:id="@+id/tvRealLoc"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLocation2"
+        android:layout_alignStart="@+id/tvLocation2"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvRealEmail"
+        android:text="real location" />
+
+    <TextView
+        android:id="@+id/tvInterests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRealEmail"
+        android:layout_alignStart="@+id/tvRealEmail"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:text="Interests" />
+
+    <TextView
+        android:id="@+id/tvRealInterests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvInterests"
+        android:layout_alignStart="@+id/tvInterests"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:text="real interests" />
+
+    <TextView
+        android:id="@+id/tvBirth"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRealLoc"
+        android:layout_alignStart="@+id/tvRealLoc"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="24dp"
+        android:text="Year of Birth" />
+
+    <TextView
+        android:id="@+id/tvRealBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBirth"
+        android:layout_alignStart="@+id/tvBirth"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:text="real birth" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOpps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFav"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="111dp" />
+
+    <TextView
+        android:id="@+id/tvFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRealInterests"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="92dp"
+        android:text="Favorite Opportunities"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+</RelativeLayout>
