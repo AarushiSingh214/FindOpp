@@ -118,11 +118,7 @@ public class ProfileFragment extends Fragment {
 
         //Opportunity opportunity = (Opportunity) Parcels.unwrap(getContext().getParcelableExtra("opportunity"));
 
-
     }
-
-
-
 
     private void queryUsers() {
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
