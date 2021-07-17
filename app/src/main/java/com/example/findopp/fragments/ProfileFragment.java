@@ -55,6 +55,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
+    private String currentUserName = ParseUser.getCurrentUser().getUsername();
 
 
     public ProfileFragment() {
@@ -86,9 +87,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        allUsers = new ArrayList<>();
-        //adapter = new UserAdapter(getContext(), allUsers);
 
+        allUsers = new ArrayList<>();
         tvUserName = view.findViewById(R.id.tvUserName);
         tvEdit = view.findViewById(R.id.tvEdit);
         tvEmail = view.findViewById(R.id.tvEmail);
@@ -114,58 +114,113 @@ public class ProfileFragment extends Fragment {
         //maybe u need to call the profile adapter and put an if else in there, but first get it to save
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
-        queryUsers();
+        //queryUsers();
+        queryPosts();
+        try {
+            getUserInfo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
-        //Opportunity opportunity = (Opportunity) Parcels.unwrap(getContext().getParcelableExtra("opportunity"));
+    //uses ParseUser to get the data about the current user
+    private void getUserInfo() throws ParseException {
+        String location = ParseUser.getCurrentUser().getString("location");
+        String interests = ParseUser.getCurrentUser().getString("interests");
+        Integer yearBirth = ParseUser.getCurrentUser().getInt("year_of_birth");
+
+        tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
+        tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
+        tvRealLoc.setText(location);
+        tvRealInterests.setText(interests);
+        tvRealBirth.setText(yearBirth.toString());
 
     }
 
-    private void queryUsers() {
-        ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.include(User.KEY_USERNAME);
-        query.addDescendingOrder(User.KEY_CREATED_AT);
+    //all the opps show up in your favorited but u need to find a way to filter by hearts
+    private void queryPosts() {
+        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
         Log.i(TAG, "query posts");
-        query.findInBackground(new FindCallback<User>() {
+        query.include(Opportunity.KEY_NAME);
+        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Opportunity>() {
 
             @Override
-            public void done(List<User> users, ParseException e) {
+            public void done(List<Opportunity> opportunities, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting users", e);
+                    Log.e(TAG, "Issue with getting posts", e);
                     return;
-                }else{
+                } else {
 
-                    Log.i(TAG, "size of users " + users.size());
+                    Log.i(TAG, "size of opportunities " + opportunities.size());
                     // for debugging purposes let's print every post description to logcat
-                    for (User user : users) {
-                        Log.i(TAG,  "Username: " + user.getUserName() + user.getLocation2());
+                    for (Opportunity opportunity : opportunities) {
+                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
                     }
                     //this line is trying to get opportunities to appear when u go on home screen
                     //adapter.clear();
-                    allUsers.addAll(users);
-                    Log.i(TAG, "size of users " + allUsers.size());
-
-                    //User currentUser = new User();
-                    //User currentUser =  User.getCurrentUser();
-                    tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
-                    tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
-
-                    //tvRealLoc.setText((User.getCurrentUser().getLocation2()));
-                    //tvRealInterests.setText((currentUser.getInterests()));
-
-//                    ParseObject user = new ParseObject("User");
-//                    user.put("interests", "phil");
-                    //tvRealInterests.setText(users.getInterests());
-//                    tvRealLoc.setText(user.getLocation2());
-
-                    //adapter.notifyDataSetChanged();
-
-                    //User user = new User();
-                    //tvUserName.setText(user.getUserName());
+                    allOpps.addAll(opportunities);
+                    Log.i(TAG, "size of opps " + allOpps.size());
+                    adapter.notifyDataSetChanged();
 
                 }
 
             }
         });
     }
+
 }
+
+
+//    private void queryUsers() {
+//        ParseQuery<User> query2 = ParseQuery.getQuery(User.class);
+//        query2.include(User.KEY_USERNAME);
+//        query2.addDescendingOrder(User.KEY_CREATED_AT);
+//        Log.i(TAG, "query posts" + ParseUser.getCurrentUser().getString("location"));
+//        //Log.i(TAG, "query posts" + query.getFirst().getUserName());
+//        query2.findInBackground(new FindCallback<User>() {
+//
+//            @Override
+//            public void done(List<User> users, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting users", e);
+//                    return;
+//                } else {
+//
+//                    Log.i(TAG, "size of users " + users.size());
+//                    // for debugging purposes let's print every post description to logcat
+//                    for (User user : users) {
+//                        Log.i(TAG, "Username: " + user.getUserName() + user.getLocation2());
+//                    }
+//                    //this line is trying to get opportunities to appear when u go on home screen
+//                    //adapter.clear();
+//                    allUsers.addAll(users);
+//                    Log.i(TAG, "size of users " + allUsers.size());
+//
+//                    //User currentUser = new User();
+//                    //User currentUser =  User.getCurrentUser();
+//                    tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
+//                    tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
+//
+//                    //tvRealLoc.setText((currentUserName.getLocation2()));
+//                    //tvRealInterests.setText((currentUser.getInterests()));
+//
+////                    ParseObject user = new ParseObject("User");
+////                    user.put("interests", "phil");
+//                    //tvRealInterests.setText(users.getInterests());
+////                    tvRealLoc.setText(user.getLocation2());
+//
+//                    //adapter.notifyDataSetChanged();
+//
+//                    //User user = new User();
+//                    //tvUserName.setText(user.getUserName());
+//
+//                }
+//
+//            }
+//        });
+
+
+

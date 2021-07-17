@@ -1,7 +1,11 @@
 package com.example.findopp;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
@@ -9,25 +13,43 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 
 @Parcel(analyze = User.class)
-@ParseClassName("User")
+@ParseClassName("RealUser")
 
 //public class User extends ParseObject{
-public class User extends ParseUser {
+public class User extends ParseObject {
+    public static final String TAG = "User";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_INTERESTS = "interests";
     public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_OBJECTID = "objectId";
+    private String currentUserName = ParseUser.getCurrentUser().getUsername();
     public static ArrayList<String> likedId = new ArrayList<String>();
+
+//    ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+//    ParseQuery<ParseObject> updateQuery = query.whereEqualTo(KEY_USERNAME, currentUserName);
+//    ParseObject parseObject1 = updateQuery.getFirst();;
+
+//    public User() throws ParseException {
+//    }
+
     //public static final Integer KEY_BIRTHYEAR = "year_of_birth";
 
     //default empty constructor
-    public User(){
+//    public User(){
+//    }
 
-    }
+    //To read the Parse Object for data
+//    ParseQuery<ParseObject> updateQuery = query.whereEqualTo(KEY_USERNAME, currentUserName);
+//    parseObject1 = updateQuery.getFirst();
+
+
+
     //getter and setter for username
     public String getUserName(){
         return getString(KEY_USERNAME);
+        //return parseObject1.getString(KEY_USERNAME);
     }
     public void setUserName(String username){
         put(KEY_USERNAME, username);

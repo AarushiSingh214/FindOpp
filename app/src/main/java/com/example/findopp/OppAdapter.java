@@ -21,6 +21,7 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
@@ -28,7 +29,10 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
     private List<Opportunity> opportunities;
     public static final String TAG = "Opp Adapter";
     private FirebaseAuth fireBaseUser;
-    User user = new User();
+
+    //User profile = new User();
+
+    //ParseUser currentUser = ParseUser.getCurrentUser();
 
     public OppAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
@@ -50,6 +54,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
         holder.bind(opportunity);
     }
 
+
     public void clear() {
         opportunities.clear();
         notifyDataSetChanged();
@@ -65,6 +70,12 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
         private TextView tvTitle;
         private ImageView ivOpenHeart;
 
+        //getting arrayList of the liked opportunities for current user that will be added to profile page
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        ArrayList<String> likedId = (ArrayList<String>)currentUser.get("userLikes");
+
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
@@ -74,7 +85,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
 
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
-
+            //Log.i(TAG, "likedID Array " + likedId);
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,21 +96,21 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
                     });
 
             //THIS WORKS TO LIKE AND UNLIKE A HEART
-            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String objectId = opportunity.getObjectId();
-                    if(!user.likedId.contains(objectId)){
-                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                        user.likedId.add(user.getObjectId());
-                        ParseUser.getCurrentUser().put("userLikes", user.likedId);
-                    }else{
-                        ivOpenHeart.setImageResource(R.drawable.open_heart);
-                        user.likedId.remove(user.getObjectId());
-                        ParseUser.getCurrentUser().delete("userLikes", user.likedId);
-
-                    }
-                }
+//            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String objectId = opportunity.getObjectId();
+//                    if(!user.likedId.contains(objectId)){
+//                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
+//                        user.likedId.add(user.getObjectId());
+//                        ParseUser.getCurrentUser().put("userLikes", user.likedId);
+//                    }else{
+//                        ivOpenHeart.setImageResource(R.drawable.open_heart);
+//                        user.likedId.remove(user.getObjectId());
+//                        ParseUser.getCurrentUser().put("userLikes", user.likedId);
+//
+//                    }
+//                }
 
 
 
@@ -156,8 +167,8 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder>{
 //            });
 
 
-        }));
+        }
      }
 
     }
-}
+

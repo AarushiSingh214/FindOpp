@@ -25,6 +25,7 @@ import com.example.findopp.OppAdapter;
 import com.example.findopp.OppDetailsActivity;
 import com.example.findopp.Opportunity;
 import com.example.findopp.R;
+import com.example.findopp.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
+    private List<User> allUsers;
     Opportunity opportunity = new Opportunity();
 
     //private static final String KEY_LIKES = "likes";
@@ -89,6 +91,7 @@ public class HomeFragment extends Fragment {
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
+
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +145,7 @@ public class HomeFragment extends Fragment {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
-                }else{
+                } else {
 
                     Log.i(TAG, "size of opportunities " + opportunities.size());
                     // for debugging purposes let's print every post description to logcat
@@ -160,5 +163,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 }
 
