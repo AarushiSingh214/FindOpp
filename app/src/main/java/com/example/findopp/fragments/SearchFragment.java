@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,11 @@ import android.widget.TextView;
 
 import com.example.findopp.Opportunity;
 import com.example.findopp.R;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.Calendar;
 
 public class SearchFragment extends Fragment {
     private TextView tvChange;
@@ -25,6 +29,7 @@ public class SearchFragment extends Fragment {
     private EditText etAge;
     private EditText etInterests;
     private Button btnSearch;
+    public static final String TAG = "Search Fragment";
 
     public SearchFragment() {
         // Required empty public constructor
@@ -58,8 +63,27 @@ public class SearchFragment extends Fragment {
         etAge = view.findViewById(R.id.etAge);
         etInterests = view.findViewById(R.id.etInterests);
         btnSearch = view.findViewById(R.id.btnSearch);
+        defaultPreferences();
 
-        //Opportunity opportunity = (Opportunity) Parcels.unwrap(getContext().getParcelableExtra("opportunity"));
-        //HOW DO U GET INFO FROM USER/OPPORTUNITY
+    }
+
+    //sets default preferences for the search
+    private void defaultPreferences(){
+        String location = ParseUser.getCurrentUser().getString("location");
+        String interests = ParseUser.getCurrentUser().getString("interests");
+        Integer yearBirth = ParseUser.getCurrentUser().getInt("year_of_birth");
+        Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        //calculating year
+        String age = Integer.toString(currentYear - yearBirth);
+        etAge.setText(age);
+
+        if(location!= null){
+            etLocation.setText(location);
+        }
+        if(interests != null){
+            etInterests.setText(interests);
+        }
+
     }
 }

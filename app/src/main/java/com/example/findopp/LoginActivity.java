@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //allows user to use app without having to login each time
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //checks to see if login successful or not
     private void loginUser(String username, String password) {
         Log.i(TAG, "attempting to login user " + username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -62,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //passes intent to go to main activity
     private void goMainActivity() {
         Log.e(TAG, "inside of main activity");
         Intent i = new Intent(this, MainActivity.class);

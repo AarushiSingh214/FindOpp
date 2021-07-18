@@ -27,6 +27,13 @@ public class OpeningActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerBtn);
         tvFindOpp = findViewById(R.id.tvFindOpp);
 
+        loginAction();
+        registerAction();
+
+    }
+
+    //action after login button is clicked
+    private void loginAction(){
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +45,10 @@ public class OpeningActivity extends AppCompatActivity {
 
         });
 
+    }
 
+    //action after register button is clicked
+    private void registerAction(){
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

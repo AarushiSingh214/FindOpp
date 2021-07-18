@@ -27,30 +27,8 @@ public class User extends ParseObject {
     private String currentUserName = ParseUser.getCurrentUser().getUsername();
     public static ArrayList<String> likedId = new ArrayList<String>();
 
-//    ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-//    ParseQuery<ParseObject> updateQuery = query.whereEqualTo(KEY_USERNAME, currentUserName);
-//    ParseObject parseObject1 = updateQuery.getFirst();;
-
-//    public User() throws ParseException {
-//    }
-
-    //public static final Integer KEY_BIRTHYEAR = "year_of_birth";
-
-    //default empty constructor
-//    public User(){
-//    }
-
-    //To read the Parse Object for data
-//    ParseQuery<ParseObject> updateQuery = query.whereEqualTo(KEY_USERNAME, currentUserName);
-//    parseObject1 = updateQuery.getFirst();
-
-
-
     //getter and setter for username
-    public String getUserName(){
-        return getString(KEY_USERNAME);
-        //return parseObject1.getString(KEY_USERNAME);
-    }
+    public String getUserName(){ return getString(KEY_USERNAME); }
     public void setUserName(String username){
         put(KEY_USERNAME, username);
     }
@@ -78,6 +56,5 @@ public class User extends ParseObject {
     public void setInterests(String interests){
         put(KEY_INTERESTS, interests);
     }
-
 
 }

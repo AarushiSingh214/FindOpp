@@ -155,11 +155,9 @@
         android:layout_below="@+id/tvFav"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="1dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="111dp" />
+        android:layout_marginEnd="0dp" />
 
     <TextView
         android:id="@+id/tvFav"
