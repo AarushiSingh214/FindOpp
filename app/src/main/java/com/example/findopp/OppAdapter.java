@@ -78,9 +78,22 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
+
             likeHeart(opportunity);
+            saveHeart(opportunity);
             titleAction(opportunity);
 
+        }
+
+        //saves the likes after a user logs in and in between switching screens
+        public void saveHeart(Opportunity opportunity){
+            if(!likedId.isEmpty()) {
+                for (String user: likedId) {
+                    if (user.equals(opportunity.getName())){
+                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                    }
+                }
+            }
         }
 
         //action after title of the opportunity is clicked
@@ -117,12 +130,13 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                 } else {
                                     Log.i(TAG, "adding heart" + likedId);
                                     ParseUser.getCurrentUser().put("userLikes", likedId);
-                                    ParseUser.getCurrentUser().put("test", "hello");
                                 }
                             }
                         });
 
                     } else if (likedId.contains(objectId)) {
+                        ivOpenHeart.setImageResource(R.drawable.open_heart);
+                        likedId.remove(objectId);
 
                         ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                             @Override
@@ -130,8 +144,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                 if (e != null) {
                                     return;
                                 } else {
-                                    ivOpenHeart.setImageResource(R.drawable.open_heart);
-                                    likedId.remove(objectId);
                                     ParseUser.getCurrentUser().put("userLikes", likedId);
                                     //ParseUser.getCurrentUser().put("userLikes", likedId);
                                     Log.i(TAG, " removing heart" + likedId);

@@ -115,6 +115,22 @@ public class ProfileFragment extends Fragment {
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         //queryUsers();
+
+        //HOW DO U CREATE IF STATEMENT SO THAT IF ID IN LIST PUT IN PROFILE
+        //THIS DOESNT WORK FIXXXXX!!!!!!!!!!!!!!!!!!!!!!!!
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+//        for(String user: likedId){
+//            Log.i(TAG, "user id in likeid array " + user);
+//            for(Opportunity opp: allOpps){
+//                Log.i(TAG, "opp id in rvOpps " + opp);
+//                if (user.equals(opp.getName())) {
+//                    queryPosts();
+//                }
+//
+//            }
+//        }
+
         queryPosts();
         try {
             getUserInfo();
@@ -160,6 +176,16 @@ public class ProfileFragment extends Fragment {
                     }
                     //this line is trying to get opportunities to appear when u go on home screen
                     //adapter.clear();
+
+//                    ParseUser currentUser = ParseUser.getCurrentUser();
+//                    ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+//                    for(String user: likedId){
+//                        Log.i(TAG, "user id in likeid array " + user);
+//                        for(Opportunity opp: allOpps){
+//                            Log.i(TAG, "opp id in rvOpps " + opp);
+//                            if (user.equals(opp.getName())) {
+//                                //queryPosts();
+//                                allOpps.addAll(opportunities);
                     allOpps.addAll(opportunities);
                     Log.i(TAG, "size of opps " + allOpps.size());
                     adapter.notifyDataSetChanged();

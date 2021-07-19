@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -20,6 +21,29 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     public static final String TAG = "Main Activity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
+
+    //trying to set the loading feature when the data is still loading
+//    // Instance of the progress action-view
+//    MenuItem miActionProgressItem;
+//
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        // Store instance of the menu item containing progress
+//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+//
+//        // Return to finish
+//        return super.onPrepareOptionsMenu(menu);
+//    }
+//
+//    public void showProgressBar() {
+//        // Show progress item
+//        miActionProgressItem.setVisible(true);
+//    }
+//
+//    public void hideProgressBar() {
+//        // Hide progress item
+//        miActionProgressItem.setVisible(false);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,4 +77,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
