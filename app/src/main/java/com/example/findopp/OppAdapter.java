@@ -30,6 +30,7 @@ import java.util.List;
 public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
     private Context context;
     private List<Opportunity> opportunities;
+
     public static final String TAG = "Opp Adapter";
     String objectId;
 
@@ -86,15 +87,26 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         }
 
         //saves the likes after a user logs in and in between switching screens
-        public void saveHeart(Opportunity opportunity){
-            if(!likedId.isEmpty()) {
-                for (String user: likedId) {
-                    if (user.equals(opportunity.getName())){
-                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
+        public void saveHeart(Opportunity opportunity) {
+            try {
+                if (!likedId.isEmpty()) {
+                    for (String user : likedId) {
+                        if (user.equals(opportunity.getName())) {
+                            ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                        }
                     }
                 }
+            } catch (NullPointerException e) {
+                Log.e(TAG, "nothing is hearted" + e);
+
             }
         }
+
+//            }else {
+//                Log.e(TAG, "nothing is hearted");
+//                return;
+//            }
+
 
         //action after title of the opportunity is clicked
         public void titleAction(Opportunity opportunity) {
@@ -115,7 +127,10 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     objectId = opportunity.getName();
-                    if (!likedId.contains(objectId)) {
+                    if(likedId == null) {
+                        likedId = new ArrayList<String>();
+
+                    }else if (!likedId.contains(objectId) ) {
                         Log.i(TAG, "adding this user: " + objectId);
                         ivOpenHeart.setImageResource(R.drawable.filled_heart);
                         likedId.add(objectId);
@@ -135,6 +150,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                         });
 
                     } else if (likedId.contains(objectId)) {
+//                    }else{
                         ivOpenHeart.setImageResource(R.drawable.open_heart);
                         likedId.remove(objectId);
 

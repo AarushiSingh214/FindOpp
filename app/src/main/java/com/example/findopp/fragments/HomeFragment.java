@@ -90,31 +90,7 @@ public class HomeFragment extends Fragment {
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
         logout();
-
-//        public void createLikes(RecyclerView rvOpps) {
-//            //trying to get the heart to appear when u login again
-//            if(likedId != null) {
-//                for (int i = 0; i <= likedId.size(); i++) {
-//                    //how does it know which heart to fill
-//                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                    Log.i(TAG, "array: " + oppUser);
-//
-//                }
-//            }
-//
-//        }
-
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        ArrayList<String> likedId = (ArrayList<String>)currentUser.get("userLikes");
-//        for (String oppUser: likedId){
-//            ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//            Log.i(TAG, "array: " + oppUser);
-
         }
-        //Log.i(TAG, "likes " + likedId);
-
-
-
 
         //method for the logout button
         private void logout(){
@@ -129,37 +105,6 @@ public class HomeFragment extends Fragment {
             });
 
         }
-
-
-//        if (savedInstanceState != null) {
-//            String savedLike = savedInstanceState.getString(opportunity.KEY_LIKES);
-//            opportunity.setLikes(savedLike);
-//            //saveView(view);
-//
-//            if (opportunity.getLikes() == "false") {
-//                opportunity.setLikes("true");
-//
-//            } else {
-//                Toast.makeText(getContext(), "New entry", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-//
-//        @Override
-//        public void onSaveInstanceState (Bundle savedInstanceState){
-//            savedInstanceState.putString(opportunity.KEY_LIKES, opportunity.getLikes().toString());
-//            super.onSaveInstanceState(savedInstanceState);
-//        }
-
-
-//    public void saveView(View view) {
-//        if (opportunity.getLikes() == "false") {
-//            //ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//            opportunity.setLikes("true");
-//
-//        }
-//    }
-
 
         private void queryPosts () {
             ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);

@@ -177,18 +177,41 @@ public class ProfileFragment extends Fragment {
                     //this line is trying to get opportunities to appear when u go on home screen
                     //adapter.clear();
 
-//                    ParseUser currentUser = ParseUser.getCurrentUser();
-//                    ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
-//                    for(String user: likedId){
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+                    try {
+                        if (!likedId.isEmpty()) {
+                            for (String user : likedId) {
+                                for (Opportunity opportunity : opportunities) {
+                                    if (user.equals(opportunity.getName())) {
+                                        allOpps.add(opportunity);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (NullPointerException e2){
+                        Log.i(TAG, "nothing is liked " + e2);
+                        return;
+
+                    }
+
+
+//                    } else {
+//                        Log.i(TAG, "nothing is liked ");
+//                        return;
+//
+//                    }
+
+                    adapter.notifyDataSetChanged();
 //                        Log.i(TAG, "user id in likeid array " + user);
 //                        for(Opportunity opp: allOpps){
 //                            Log.i(TAG, "opp id in rvOpps " + opp);
 //                            if (user.equals(opp.getName())) {
 //                                //queryPosts();
 //                                allOpps.addAll(opportunities);
-                    allOpps.addAll(opportunities);
-                    Log.i(TAG, "size of opps " + allOpps.size());
-                    adapter.notifyDataSetChanged();
+                    //allOpps.addAll(opportunities);
+                    //Log.i(TAG, "size of opps " + allOpps.size());
+                    //adapter.notifyDataSetChanged();
 
                 }
 
