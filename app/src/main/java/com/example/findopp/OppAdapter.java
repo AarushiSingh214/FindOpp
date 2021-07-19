@@ -69,7 +69,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         //getting arrayList of the liked opportunities for current user that will be added to profile page
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+        //ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,45 +80,49 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
 
+            titleAction(opportunity);
             likeHeart(opportunity);
             saveHeart(opportunity);
-            titleAction(opportunity);
 
         }
 
         //saves the likes after a user logs in and in between switching screens
         public void saveHeart(Opportunity opportunity) {
-            try {
-                if (!likedId.isEmpty()) {
-                    for (String user : likedId) {
-                        if (user.equals(opportunity.getName())) {
-                            ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                        }
-                    }
-                }
-            } catch (NullPointerException e) {
-                Log.e(TAG, "nothing is hearted" + e);
-
-            }
+//            try {
+//                if (!likedId.isEmpty()) {
+//                    for (String user : likedId) {
+//                        if (user.equals(opportunity.getName())) {
+//                            ivOpenHeart.setImageResource(R.drawable.filled_heart);
+//                        }
+//                    }
+//                }
+//            } catch (NullPointerException e) {
+//                Log.e(TAG, "nothing is hearted" + e);
+//
+//            }
+            return;
         }
 
-//            }else {
-//                Log.e(TAG, "nothing is hearted");
-//                return;
-//            }
-
-
-        //action after title of the opportunity is clicked
+        //action after title of the opportunity is clicked to see more details
         public void titleAction(Opportunity opportunity) {
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v){
                     Intent intent = new Intent(context, OppDetailsActivity.class);
                     intent.putExtra("opportunity", Parcels.wrap(opportunity));
                     context.startActivity(intent);
+
+//                    try {
+//                        Intent intent = new Intent(context, OppDetailsActivity.class);
+//                        intent.putExtra("opportunity", Parcels.wrap(opportunity));
+//                        context.startActivity(intent);
+//                    }catch(IllegalStateException e){
+//                        Log.i(TAG, "illegal state exception " + e);
+//                        return;
+//
+//                    }
                 }
             });
-
         }
 
         //action after like heart button is clicked
@@ -127,13 +131,19 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     objectId = opportunity.getName();
-                    if(likedId == null) {
-                        likedId = new ArrayList<String>();
+                    Likes likes = new Likes();
 
-                    }else if (!likedId.contains(objectId) ) {
+
+                    //if user has no likes
+//                    if(likedId == null) {
+//                        likedId = new ArrayList<String>();
+
+                    //user adding a like
+                    //if the user has not liked that specific opportunity, then like it
+                    if (!likes.getUserName().equals(objectId)) {
                         Log.i(TAG, "adding this user: " + objectId);
                         ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                        likedId.add(objectId);
+                        //likedId.add(objectId);
 
                         ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                             @Override
@@ -143,16 +153,17 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                     Log.e(TAG, "error saving " + e);
                                     return;
                                 } else {
-                                    Log.i(TAG, "adding heart" + likedId);
-                                    ParseUser.getCurrentUser().put("userLikes", likedId);
+                                    Log.i(TAG, "adding heart" );
+                                    likes.put("userName", currentUser);
+                                    likes.put("opportunity", objectId);
                                 }
                             }
                         });
 
-                    } else if (likedId.contains(objectId)) {
-//                    }else{
+                    //user removing a like
+                    } else if (likes.getUserName().equals(objectId)) {
                         ivOpenHeart.setImageResource(R.drawable.open_heart);
-                        likedId.remove(objectId);
+                        //likedId.remove(objectId);
 
                         ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                             @Override
@@ -160,16 +171,15 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                 if (e != null) {
                                     return;
                                 } else {
-                                    ParseUser.getCurrentUser().put("userLikes", likedId);
-                                    //ParseUser.getCurrentUser().put("userLikes", likedId);
-                                    Log.i(TAG, " removing heart" + likedId);
-                                    ParseUser.getCurrentUser().put("test", "bye");
+//                                    likes.remove("userName", currentUser);
+//                                    likes.put("opportunity", objectId);
+                                    Log.i(TAG, " removing heart" );
+
                                 }
 
                             }
 
                         });
-
 
                     }
                 }
@@ -178,72 +188,4 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         }
     }
 }
-
-
-
-//        public void createLikes(RecyclerView rvOpps) {
-//            //trying to get the heart to appear when u login again
-//            if(likedId != null) {
-//                for (int i = 0; i <= likedId.size(); i++) {
-//                    //how does it know which heart to fill
-//                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                    Log.i(TAG, "array: " + oppUser);
-//
-//                }
-//            }
-//
-//        }
-
-
-
-
-//                    if (opportunity.getLikes() == "false"){
-//                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                        opportunity.setLikes("true");
-//                        user.likedId.add(user.getObjectId());
-//                        //ParseUser.getCurrentUser().put("likes", opportunity.getLikes());
-//
-////                        Intent intent = new Intent(context, ProfileFragment.class);
-////                        intent.putExtra("opportunity", Parcels.wrap(opportunity));
-////                        context.startActivity(intent);
-//
-//                    }else{
-//                        ivOpenHeart.setImageResource(R.drawable.open_heart);
-//                        opportunity.setLikes("false");
-//
-//                    }
-//                }
-//            }));
-
-//            if(opportunity.getLikes() == "true"){
-//                Intent intent = new Intent(context, ProfileFragment.class);
-//                intent.putExtra("opportunity", Parcels.wrap(opportunity));
-//                context.startActivity(intent);
-
-//            }
-
-
-//            private void isLikes(String postid, ImageView imageview){
-//                FireBaseUser fireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//            }
-
-            //change item view to the heart
-//            ivOpenHeart.setOnTouchListener(new View.OnTouchListener() {
-//                GestureDetector gestureDetector = new GestureDetector(context.getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
-//                    @Override
-//                    public boolean onDoubleTap(MotionEvent e) {
-//                        Toast.makeText(context.getApplicationContext(), "double tap", Toast.LENGTH_SHORT).show();
-//                        //ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                        return super.onDoubleTap(e);
-//                    }
-//
-//                });
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    gestureDetector.onTouchEvent(event);
-//                    return false;
-//                }
-//            });
-
-
 

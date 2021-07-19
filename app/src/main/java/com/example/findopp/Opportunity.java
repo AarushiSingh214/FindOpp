@@ -37,9 +37,7 @@ public class Opportunity extends ParseObject {
     public String getPointOfContact(){
         return getString(KEY_POINT_OF_CONTACT);
     }
-    public void setPointOfContact(String pointOfContact){
-        put(KEY_POINT_OF_CONTACT, pointOfContact);
-    }
+    public void setPointOfContact(String pointOfContact){ put(KEY_POINT_OF_CONTACT, pointOfContact); }
 
     //getter and setter for location
     public String getLocation(){

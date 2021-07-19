@@ -13,7 +13,7 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 
 @Parcel(analyze = User.class)
-@ParseClassName("RealUser")
+@ParseClassName("User")
 
 //public class User extends ParseObject{
 public class User extends ParseObject {

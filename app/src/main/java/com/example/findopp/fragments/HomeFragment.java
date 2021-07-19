@@ -1,6 +1,7 @@
 package com.example.findopp.fragments;
 
 import android.content.Intent;
+import android.graphics.Path;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -103,14 +104,16 @@ public class HomeFragment extends Fragment {
                     startActivity(i);
                 }
             });
-
         }
 
+        //queries the opportunities based on the location of the user
         private void queryPosts () {
             ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
             Log.i(TAG, "query posts");
             query.include(Opportunity.KEY_NAME);
             query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+            String userLoc = ParseUser.getCurrentUser().getString("location");
+            query.whereEqualTo("location", userLoc);
             query.findInBackground(new FindCallback<Opportunity>() {
 
                 @Override
@@ -120,16 +123,13 @@ public class HomeFragment extends Fragment {
                         Log.e(TAG, "Issue with getting posts", e);
                         return;
                     } else {
-
                         Log.i(TAG, "size of opportunities " + opportunities.size());
                         // for debugging purposes let's print every post description to logcat
                         for (Opportunity opportunity : opportunities) {
                             Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
                         }
-                        //this line is trying to get opportunities to appear when u go on home screen
-                        //adapter.clear();
+
                         allOpps.addAll(opportunities);
-                        Log.i(TAG, "size of opps " + allOpps.size());
                         adapter.notifyDataSetChanged();
 
                     }

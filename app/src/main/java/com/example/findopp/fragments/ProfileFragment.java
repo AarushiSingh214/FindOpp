@@ -39,7 +39,6 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     private List<User> allUsers;
-    //private UserAdapter adapter;
 
     private TextView tvUserName;
     private TextView tvEdit;
@@ -110,26 +109,8 @@ public class ProfileFragment extends Fragment {
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), allOpps);
 
-
-        //maybe u need to call the profile adapter and put an if else in there, but first get it to save
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
-        //queryUsers();
-
-        //HOW DO U CREATE IF STATEMENT SO THAT IF ID IN LIST PUT IN PROFILE
-        //THIS DOESNT WORK FIXXXXX!!!!!!!!!!!!!!!!!!!!!!!!
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
-//        for(String user: likedId){
-//            Log.i(TAG, "user id in likeid array " + user);
-//            for(Opportunity opp: allOpps){
-//                Log.i(TAG, "opp id in rvOpps " + opp);
-//                if (user.equals(opp.getName())) {
-//                    queryPosts();
-//                }
-//
-//            }
-//        }
 
         queryPosts();
         try {
@@ -168,108 +149,40 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 } else {
-
                     Log.i(TAG, "size of opportunities " + opportunities.size());
                     // for debugging purposes let's print every post description to logcat
                     for (Opportunity opportunity : opportunities) {
                         Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
                     }
-                    //this line is trying to get opportunities to appear when u go on home screen
-                    //adapter.clear();
 
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
-                    try {
-                        if (!likedId.isEmpty()) {
-                            for (String user : likedId) {
-                                for (Opportunity opportunity : opportunities) {
-                                    if (user.equals(opportunity.getName())) {
-                                        allOpps.add(opportunity);
-                                    }
-                                }
-                            }
-                        }
-                    } catch (NullPointerException e2){
-                        Log.i(TAG, "nothing is liked " + e2);
-                        return;
-
-                    }
-
-
-//                    } else {
-//                        Log.i(TAG, "nothing is liked ");
-//                        return;
-//
-//                    }
-
+                    profileLikes(opportunities);
                     adapter.notifyDataSetChanged();
-//                        Log.i(TAG, "user id in likeid array " + user);
-//                        for(Opportunity opp: allOpps){
-//                            Log.i(TAG, "opp id in rvOpps " + opp);
-//                            if (user.equals(opp.getName())) {
-//                                //queryPosts();
-//                                allOpps.addAll(opportunities);
-                    //allOpps.addAll(opportunities);
-                    //Log.i(TAG, "size of opps " + allOpps.size());
-                    //adapter.notifyDataSetChanged();
-
                 }
 
             }
         });
     }
 
+    //gets liked opportunities to appear when u go on profile screen
+    private void profileLikes(List<Opportunity> opportunities){
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+        try {
+            if (!likedId.isEmpty()) {
+                for (String user : likedId) {
+                    for (Opportunity opportunity : opportunities) {
+                        if (user.equals(opportunity.getName())) {
+                            allOpps.add(opportunity);
+                        }
+                    }
+                }
+            }
+        } catch (NullPointerException e2){
+            Log.i(TAG, "nothing is liked " + e2);
+            return;
+
+        }
+
+    }
+
 }
-
-
-//    private void queryUsers() {
-//        ParseQuery<User> query2 = ParseQuery.getQuery(User.class);
-//        query2.include(User.KEY_USERNAME);
-//        query2.addDescendingOrder(User.KEY_CREATED_AT);
-//        Log.i(TAG, "query posts" + ParseUser.getCurrentUser().getString("location"));
-//        //Log.i(TAG, "query posts" + query.getFirst().getUserName());
-//        query2.findInBackground(new FindCallback<User>() {
-//
-//            @Override
-//            public void done(List<User> users, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting users", e);
-//                    return;
-//                } else {
-//
-//                    Log.i(TAG, "size of users " + users.size());
-//                    // for debugging purposes let's print every post description to logcat
-//                    for (User user : users) {
-//                        Log.i(TAG, "Username: " + user.getUserName() + user.getLocation2());
-//                    }
-//                    //this line is trying to get opportunities to appear when u go on home screen
-//                    //adapter.clear();
-//                    allUsers.addAll(users);
-//                    Log.i(TAG, "size of users " + allUsers.size());
-//
-//                    //User currentUser = new User();
-//                    //User currentUser =  User.getCurrentUser();
-//                    tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
-//                    tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
-//
-//                    //tvRealLoc.setText((currentUserName.getLocation2()));
-//                    //tvRealInterests.setText((currentUser.getInterests()));
-//
-////                    ParseObject user = new ParseObject("User");
-////                    user.put("interests", "phil");
-//                    //tvRealInterests.setText(users.getInterests());
-////                    tvRealLoc.setText(user.getLocation2());
-//
-//                    //adapter.notifyDataSetChanged();
-//
-//                    //User user = new User();
-//                    //tvUserName.setText(user.getUserName());
-//
-//                }
-//
-//            }
-//        });
-
-
-
