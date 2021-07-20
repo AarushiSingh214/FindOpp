@@ -65,12 +65,19 @@ public class SearchResultsActivity extends AppCompatActivity {
         query.include(Opportunity.KEY_NAME);
         query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
 
-        //this works if everything matches exactly and nothing is empty
-        query.whereEqualTo("location", inputLocation);
-        query.whereEqualTo("age", inputAge);
-        query.whereEqualTo("duration", inputDuration);
-
-        query.whereEqualTo("interest", inputInterest);
+        //this works if everything matches exactly and if something is empty
+        if(!inputLocation.equals("")) {
+            query.whereEqualTo("location", inputLocation);
+        }
+        if(!inputAge.equals("")) {
+            query.whereEqualTo("age", inputAge);
+        }
+        if(!inputDuration.equals("")) {
+            query.whereEqualTo("duration", inputDuration);
+        }
+        if(!inputInterest.equals("")) {
+            query.whereEqualTo("interest", inputInterest);
+        }
 
         query.findInBackground(new FindCallback<Opportunity>() {
 
