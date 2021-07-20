@@ -64,8 +64,11 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
+        public TextView tvTitle;
         private ImageView ivOpenHeart;
+
+//        Intent i = new Intent(this, SearchResultsActivity.class);
+//        i.putExtra("location", etLocation.getText().toString());
 
         //getting arrayList of the liked opportunities for current user that will be added to profile page
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -77,8 +80,11 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
         }
 
+
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
+            Intent i = new Intent(context, HomeFragment.class);
+            i.putExtra("tvTitle", tvTitle.getText().toString());
 
             titleAction(opportunity);
             likeHeart(opportunity);
@@ -103,7 +109,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             return;
         }
 
-        //action after title of the opportunity is clicked to see more details
+//        //action after title of the opportunity is clicked to see more details
         public void titleAction(Opportunity opportunity) {
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,10 +126,10 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 //                        Log.i(TAG, "illegal state exception " + e);
 //                        return;
 //
-//                    }
-                }
-            });
-        }
+                    }
+                });
+            }
+
 
         //action after like heart button is clicked
         public void likeHeart(Opportunity opportunity) {

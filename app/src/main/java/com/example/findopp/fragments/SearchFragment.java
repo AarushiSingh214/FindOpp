@@ -1,5 +1,6 @@
 package com.example.findopp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,21 +15,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.findopp.OpeningActivity;
+import com.example.findopp.OppAdapter;
 import com.example.findopp.Opportunity;
 import com.example.findopp.R;
+import com.example.findopp.SearchResultsActivity;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
+    public ArrayList<Opportunity> filterOpps;
     private TextView tvChange;
     private EditText etLocation;
     private EditText etDuration;
     private EditText etAge;
     private EditText etInterests;
     private Button btnSearch;
+    private OppAdapter adapter;
+    //private static List<Opportunity> allOpps;
     public static final String TAG = "Search Fragment";
 
     public SearchFragment() {
@@ -63,14 +77,34 @@ public class SearchFragment extends Fragment {
         etAge = view.findViewById(R.id.etAge);
         etInterests = view.findViewById(R.id.etInterests);
         btnSearch = view.findViewById(R.id.btnSearch);
+        filterOpps = new ArrayList<>();
+        adapter = new OppAdapter(getContext(), filterOpps);
+
         defaultPreferences();
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //querySearch();
+                Log.i(TAG, "size of allOpps OUT METHOD " + filterOpps.size());
+
+                //trying to pass allOpps array to SearchResultsActivity
+                Intent i = new Intent(getContext(), SearchResultsActivity.class);
+                i.putExtra("location", etLocation.getText().toString());
+                i.putExtra("age", etAge.getText().toString());
+                i.putExtra("duration", etDuration.getText().toString());
+                i.putExtra("interest", etInterests.getText().toString());
+                startActivity(i);
+
+            }
+        });
     }
 
     //sets default preferences for the search
-    private void defaultPreferences(){
+    private void defaultPreferences() {
         String location = ParseUser.getCurrentUser().getString("location");
         String interests = ParseUser.getCurrentUser().getString("interests");
+        String duration = ParseUser.getCurrentUser().getString("duration");
         Integer yearBirth = ParseUser.getCurrentUser().getInt("year_of_birth");
         Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
@@ -78,12 +112,22 @@ public class SearchFragment extends Fragment {
         String age = Integer.toString(currentYear - yearBirth);
         etAge.setText(age);
 
-        if(location!= null){
+        if (location != null) {
             etLocation.setText(location);
         }
-        if(interests != null){
+        if (interests != null) {
             etInterests.setText(interests);
+        }
+        if (duration != null) {
+            etDuration.setText(duration);
         }
 
     }
+
 }
+
+
+
+
+
+

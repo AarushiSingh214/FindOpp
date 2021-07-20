@@ -33,6 +33,8 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +47,8 @@ public class HomeFragment extends Fragment {
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
     private ImageView ivOpenHeart;
-    private List<User> allUsers;
-    Opportunity opportunity = new Opportunity();
+//    private List<User> allUsers;
+//    Opportunity opportunity = new Opportunity();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -104,6 +106,13 @@ public class HomeFragment extends Fragment {
                     startActivity(i);
                 }
             });
+        }
+
+        //action after title of the opportunity is clicked to see more details
+        private void details(){
+//            Intent intent = getInent();
+//            inputLocation = intent.getStringExtra("location");
+
         }
 
         //queries the opportunities based on the location of the user

@@ -5,11 +5,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import org.parceler.Parcel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Parcel(analyze = Opportunity.class)
 @ParseClassName("Opportunities")
-public class Opportunity extends ParseObject {
+public class Opportunity extends ParseObject implements Serializable {
 
     public static final String KEY_NAME = "name";
     public static final String KEY_POINT_OF_CONTACT = "point_of_contact";
@@ -24,6 +25,7 @@ public class Opportunity extends ParseObject {
     public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_LIKES = "likes";
     public static final String KEY_OBJECTID = "objectId";
+    public static final String KEY_INTERESTS = "interest";
 
     //getter and setter for name
     public String getName(){
@@ -117,6 +119,12 @@ public class Opportunity extends ParseObject {
     }
     public void setObjectId(String objectId){
         put(KEY_OBJECTID, objectId);
+    }
+
+    //getter and setter for interest
+    public String getInterest(){ return getString(KEY_INTERESTS); }
+    public void setInterest(String interest){
+        put(KEY_INTERESTS, interest);
     }
 
 }
