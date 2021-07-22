@@ -1,11 +1,7 @@
-package com.example.findopp;
-
-import android.util.Log;
+package com.example.findopp.models;
 
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;

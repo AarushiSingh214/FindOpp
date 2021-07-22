@@ -13,25 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.findopp.OppAdapter;
-import com.example.findopp.Opportunity;
+import com.example.findopp.models.Likes;
+import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
-import com.example.findopp.User;
-import com.example.findopp.UserAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.findopp.models.User;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,12 +103,19 @@ public class ProfileFragment extends Fragment {
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        queryPosts();
+        //adapter.likeHeart();
         try {
             getUserInfo();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //profileLikes(opp);
+        queryPosts();
+//        try {
+//            getUserInfo();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //uses ParseUser to get the data about the current user
@@ -164,25 +162,51 @@ public class ProfileFragment extends Fragment {
     }
 
     //gets liked opportunities to appear when u go on profile screen
-    private void profileLikes(List<Opportunity> opportunities){
+    private void profileLikes(List<Opportunity> opportunities) {
+        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+
+        //trying to query where the user equals the current user
         ParseUser currentUser = ParseUser.getCurrentUser();
-        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
-        try {
-            if (!likedId.isEmpty()) {
-                for (String user : likedId) {
-                    for (Opportunity opportunity : opportunities) {
-                        if (user.equals(opportunity.getName())) {
-                            allOpps.add(opportunity);
-                        }
-                    }
+        query.whereEqualTo("user", currentUser);
+
+        query.findInBackground(new FindCallback<Likes>() {
+            @Override
+            public void done(List<Likes> likes, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
+                    return;
+                } else {
+                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
+
+                    allOpps.addAll(opportunities);
+                    //ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                    //notifyDataSetChanged();
                 }
             }
-        } catch (NullPointerException e2){
-            Log.i(TAG, "nothing is liked " + e2);
-            return;
-
-        }
+        });
+    }
 
     }
 
-}
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");
+//        try {
+//            if (!likedId.isEmpty()) {
+//                for (String user : likedId) {
+//                    for (Opportunity opportunity : opportunities) {
+//                        if (user.equals(opportunity.getName())) {
+//                            allOpps.add(opportunity);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (NullPointerException e2){
+//            Log.i(TAG, "nothing is liked " + e2);
+//            return;
+//
+//        }
+
+
+
+

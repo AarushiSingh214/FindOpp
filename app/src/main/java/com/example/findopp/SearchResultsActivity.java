@@ -9,12 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.findopp.fragments.HomeFragment;
-import com.example.findopp.fragments.SearchFragment;
+import com.example.findopp.models.Opportunity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +73,12 @@ public class SearchResultsActivity extends AppCompatActivity {
         if(!inputDuration.equals("")) {
             query.whereEqualTo("duration", inputDuration);
         }
+
         if(!inputInterest.equals("")) {
-            query.whereEqualTo("interest", inputInterest);
+            query.whereEqualTo("location", inputLocation);
         }
 
         query.findInBackground(new FindCallback<Opportunity>() {
-
             @Override
             public void done(List<Opportunity> opportunities, ParseException e) {
                 // check for errors

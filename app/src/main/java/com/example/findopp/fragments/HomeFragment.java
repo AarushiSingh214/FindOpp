@@ -1,8 +1,6 @@
 package com.example.findopp.fragments;
 
 import android.content.Intent;
-import android.graphics.Path;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,22 +16,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.findopp.MainActivity;
+import com.bumptech.glide.Glide;
 import com.example.findopp.OpeningActivity;
 import com.example.findopp.OppAdapter;
-import com.example.findopp.OppDetailsActivity;
-import com.example.findopp.Opportunity;
+import com.example.findopp.models.Likes;
+import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
-import com.example.findopp.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.parceler.Parcels;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +40,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
-    private ImageView ivOpenHeart;
+    //private ImageView ivOpenHeart;
+    private ArrayList<Likes> savedOpps;
+    private Serializable openHeart;
 //    private List<User> allUsers;
 //    Opportunity opportunity = new Opportunity();
 
@@ -81,72 +77,67 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        savedOpps = new ArrayList<Likes>();
         rvOpps = view.findViewById(R.id.rvOpps);
         logoutButton = view.findViewById(R.id.btnLogout);
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), allOpps);
         tvRecommendation = view.findViewById(R.id.tvRecommendation);
         tvRecommendation.setText("Recommendations");
-        ivOpenHeart = view.findViewById(R.id.ivOpenHeart);
 
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
         logout();
-        }
-
-        //method for the logout button
-        private void logout(){
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ParseUser.logOut();
-                    ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-                    Intent i = new Intent(getContext(), OpeningActivity.class);
-                    startActivity(i);
-                }
-            });
-        }
-
-        //action after title of the opportunity is clicked to see more details
-        private void details(){
-//            Intent intent = getInent();
-//            inputLocation = intent.getStringExtra("location");
-
-        }
-
-        //queries the opportunities based on the location of the user
-        private void queryPosts () {
-            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-            Log.i(TAG, "query posts");
-            query.include(Opportunity.KEY_NAME);
-            query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-            String userLoc = ParseUser.getCurrentUser().getString("location");
-            query.whereEqualTo("location", userLoc);
-            query.findInBackground(new FindCallback<Opportunity>() {
-
-                @Override
-                public void done(List<Opportunity> opportunities, ParseException e) {
-                    // check for errors
-                    if (e != null) {
-                        Log.e(TAG, "Issue with getting posts", e);
-                        return;
-                    } else {
-                        Log.i(TAG, "size of opportunities " + opportunities.size());
-                        // for debugging purposes let's print every post description to logcat
-                        for (Opportunity opportunity : opportunities) {
-                            Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
-                        }
-
-                        allOpps.addAll(opportunities);
-                        adapter.notifyDataSetChanged();
-
-                    }
-
-                }
-            });
-        }
-
     }
+
+    //method for the logout button
+    private void logout() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                Intent i = new Intent(getContext(), OpeningActivity.class);
+                startActivity(i);
+            }
+        });
+    }
+
+
+    //queries the opportunities based on the location of the user
+    private void queryPosts() {
+        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+        Log.i(TAG, "query posts");
+        query.include(Opportunity.KEY_NAME);
+        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+        String userLoc = ParseUser.getCurrentUser().getString("location");
+        query.whereEqualTo("location", userLoc);
+        query.findInBackground(new FindCallback<Opportunity>() {
+
+            @Override
+            public void done(List<Opportunity> opportunities, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                } else {
+                    Log.i(TAG, "size of opportunities " + opportunities.size());
+                    // for debugging purposes let's print every post description to logcat
+                    for (Opportunity opportunity : opportunities) {
+                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
+                    }
+                    allOpps.addAll(opportunities);
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+        });
+    }
+
+}
+
+
 
 

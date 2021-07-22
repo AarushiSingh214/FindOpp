@@ -15,23 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.findopp.OpeningActivity;
 import com.example.findopp.OppAdapter;
-import com.example.findopp.Opportunity;
+import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
 import com.example.findopp.SearchResultsActivity;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.parceler.Parcels;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
 
 public class SearchFragment extends Fragment {
     public ArrayList<Opportunity> filterOpps;

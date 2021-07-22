@@ -2,6 +2,7 @@ package com.example.findopp;
 
 import android.app.Application;
 
+import com.example.findopp.models.Opportunity;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

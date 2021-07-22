@@ -1,4 +1,4 @@
-package com.example.findopp;
+package com.example.findopp.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -6,7 +6,6 @@ import com.parse.ParseObject;
 import org.parceler.Parcel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 @Parcel(analyze = Opportunity.class)
 @ParseClassName("Opportunities")
@@ -114,10 +113,10 @@ public class Opportunity extends ParseObject implements Serializable {
     }
 
     //getter and setter for objectID
-    public String getObjectId(){
+    public String getObjectId2(){
         return getString(KEY_OBJECTID);
     }
-    public void setObjectId(String objectId){
+    public void setObjectId2(String objectId){
         put(KEY_OBJECTID, objectId);
     }
 
