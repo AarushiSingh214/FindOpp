@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.findopp.models.Opportunity;
@@ -29,6 +30,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     String inputAge;
     String inputDuration;
     String inputInterest;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         rvSearchResults = findViewById(R.id.rvSearchResults);
         tvSearch = findViewById(R.id.tvSearch);
         tvSearch.setText("Here's What We Found!");
+        pb = (ProgressBar) findViewById(R.id.pbLoading);
 
 
         Intent intent = getIntent();
@@ -47,7 +50,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         inputInterest = intent.getStringExtra("interest");
         //Log.i(TAG, "duration " + inputDuration);
 
-
+        //before the opportunities are displayed, the loading symbol should be displayed for waiting period
+        pb.setVisibility(ProgressBar.VISIBLE);
 
         filterOpps = new ArrayList<>();
         adapter = new OppAdapter(this, filterOpps);
@@ -96,6 +100,9 @@ public class SearchResultsActivity extends AppCompatActivity {
                     filterOpps.addAll(opportunities);
                     adapter.notifyDataSetChanged();
                     Log.i(TAG, "size of allOpps IN method " + filterOpps.size());
+
+                    //after the posts have been queried and displayed, the visibility bar should be invisible
+                    pb.setVisibility(ProgressBar.INVISIBLE);
 
 
                 }

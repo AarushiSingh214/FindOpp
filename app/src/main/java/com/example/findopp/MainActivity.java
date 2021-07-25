@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.findopp.fragments.HomeFragment;
@@ -22,43 +23,20 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Main Activity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
-    //trying to set the loading feature when the data is still loading
-//    // Instance of the progress action-view
-//    MenuItem miActionProgressItem;
-//
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        // Store instance of the menu item containing progress
-//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-//
-//        // Return to finish
-//        return super.onPrepareOptionsMenu(menu);
-//    }
-//
-//    public void showProgressBar() {
-//        // Show progress item
-//        miActionProgressItem.setVisible(true);
-//    }
-//
-//    public void hideProgressBar() {
-//        // Hide progress item
-//        miActionProgressItem.setVisible(false);
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "after onCreate save instance");
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
-                        //Log.i(TAG, "going to home fragment");
                         //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
                         fragment = new HomeFragment();
                         break;
@@ -76,6 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
 
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.findopp.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,10 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +51,7 @@ public class HomeFragment extends Fragment {
     //private ImageView ivOpenHeart;
     private ArrayList<Likes> savedOpps;
     private Serializable openHeart;
+    ProgressBar pb;
 //    private List<User> allUsers;
 //    Opportunity opportunity = new Opportunity();
 
@@ -55,12 +64,6 @@ public class HomeFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -84,7 +87,12 @@ public class HomeFragment extends Fragment {
         adapter = new OppAdapter(getContext(), allOpps);
         tvRecommendation = view.findViewById(R.id.tvRecommendation);
         tvRecommendation.setText("Recommendations");
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
+        //before the opportunities are displayed, the loading symbol should be displayed for waiting period
+        pb.setVisibility(ProgressBar.VISIBLE);
+
+        //opportunities are being added and displayed to recyclerview by setting adapter
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
@@ -130,14 +138,12 @@ public class HomeFragment extends Fragment {
                     allOpps.addAll(opportunities);
                     adapter.notifyDataSetChanged();
 
+                    //after the posts have been queried and displayed, the visibility bar should be invisible
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+
                 }
 
             }
         });
     }
-
 }
-
-
-
-

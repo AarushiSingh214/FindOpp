@@ -77,11 +77,42 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         private ArrayList<Likes> likedOpps = new ArrayList<Likes>();
         private ArrayList<Likes> savedOpps = new ArrayList<Likes>();
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
+
+            int position = getBindingAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the movie at the position, this won't work if the class is static
+                Opportunity opportunity = opportunities.get(position);
+                saveHeart(opportunity);
+            }
+
+            //titleAction(opportunity);
+
+
+            tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getBindingAdapterPosition();
+                    // make sure the position is valid, i.e. actually exists in the view
+                    if (position != RecyclerView.NO_POSITION) {
+                        // get the movie at the position, this won't work if the class is static
+                        Opportunity opportunity = opportunities.get(position);
+                        // create intent for the new activity
+                        Intent intent = new Intent(context, OppDetailsActivity.class);
+                        // serialize the movie using parceler, use its short name as a key
+                        intent.putExtra("opportunity", Parcels.wrap(opportunity));
+                        // show the activity
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
+
 
 
         public void bind(Opportunity opportunity) {
@@ -89,31 +120,37 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             Intent i = new Intent(context, HomeFragment.class);
             i.putExtra("tvTitle", tvTitle.getText().toString());
 
-            titleAction(opportunity);
-            saveHeart();
-            likeHeart(opportunity);
+//            titleAction(opportunity);
+            //saveHeart();
+            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "in ivopenheart");
+                    queryLikes(opportunity);
+                    //ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                }
+            }));
 
         }
 
 
         //action after title of the opportunity is clicked to see more details
-        public void titleAction(Opportunity opportunity) {
-            tvTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, OppDetailsActivity.class);
-                    intent.putExtra("opportunity", Parcels.wrap(opportunity));
-                    context.startActivity(intent);
-                }
-            });
-        }
+//        public void titleAction(Opportunity opportunity) {
+//            Intent intent = new Intent(context, OppDetailsActivity.class);
+//            intent.putExtra("opportunity", Parcels.wrap(opportunity));
+//            context.startActivity(intent);
+//        }
+
+
 
         //saves the likes after a user logs in and in between switching screens
-        public void saveHeart() {
+        public void saveHeart(Opportunity opportunity) {
             ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
             //trying to query where the user equals the current user
+            //query.include()
             ParseUser currentUser = ParseUser.getCurrentUser();
+            query.whereEqualTo("opportunity", opportunity);
             query.whereEqualTo("user", currentUser);
 
             query.findInBackground(new FindCallback<Likes>() {
@@ -126,8 +163,11 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                     } else {
                         Log.i(TAG, "size of likes (saveHeart)" + likes.size());
                         savedOpps.addAll(likes);
-                        ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                        notifyDataSetChanged();
+                        //for(Likes save: savedOpps) {
+                        if(!savedOpps.isEmpty()) {
+                            ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                        }
+                        //notifyDataSetChanged();
                     }
                 }
             });
@@ -135,84 +175,85 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
 
         //action after like heart button is clicked
-        public void likeHeart(Opportunity opportunity) {
-
-            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    queryLikes(opportunity);
-                }
+//        public void likeHeart(Opportunity opportunity) {
+//
+//            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    queryLikes(opportunity);
+//                }
 
                 //sees if that user liked that opportunity
-                private void queryLikes(Opportunity opportunity) {
-                    ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
-                    //query.include(Likes.KEY_USER);
-                    ParseObject allLikes = new ParseObject("Likes");
-                    //trying to query where the user equals the current user and the current opportunity
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    query.whereEqualTo("user", currentUser);
-                    query.whereEqualTo("opportunity", opportunity);
+            private void queryLikes(Opportunity opportunity) {
+                ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+                //query.include(Likes.KEY_USER);
+                ParseObject allLikes = new ParseObject("Likes");
+                //trying to query where the user equals the current user and the current opportunity
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                query.whereEqualTo("user", currentUser);
+                query.whereEqualTo("opportunity", opportunity);
 
-                    query.findInBackground(new FindCallback<Likes>() {
-                        @Override
-                        public void done(List<Likes> likes, ParseException e) {
-                            // check for errors
-                            if (e != null) {
-                                Log.e(TAG, "Issue with getting likes", e);
-                                return;
-                            } else {
-                                likedOpps.addAll(likes);
-                                notifyDataSetChanged();
+                query.findInBackground(new FindCallback<Likes>() {
+                    @Override
+                    public void done(List<Likes> likes, ParseException e) {
+                        // check for errors
+                        if (e != null) {
+                            Log.e(TAG, "Issue with getting likes", e);
+                            return;
+                        } else {
+                            Log.i(TAG, "likes:: " + likes);
+                            likedOpps.addAll(likes);
+                            //notifyDataSetChanged();
 
-                                Log.i(TAG, "size of likedArray " + likedOpps);
-                                if (likedOpps.isEmpty()) {
-                                    Log.i(TAG, "adding like");
-                                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                                    allLikes.put("opportunity", opportunity);
-                                    allLikes.put("user", ParseUser.getCurrentUser());
-                                    allLikes.saveInBackground();
-                                } else if(!likedOpps.isEmpty()) {
-                                    queryRemoveLike();
-                                    Log.i(TAG, "removing like");
+                            Log.i(TAG, "size of likedArray " + likedOpps);
+                            if (likedOpps.isEmpty()) {
+                                Log.i(TAG, "adding like");
+                                ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                                allLikes.put("opportunity", opportunity);
+                                allLikes.put("user", ParseUser.getCurrentUser());
+                                allLikes.saveInBackground();
+                            } else if(!likedOpps.isEmpty()) {
+                                queryRemoveLike(opportunity);
+                                Log.i(TAG, "removing like");
 
-                                }
                             }
-
                         }
 
-                    });
-                }
+                    }
+
+                });
+            }
 
                 //private method to remove like
-                private void queryRemoveLike() {
-                    ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
-                    query.include(Likes.KEY_USER);
-                    //trying to query where the user equals the current user and the current opportunity
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    query.whereEqualTo("user", currentUser);
-                    query.whereEqualTo("opportunity", opportunity);
+            private void queryRemoveLike(Opportunity opportunity) {
+                ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+                query.include(Likes.KEY_USER);
+                //trying to query where the user equals the current user and the current opportunity
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                query.whereEqualTo("user", currentUser);
+                query.whereEqualTo("opportunity", opportunity);
 
-                    query.findInBackground(new FindCallback<Likes>() {
-                        @Override
-                        public void done(List<Likes> objects, ParseException e) {
-                            try {
-                                for(ParseObject object: objects) {
-                                    ivOpenHeart.setImageResource(R.drawable.open_heart);
-                                    likedOpps.clear();
-                                    object.delete();
-                                    object.saveInBackground();
-                                }
-                            } catch (ParseException parseException) {
-                                parseException.printStackTrace();
+                query.findInBackground(new FindCallback<Likes>() {
+                    @Override
+                    public void done(List<Likes> objects, ParseException e) {
+                        try {
+                            for (ParseObject object : objects) {
+                                ivOpenHeart.setImageResource(R.drawable.open_heart);
+                                likedOpps.clear();
+                                object.delete();
+                                object.saveInBackground();
                             }
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
                         }
-                    });
-                }
-            }));
+                    }
+                });
+            }
+            }
 
         }
-    }
-}
+
+
 
 
 
