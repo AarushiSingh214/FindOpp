@@ -1,5 +1,6 @@
 package com.example.findopp.fragments;
 
+import android.graphics.Path;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class ProfileFragment extends Fragment {
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
     private String currentUserName = ParseUser.getCurrentUser().getUsername();
+    private ArrayList<Opportunity> profileLikes = new ArrayList<Opportunity>();
 
 
     public ProfileFragment() {
@@ -102,20 +104,13 @@ public class ProfileFragment extends Fragment {
 
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
+        displayLikes();
 
-        //adapter.likeHeart();
         try {
             getUserInfo();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //profileLikes(opp);
-        queryPosts();
-//        try {
-//            getUserInfo();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
     }
 
     //uses ParseUser to get the data about the current user
@@ -132,40 +127,13 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    //all the opps show up in your favorited but u need to find a way to filter by hearts
-    private void queryPosts() {
-        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-        Log.i(TAG, "query posts");
-        query.include(Opportunity.KEY_NAME);
-        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Opportunity>() {
-
-            @Override
-            public void done(List<Opportunity> opportunities, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                } else {
-                    Log.i(TAG, "size of opportunities " + opportunities.size());
-                    // for debugging purposes let's print every post description to logcat
-                    for (Opportunity opportunity : opportunities) {
-                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
-                    }
-
-                    profileLikes(opportunities);
-                    adapter.notifyDataSetChanged();
-                }
-
-            }
-        });
-    }
-
-    //gets liked opportunities to appear when u go on profile screen
-    private void profileLikes(List<Opportunity> opportunities) {
+    //this needs to be an opportunity class
+    private void displayLikes() {
         ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
-        //trying to query where the user equals the current user
+        //need to have query.include for the pointers specifically
+        query.include("opportunity");
+        query.include("user");
         ParseUser currentUser = ParseUser.getCurrentUser();
         query.whereEqualTo("user", currentUser);
 
@@ -174,20 +142,104 @@ public class ProfileFragment extends Fragment {
             public void done(List<Likes> likes, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
+                    Log.e(TAG, "Issue with getting likes (display likes)", e);
                     return;
                 } else {
-                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
+                    Log.i(TAG, "size of likes (display likes)" + likes.size());
 
-                    allOpps.addAll(opportunities);
-                    //ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                    //notifyDataSetChanged();
+                    //Opportunity opportunity = new Opportunity();
+                    for (int i = 0; i < likes.size(); i++) {
+                        Log.i(TAG, "oppsLikes.get(i).getObjectId() " + likes.get(i).getOpp().getClass().getSimpleName());
+                        allOpps.add(likes.get(i).getOpp());
+                        Log.i(TAG, "size of allOpps (display likes)" + allOpps.size());
+                        adapter.notifyDataSetChanged();
+
+                    }
                 }
             }
         });
     }
+}
 
-    }
+//    private void matchOpp(){
+//        for (int i = 0; i < profileLikes.size(); i++) {
+//            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+//            query.whereEqualTo("objectId", profileLikes.get(i).getObjectId());
+//            query.findInBackground(new FindCallback<Opportunity>() {
+//                @Override
+//                public void done(List<Opportunity> opportunities, ParseException e) {
+//                    // check for errors
+//                    if (e != null) {
+//                        Log.e(TAG, "Issue with getting likes (display likes)", e);
+//                        return;
+//                    } else {
+//
+//                        allOpps.addAll(opportunities);
+//                    }
+//                }
+//            });
+//        }
+
+
+
+
+
+//    //all the opps show up in your favorited but u need to find a way to filter by hearts
+//    private void queryPosts() {
+//        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+//        Log.i(TAG, "query posts");
+//        query.include(Opportunity.KEY_NAME);
+//        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+//        query.findInBackground(new FindCallback<Opportunity>() {
+//
+//            @Override
+//            public void done(List<Opportunity> opportunities, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting posts", e);
+//                    return;
+//                } else {
+//                    Log.i(TAG, "size of opportunities " + opportunities.size());
+//                    // for debugging purposes let's print every post description to logcat
+//                    for (Opportunity opportunity : opportunities) {
+//                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
+//                    }
+//
+//                    profileLikes(opportunities);
+//                    adapter.notifyDataSetChanged();
+//                }
+//
+//            }
+//        });
+//    }
+//
+//    //gets liked opportunities to appear when u go on profile screen
+//    private void profileLikes(List<Opportunity> opportunities) {
+//        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+//
+//        //trying to query where the user equals the current user
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        query.whereEqualTo("user", currentUser);
+//
+//        query.findInBackground(new FindCallback<Likes>() {
+//            @Override
+//            public void done(List<Likes> likes, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
+//                    return;
+//                } else {
+//                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
+//
+//                    allOpps.addAll(opportunities);
+//                    //ivOpenHeart.setImageResource(R.drawable.filled_heart);
+//                    //notifyDataSetChanged();
+//                }
+//            }
+//        });
+//    }
+//
+//    }
 
 //        ParseUser currentUser = ParseUser.getCurrentUser();
 //        ArrayList<String> likedId = (ArrayList<String>) currentUser.get("userLikes");

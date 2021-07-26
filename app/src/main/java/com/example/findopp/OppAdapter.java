@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.findopp.fragments.HomeFragment;
+import com.example.findopp.fragments.ProfileFragment;
 import com.example.findopp.models.Likes;
 import com.example.findopp.models.Opportunity;
 import com.parse.FindCallback;
@@ -40,7 +41,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         saveHeart();
     }
 
-    //gets all the opportunities taht were liked by the user
+    //gets all the opportunities that were liked by the user
     public void saveHeart() {
         ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
@@ -100,9 +101,21 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
 
         public void bind(Opportunity opportunity) {
-            tvTitle.setText(opportunity.getTitle());
-            Intent intent = new Intent(context, HomeFragment.class);
-            intent.putExtra("tvTitle", tvTitle.getText().toString());
+            //tvTitle.setText(opportunity.getTitle());
+            try {
+                tvTitle.setText(opportunity.getTitle());
+                Log.i(TAG, "opportunity.getTitle()" + opportunity.getTitle());
+
+
+//                Intent intent = new Intent(context, HomeFragment.class);
+//                intent.putExtra("tvTitle", tvTitle.getText().toString());
+//
+//                tvTitle.setText(opportunity.getTitle());
+//                Intent intent2 = new Intent(context, ProfileFragment.class);
+//                intent.putExtra("tvTitle", tvTitle.getText().toString());
+            }catch(IllegalStateException e){
+                Log.i(TAG, "error with tvTitle" + e);
+            }
 
             titleAction(opportunity);
             displayLikes(opportunity);
@@ -196,7 +209,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                 Log.i(TAG, "something went wrong with querying- removing like" + e);
                             }
                         });
-
                     }
                 }
             }
