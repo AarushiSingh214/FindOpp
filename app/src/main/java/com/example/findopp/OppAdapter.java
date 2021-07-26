@@ -101,21 +101,21 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
 
         public void bind(Opportunity opportunity) {
-            //tvTitle.setText(opportunity.getTitle());
-            try {
-                tvTitle.setText(opportunity.getTitle());
-                Log.i(TAG, "opportunity.getTitle()" + opportunity.getTitle());
-
-
-//                Intent intent = new Intent(context, HomeFragment.class);
-//                intent.putExtra("tvTitle", tvTitle.getText().toString());
-//
+            tvTitle.setText(opportunity.getTitle());
+//            try {
 //                tvTitle.setText(opportunity.getTitle());
-//                Intent intent2 = new Intent(context, ProfileFragment.class);
-//                intent.putExtra("tvTitle", tvTitle.getText().toString());
-            }catch(IllegalStateException e){
-                Log.i(TAG, "error with tvTitle" + e);
-            }
+//                Log.i(TAG, "opportunity.getTitle()" + opportunity.getTitle());
+//
+//
+////                Intent intent = new Intent(context, HomeFragment.class);
+////                intent.putExtra("tvTitle", tvTitle.getText().toString());
+////
+////                tvTitle.setText(opportunity.getTitle());
+////                Intent intent2 = new Intent(context, ProfileFragment.class);
+////                intent.putExtra("tvTitle", tvTitle.getText().toString());
+//            }catch(IllegalStateException e){
+//                Log.i(TAG, "error with tvTitle" + e);
+//            }
 
             titleAction(opportunity);
             displayLikes(opportunity);
