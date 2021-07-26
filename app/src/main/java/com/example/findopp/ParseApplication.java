@@ -2,6 +2,7 @@ package com.example.findopp;
 
 import android.app.Application;
 
+import com.example.findopp.models.Likes;
 import com.example.findopp.models.Opportunity;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -15,6 +16,8 @@ public class ParseApplication extends Application {
 
         // Register your parse models
         ParseObject.registerSubclass(Opportunity.class);
+        ParseObject.registerSubclass(Likes.class);
+
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("5379mKkhN29LJSeT5k1cY008RoyORhoJYLviZFaL")

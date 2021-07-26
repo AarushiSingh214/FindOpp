@@ -73,6 +73,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         Log.i(TAG, "query posts");
         query.include(Opportunity.KEY_NAME);
         query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+        ParseQuery<Opportunity> interest = query.whereEqualTo("interest", inputInterest);
+        Log.i(TAG, "query interest " + interest);
 
         //this works if everything matches exactly and if something is empty
         if (!inputLocation.equals("")) {
@@ -85,11 +87,15 @@ public class SearchResultsActivity extends AppCompatActivity {
             query.whereEqualTo("duration", inputDuration);
         }
 
-        if (!inputInterest.equals("")) {
+        //if (!inputInterest.equals("")) {
+        if(interest == null){
+            Log.i(TAG, "inside if interest doesn't ");
             //query.whereEqualTo("location", inputLocation);
             queryInterests();
             //return;
 
+        }else{
+            //have text print that says sorry no results found
         }
 
         //if interests doesn't equal what you searched for call anotehr query where you query intersts and get the relted
