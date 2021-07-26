@@ -82,35 +82,36 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
+            saveHeart();
 
-            int position = getBindingAdapterPosition();
-            // make sure the position is valid, i.e. actually exists in the view
-            if (position != RecyclerView.NO_POSITION) {
-                // get the movie at the position, this won't work if the class is static
-                Opportunity opportunity = opportunities.get(position);
-                saveHeart(opportunity);
-            }
+//            int position = getBindingAdapterPosition();
+//            // make sure the position is valid, i.e. actually exists in the view
+//            if (position != RecyclerView.NO_POSITION) {
+//                // get the movie at the position, this won't work if the class is static
+//                Opportunity opportunity = opportunities.get(position);
+//                saveHeart(opportunity);
+//            }
 
             //titleAction(opportunity);
 
 
-            tvTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getBindingAdapterPosition();
-                    // make sure the position is valid, i.e. actually exists in the view
-                    if (position != RecyclerView.NO_POSITION) {
-                        // get the movie at the position, this won't work if the class is static
-                        Opportunity opportunity = opportunities.get(position);
-                        // create intent for the new activity
-                        Intent intent = new Intent(context, OppDetailsActivity.class);
-                        // serialize the movie using parceler, use its short name as a key
-                        intent.putExtra("opportunity", Parcels.wrap(opportunity));
-                        // show the activity
-                        context.startActivity(intent);
-                    }
-                }
-            });
+//            tvTitle.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getBindingAdapterPosition();
+//                    // make sure the position is valid, i.e. actually exists in the view
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        // get the movie at the position, this won't work if the class is static
+//                        Opportunity opportunity = opportunities.get(position);
+//                        // create intent for the new activity
+//                        Intent intent = new Intent(context, OppDetailsActivity.class);
+//                        // serialize the movie using parceler, use its short name as a key
+//                        intent.putExtra("opportunity", Parcels.wrap(opportunity));
+//                        // show the activity
+//                        context.startActivity(intent);
+//                    }
+//                }
+//            });
         }
 
 
@@ -120,7 +121,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             Intent i = new Intent(context, HomeFragment.class);
             i.putExtra("tvTitle", tvTitle.getText().toString());
 
-//            titleAction(opportunity);
+            titleAction(opportunity);
             //saveHeart();
             ivOpenHeart.setOnClickListener((new View.OnClickListener() {
                 @Override
@@ -135,22 +136,27 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
 
         //action after title of the opportunity is clicked to see more details
-//        public void titleAction(Opportunity opportunity) {
-//            Intent intent = new Intent(context, OppDetailsActivity.class);
-//            intent.putExtra("opportunity", Parcels.wrap(opportunity));
-//            context.startActivity(intent);
-//        }
+        private void titleAction(Opportunity opportunity) {
+            tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, OppDetailsActivity.class);
+                    intent.putExtra("opportunity", Parcels.wrap(opportunity));
+                    context.startActivity(intent);
+                }
+            });
+        }
 
 
 
         //saves the likes after a user logs in and in between switching screens
-        public void saveHeart(Opportunity opportunity) {
+        public void saveHeart() {
             ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
             //trying to query where the user equals the current user
             //query.include()
             ParseUser currentUser = ParseUser.getCurrentUser();
-            query.whereEqualTo("opportunity", opportunity);
+            //query.whereEqualTo("opportunity", opportunity);
             query.whereEqualTo("user", currentUser);
 
             query.findInBackground(new FindCallback<Likes>() {
@@ -185,6 +191,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
                 //sees if that user liked that opportunity
             private void queryLikes(Opportunity opportunity) {
+                Log.i(TAG, "opportunity: " + opportunity);
                 ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
                 //query.include(Likes.KEY_USER);
                 ParseObject allLikes = new ParseObject("Likes");
@@ -205,14 +212,20 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                             likedOpps.addAll(likes);
                             //notifyDataSetChanged();
 
-                            Log.i(TAG, "size of likedArray " + likedOpps);
+                            Log.i(TAG, "size of likedArray " + likedOpps.indexOf(0));
+                            //Log.i(TAG, "get(0): " + likedOpps.get(0));
+                            //if (!likedOpps.equals(opportunity.getObjectId())) {
                             if (likedOpps.isEmpty()) {
-                                Log.i(TAG, "adding like");
+                                Log.i(TAG, "adding like" + likedOpps);
                                 ivOpenHeart.setImageResource(R.drawable.filled_heart);
                                 allLikes.put("opportunity", opportunity);
                                 allLikes.put("user", ParseUser.getCurrentUser());
+
+                                //Log.i(TAG, "GETIGN FROM GET: " + allLikes.get("user"));
+
                                 allLikes.saveInBackground();
-                            } else if(!likedOpps.isEmpty()) {
+                                //} else if(likedOpps.equals(opportunity.getObjectId())) {
+                            }else if(!likedOpps.isEmpty()){
                                 queryRemoveLike(opportunity);
                                 Log.i(TAG, "removing like");
 
