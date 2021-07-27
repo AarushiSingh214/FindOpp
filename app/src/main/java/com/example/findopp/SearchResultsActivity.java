@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Headers;
@@ -39,10 +40,14 @@ public class SearchResultsActivity extends AppCompatActivity {
     public static final String TAG = "Search Results Activity";
     public ArrayList<Opportunity> filterOpps;
     public ArrayList<Opportunity> relatedOpps;
+    private ArrayList<String> oppLocation;
     String inputLocation;
     String inputAge;
     String inputDuration;
     String inputInterest;
+    String destination = "";
+    HashMap<Opportunity, String> map;
+
     ProgressBar pb;
     String str_from,str_to;
     private List<Opportunity> allOpps;
@@ -69,6 +74,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
 
+        map = new HashMap<>();
+        oppLocation = new ArrayList<>();
         allOpps = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
@@ -78,7 +85,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
         querySearch();
-        apiCall();
+        queryOpps();
+
     }
 
     //filters the different conditions to receive accurate search results
@@ -105,7 +113,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         if(interest == null){
             Log.i(TAG, "inside if interest doesn't ");
             //query.whereEqualTo("location", inputLocation);
-            queryInterests();
+            //queryInterests();
             //return;
 
         }else{
@@ -164,7 +172,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
                     List<ParseObject> relatedInterest = interest.getList("relatedInterest");
                     Log.i(TAG, "oppInterest: " + relatedInterest);
-                    queryRelatedFields(relatedInterest);
+                    //queryRelatedFields(relatedInterest);
 
                 }
             }
@@ -202,50 +210,77 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
     }
 
+    private void queryOpps() {
+        //parsing for all of the
+        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+        query.include("location");
+        query.findInBackground(new FindCallback<Opportunity>() {
+            @Override
+            public void done(List<Opportunity> opportunities, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting likes (display likes)", e);
+                    return;
+                } else {
+
+                    //DO I NEED TO NOTIFY THE ADAPTER?????
+                    //adapter.notifyDataSetChanged();
+
+                    //getting the location for all of the opportunities
+                    for (int h = 0; h < opportunities.size(); h++) {
+                        oppLocation.add(opportunities.get(h).getLocation());
+                    }
+                    Log.i(TAG, "location of all opps: " + oppLocation);
+
+
+                    apiCall();
+
+                }
+            }
+        });
+
+    }
+
     private void apiCall() {
+        //Log.i(TAG, "location of all opps(OUTSIDE): " + oppLocation);
+        for(int k = 0; k < oppLocation.size(); k++){
+            destination = destination + "|" + oppLocation.get(k);
+        }
+        destination = destination.substring(1);
+        //Log.i(TAG,"destination: " + destination);
+
         AsyncHttpClient client = new AsyncHttpClient();
 
         //right now the destinations are hardcoded, get destinations from query
-        String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=/" + inputLocation + "/&destinations=Lexington,MA|Concord,MA&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
+        String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=/" + inputLocation + "/&destinations=/" + destination + "/&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
         client.get(DISTANCE_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
-
                 JSONObject jsonObject = json.jsonObject;
 
                 try {
                     JSONArray locationData = jsonObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
-                    //Log.i(TAG, "locationData: " + locationData);
 
                     //returns the distance from origin to each destination
                     for (int j = 0; j < locationData.length(); j++) {
                         String jsonDistance = locationData.getJSONObject(j).getJSONObject("distance").getString("text");
-                        //Log.i(TAG, "jsonDistance: " + jsonDistance);
+                        Log.i(TAG, "jsonDistance: " + jsonDistance);
                     }
-
-
-//                    String jsonElements = locationData.getJSONObject(0).getString("elements");
-//                    Log.i(TAG, "jsonDistance: " + jsonElements);
-//
-//
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
-
 
             @Override
             public void onFailure(int i, Headers headers, String s, Throwable throwable) {
                 Log.d(TAG, "onFailure");
             }
         });
-
-
     }
+
+
+
 
 
 //    private void apiCallTry1() {
