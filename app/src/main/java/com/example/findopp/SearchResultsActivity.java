@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -46,10 +45,10 @@ public class SearchResultsActivity extends AppCompatActivity {
     String inputDuration;
     String inputInterest;
     String destination = "";
-    HashMap<Opportunity, String> map;
+    HashMap<String, String> map;
 
     ProgressBar pb;
-    String str_from,str_to;
+    String str_from, str_to;
     private List<Opportunity> allOpps;
     //public static final String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Cleveland,OH&destinations=Lexington,MA|Concord,MA&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
 
@@ -74,140 +73,19 @@ public class SearchResultsActivity extends AppCompatActivity {
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
 
-        map = new HashMap<>();
+        map = new HashMap<String, String>();
         oppLocation = new ArrayList<>();
         allOpps = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
         adapter = new OppAdapter(this, filterOpps);
-        adapter = new OppAdapter(this, relatedOpps);
+        //adapter = new OppAdapter(this, relatedOpps);
 
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
-        querySearch();
+        //querySearch();
         queryOpps();
 
-    }
-
-    //filters the different conditions to receive accurate search results
-    public void querySearch() {
-        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-        Log.i(TAG, "query posts");
-        query.include(Opportunity.KEY_NAME);
-        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-        ParseQuery<Opportunity> interest = query.whereEqualTo("interest", inputInterest);
-        Log.i(TAG, "query interest " + interest);
-
-        //this works if everything matches exactly and if something is empty
-        if (!inputLocation.equals("")) {
-            query.whereEqualTo("location", inputLocation);
-        }
-        if (!inputAge.equals("")) {
-            query.whereEqualTo("age", inputAge);
-        }
-        if (!inputDuration.equals("")) {
-            query.whereEqualTo("duration", inputDuration);
-        }
-
-        //if (!inputInterest.equals("")) {
-        if(interest == null){
-            Log.i(TAG, "inside if interest doesn't ");
-            //query.whereEqualTo("location", inputLocation);
-            //queryInterests();
-            //return;
-
-        }else{
-            //have text print that says sorry no results found
-        }
-
-        //if interests doesn't equal what you searched for call anotehr query where you query intersts and get the relted
-        //query.whereeualto("interst" input interet
-        //getRelatedFields
-        // go back to querySearch and do for loop there
-        //for loop should be for each relactedinterest. wueryWhereequal to "interest", that related fiel
-
-        query.findInBackground(new FindCallback<Opportunity>() {
-            @Override
-            public void done(List<Opportunity> opportunities, ParseException e) {
-                // check for errors
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                } else {
-                    Log.i(TAG, "size of opportunities " + opportunities.size());
-                    // for debugging purposes let's print every post description to logcat
-//                    for (Opportunity opportunity : opportunities) {
-//                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
-//                    }
-
-                    //all filtered data
-                    filterOpps.addAll(opportunities);
-                    adapter.notifyDataSetChanged();
-                    Log.i(TAG, "size of allOpps IN method " + filterOpps.size());
-
-                    //after the posts have been queried and displayed, the visibility bar should be invisible
-                    pb.setVisibility(ProgressBar.INVISIBLE);
-
-
-                }
-            }
-        });
-
-    }
-
-    private void queryInterests() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Interests");
-        query.include(Interests.KEY_OPPINTEREST);
-        //query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-        query.whereEqualTo("oppInterest", inputInterest);
-        Log.i(TAG, "query interests: " + query);
-
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject interest, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting interests", e);
-                    return;
-                } else {
-
-                    List<ParseObject> relatedInterest = interest.getList("relatedInterest");
-                    Log.i(TAG, "oppInterest: " + relatedInterest);
-                    //queryRelatedFields(relatedInterest);
-
-                }
-            }
-
-        });
-    }
-
-    private void queryRelatedFields(List relatedInterest) {
-        for (Object related : relatedInterest) {
-            Log.i(TAG, "related: " +related);
-            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-            //Log.i(TAG, "query posts");
-            query.include(Opportunity.KEY_NAME);
-            query.whereEqualTo("interest", related);
-            Log.i(TAG, "query related interest: " + query);
-
-            query.findInBackground(new FindCallback<Opportunity>() {
-                @Override
-                public void done(List<Opportunity> opportunities, ParseException e) {
-                    if (e != null) {
-                        Log.e(TAG, "Issue with getting posts", e);
-                        return;
-                    } else {
-                        Log.i(TAG, "size of opportunities " + opportunities.size());
-
-                        //all filtered data
-                        relatedOpps.addAll(opportunities);
-                        adapter.notifyDataSetChanged();
-                        Log.i(TAG, "relatedOpps " + relatedOpps);
-
-
-                    }
-                }
-            });
-        }
     }
 
     private void queryOpps() {
@@ -228,12 +106,12 @@ public class SearchResultsActivity extends AppCompatActivity {
 
                     //getting the location for all of the opportunities
                     for (int h = 0; h < opportunities.size(); h++) {
+//                        map.put(opportunities.get(h).getObjectId(), "");
                         oppLocation.add(opportunities.get(h).getLocation());
                     }
                     Log.i(TAG, "location of all opps: " + oppLocation);
 
-
-                    apiCall();
+                    apiCall(opportunities);
 
                 }
             }
@@ -241,9 +119,9 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     }
 
-    private void apiCall() {
+    private void apiCall(List<Opportunity> opportunities) {
         //Log.i(TAG, "location of all opps(OUTSIDE): " + oppLocation);
-        for(int k = 0; k < oppLocation.size(); k++){
+        for (int k = 0; k < oppLocation.size(); k++) {
             destination = destination + "|" + oppLocation.get(k);
         }
         destination = destination.substring(1);
@@ -265,8 +143,20 @@ public class SearchResultsActivity extends AppCompatActivity {
                     //returns the distance from origin to each destination
                     for (int j = 0; j < locationData.length(); j++) {
                         String jsonDistance = locationData.getJSONObject(j).getJSONObject("distance").getString("text");
-                        Log.i(TAG, "jsonDistance: " + jsonDistance);
+
+                        //gets rid of the units at the end of the string
+                        jsonDistance = jsonDistance.substring(0, jsonDistance.indexOf(" "));
+
+                        //replaces all of the commas and then puts the opportunities below 300km in hashmap
+                        if (jsonDistance.indexOf(",") != -1) {
+                            jsonDistance.replaceAll(",", "");
+                        } else if (Float.parseFloat(jsonDistance) < 300) {
+                            map.put(opportunities.get(j).getObjectId(), jsonDistance);
+                        }
                     }
+                    Log.i(TAG, "hashmap: " + map);
+                    querySearch();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -274,48 +164,185 @@ public class SearchResultsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int i, Headers headers, String s, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                Log.d(TAG, "onFailure- api call");
             }
         });
     }
 
+    //filters the different conditions to receive accurate search results
+    private void querySearch() {
+        for (String objectId : map.keySet()) {
+            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+            query.include("opportunity");
+            query.whereEqualTo("objectId", objectId);
+            if (!inputAge.equals("")) {
+                query.whereEqualTo("age", inputAge);
+            }
+            if (!inputDuration.equals("")) {
+                query.whereEqualTo("duration", inputDuration);
+            }
+            if (!inputInterest.equals("")) {
+                query.whereEqualTo("interest", inputInterest);
+            }
+            query.findInBackground(new FindCallback<Opportunity>() {
+                @Override
+                public void done(List<Opportunity> opportunities, ParseException e) {
+                    // check for errors
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    } else {
+                        filterOpps.addAll(opportunities);
+                        adapter.notifyDataSetChanged();
+                        pb.setVisibility(ProgressBar.INVISIBLE);
+                    }
+                }
+            });
+        }
+    }
+}
 
 
 
 
-//    private void apiCallTry1() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        ///////////////////////////////////////////////////////////////////////////////////
 //        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-//        Log.i(TAG, "query" + query);
-//        query.include("location");
+//        Log.i(TAG, "query posts");
+//        query.include(Opportunity.KEY_NAME);
+//        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+//        ParseQuery<Opportunity> interest = query.whereEqualTo("interest", inputInterest);
+//        Log.i(TAG, "query interest " + interest);
+//
+//        //this works if everything matches exactly and if something is empty
+//        if (!inputLocation.equals("")) {
+//            query.whereEqualTo("location", inputLocation);
+//        }
+//        if (!inputAge.equals("")) {
+//            query.whereEqualTo("age", inputAge);
+//        }
+//        if (!inputDuration.equals("")) {
+//            query.whereEqualTo("duration", inputDuration);
+//        }
+//
+//        //if (!inputInterest.equals("")) {
+//        if(interest == null){
+//            Log.i(TAG, "inside if interest doesn't ");
+//            //query.whereEqualTo("location", inputLocation);
+//            //queryInterests();
+//            //return;
+//
+//        }else{
+//            //have text print that says sorry no results found
+//        }
+//
+//        //if interests doesn't equal what you searched for call anotehr query where you query intersts and get the relted
+//        //query.whereeualto("interst" input interet
+//        //getRelatedFields
+//        // go back to querySearch and do for loop there
+//        //for loop should be for each relactedinterest. wueryWhereequal to "interest", that related fiel
+//
 //        query.findInBackground(new FindCallback<Opportunity>() {
 //            @Override
 //            public void done(List<Opportunity> opportunities, ParseException e) {
 //                // check for errors
 //                if (e != null) {
-//                    Log.e(TAG, "Issue with getting likes (display likes)", e);
+//                    Log.e(TAG, "Issue with getting posts", e);
 //                    return;
 //                } else {
-//                    Log.i(TAG, "size of likes (display likes)" + opportunities.size());
-//                    allOpps.addAll(opportunities);
-//                    Log.i(TAG, "size of likes (display likes)" + allOpps.size());
+//                    Log.i(TAG, "size of opportunities " + opportunities.size());
+//                    // for debugging purposes let's print every post description to logcat
+////                    for (Opportunity opportunity : opportunities) {
+////                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
+////                    }
+//
+//                    //all filtered data
+//                    filterOpps.addAll(opportunities);
 //                    adapter.notifyDataSetChanged();
+//                    Log.i(TAG, "size of allOpps IN method " + filterOpps.size());
+//
+//                    //after the posts have been queried and displayed, the visibility bar should be invisible
+//                    pb.setVisibility(ProgressBar.INVISIBLE);
+//
 //
 //                }
 //            }
 //        });
 //
-//        str_from = inputLocation;
-//        Log.i(TAG, "before for loop");
-//        for(Opportunity opp: allOpps) {
-//            str_to = opp.getLocation();
-//            //str_to = oppLocation.getText().toString();
-//            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + str_to + "=" + API_KEY;
-//            new GeoTask(SearchResultsActivity.this).execute(url);
-//            Log.i(TAG, "url: " + url);
+//    }
+
+//    private void queryInterests() {
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("Interests");
+//        query.include(Interests.KEY_OPPINTEREST);
+//        //query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
+//        query.whereEqualTo("oppInterest", inputInterest);
+//        Log.i(TAG, "query interests: " + query);
+//
+//        query.getFirstInBackground(new GetCallback<ParseObject>() {
+//            @Override
+//            public void done(ParseObject interest, ParseException e) {
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting interests", e);
+//                    return;
+//                } else {
+//
+//                    List<ParseObject> relatedInterest = interest.getList("relatedInterest");
+//                    Log.i(TAG, "oppInterest: " + relatedInterest);
+//                    //queryRelatedFields(relatedInterest);
+//
+//                }
+//            }
+//
+//        });
+//    }
+//
+//    private void queryRelatedFields(List relatedInterest) {
+//        for (Object related : relatedInterest) {
+//            Log.i(TAG, "related: " +related);
+//            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+//            //Log.i(TAG, "query posts");
+//            query.include(Opportunity.KEY_NAME);
+//            query.whereEqualTo("interest", related);
+//            Log.i(TAG, "query related interest: " + query);
+//
+//            query.findInBackground(new FindCallback<Opportunity>() {
+//                @Override
+//                public void done(List<Opportunity> opportunities, ParseException e) {
+//                    if (e != null) {
+//                        Log.e(TAG, "Issue with getting posts", e);
+//                        return;
+//                    } else {
+//                        Log.i(TAG, "size of opportunities " + opportunities.size());
+//
+//                        //all filtered data
+//                        relatedOpps.addAll(opportunities);
+//                        adapter.notifyDataSetChanged();
+//                        Log.i(TAG, "relatedOpps " + relatedOpps);
+//
+//
+//                    }
+//                }
+//            });
 //        }
+//    }
 
-
-}
 
 
 
