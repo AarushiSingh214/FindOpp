@@ -48,9 +48,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     HashMap<String, String> map;
 
     ProgressBar pb;
-    String str_from, str_to;
-    private List<Opportunity> allOpps;
-    //public static final String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Cleveland,OH&destinations=Lexington,MA|Concord,MA&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +73,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         map = new HashMap<String, String>();
         oppLocation = new ArrayList<>();
-        allOpps = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
         adapter = new OppAdapter(this, filterOpps);
@@ -83,7 +80,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
-        //querySearch();
         queryOpps();
 
     }
@@ -101,18 +97,13 @@ public class SearchResultsActivity extends AppCompatActivity {
                     return;
                 } else {
 
-                    //DO I NEED TO NOTIFY THE ADAPTER?????
-                    //adapter.notifyDataSetChanged();
-
                     //getting the location for all of the opportunities
                     for (int h = 0; h < opportunities.size(); h++) {
-//                        map.put(opportunities.get(h).getObjectId(), "");
                         oppLocation.add(opportunities.get(h).getLocation());
                     }
                     Log.i(TAG, "location of all opps: " + oppLocation);
 
                     apiCall(opportunities);
-
                 }
             }
         });
@@ -120,12 +111,10 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     private void apiCall(List<Opportunity> opportunities) {
-        //Log.i(TAG, "location of all opps(OUTSIDE): " + oppLocation);
         for (int k = 0; k < oppLocation.size(); k++) {
             destination = destination + "|" + oppLocation.get(k);
         }
         destination = destination.substring(1);
-        //Log.i(TAG,"destination: " + destination);
 
         AsyncHttpClient client = new AsyncHttpClient();
 

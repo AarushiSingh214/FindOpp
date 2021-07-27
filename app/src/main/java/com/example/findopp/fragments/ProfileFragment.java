@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.findopp.OppAdapter;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
     private List<Opportunity> allOpps;
     private String currentUserName = ParseUser.getCurrentUser().getUsername();
     private ArrayList<Opportunity> profileLikes = new ArrayList<Opportunity>();
+    ProgressBar pb;
 
 
     public ProfileFragment() {
@@ -91,6 +93,7 @@ public class ProfileFragment extends Fragment {
         tvRealInterests = view.findViewById(R.id.tvRealInterests);
         tvBirth = view.findViewById(R.id.tvBirth);
         tvRealBirth = view.findViewById(R.id.tvRealBirth);
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
 
         tvEdit.setText("Edit");
         tvEmail.setText("Email");
@@ -101,6 +104,10 @@ public class ProfileFragment extends Fragment {
         rvOpps = view.findViewById(R.id.rvOpps);
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), allOpps);
+
+        //before the opportunities are displayed, the loading symbol should be displayed for waiting period
+        pb.setVisibility(ProgressBar.VISIBLE);
+
 
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -153,6 +160,7 @@ public class ProfileFragment extends Fragment {
                         allOpps.add(likes.get(i).getOpp());
                         Log.i(TAG, "size of allOpps (display likes)" + allOpps.size());
                         adapter.notifyDataSetChanged();
+                        pb.setVisibility(ProgressBar.INVISIBLE);
 
                     }
                 }

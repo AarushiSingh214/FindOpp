@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,19 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.findopp.GeoTask;
-import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
-import com.example.findopp.models.Likes;
 import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
 import com.example.findopp.SearchResultsActivity;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
