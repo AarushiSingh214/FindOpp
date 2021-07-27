@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -16,14 +17,21 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.findopp.GeoTask;
+import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
+import com.example.findopp.models.Likes;
 import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
 import com.example.findopp.SearchResultsActivity;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
     public ArrayList<Opportunity> filterOpps;
@@ -34,8 +42,14 @@ public class SearchFragment extends Fragment {
     private EditText etInterests;
     private Button btnSearch;
     private OppAdapter adapter;
-    //private static List<Opportunity> allOpps;
+    private List<Opportunity> allOpps;
     public static final String TAG = "Search Fragment";
+    EditText edttxt_from,edttxt_to;
+    Button btn_get;
+    String str_from,str_to;
+    TextView tv_result1,tv_result2;
+    String oppLocation;
+    public static final String API_KEY = "AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
 
     public SearchFragment() {
         // Required empty public constructor
@@ -70,10 +84,12 @@ public class SearchFragment extends Fragment {
         etInterests = view.findViewById(R.id.etInterests);
         btnSearch = view.findViewById(R.id.btnSearch);
         filterOpps = new ArrayList<>();
+        allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), filterOpps);
 
 
         defaultPreferences();
+        //apiCall();
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +132,7 @@ public class SearchFragment extends Fragment {
         }
 
     }
+
 
 }
 

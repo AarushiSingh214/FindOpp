@@ -5,11 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.findopp.models.Interests;
 import com.example.findopp.models.Opportunity;
 import com.parse.FindCallback;
@@ -18,8 +21,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -35,6 +44,9 @@ public class SearchResultsActivity extends AppCompatActivity {
     String inputDuration;
     String inputInterest;
     ProgressBar pb;
+    String str_from,str_to;
+    private List<Opportunity> allOpps;
+    //public static final String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Cleveland,OH&destinations=Lexington,MA|Concord,MA&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
 
+        allOpps = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
         adapter = new OppAdapter(this, filterOpps);
@@ -65,6 +78,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
         querySearch();
+        apiCall();
     }
 
     //filters the different conditions to receive accurate search results
@@ -135,10 +149,10 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private void queryInterests() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Interests");
-        Log.i(TAG, "query interests: " + query);
         query.include(Interests.KEY_OPPINTEREST);
         //query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
         query.whereEqualTo("oppInterest", inputInterest);
+        Log.i(TAG, "query interests: " + query);
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
@@ -151,9 +165,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                     List<ParseObject> relatedInterest = interest.getList("relatedInterest");
                     Log.i(TAG, "oppInterest: " + relatedInterest);
                     queryRelatedFields(relatedInterest);
-
-//                    String oppInterest = interest.getString("relatedInterest");
-//                    Log.i(TAG, "oppInterest: " + oppInterest);
 
                 }
             }
@@ -178,10 +189,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                         return;
                     } else {
                         Log.i(TAG, "size of opportunities " + opportunities.size());
-                        // for debugging purposes let's print every post description to logcat
-//                        for (Opportunity opportunity : opportunities) {
-//                            Log.i(TAG, "Opp: " + opportunity.getName());
-//                        }
 
                         //all filtered data
                         relatedOpps.addAll(opportunities);
@@ -194,7 +201,87 @@ public class SearchResultsActivity extends AppCompatActivity {
             });
         }
     }
+
+    private void apiCall() {
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        //right now the destinations are hardcoded, get destinations from query
+        String DISTANCE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=/" + inputLocation + "/&destinations=Lexington,MA|Concord,MA&key=AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
+        client.get(DISTANCE_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+
+                JSONObject jsonObject = json.jsonObject;
+
+                try {
+                    JSONArray locationData = jsonObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
+                    //Log.i(TAG, "locationData: " + locationData);
+
+                    //returns the distance from origin to each destination
+                    for (int j = 0; j < locationData.length(); j++) {
+                        String jsonDistance = locationData.getJSONObject(j).getJSONObject("distance").getString("text");
+                        //Log.i(TAG, "jsonDistance: " + jsonDistance);
+                    }
+
+
+//                    String jsonElements = locationData.getJSONObject(0).getString("elements");
+//                    Log.i(TAG, "jsonDistance: " + jsonElements);
+//
+//
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+            @Override
+            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
+
+
+    }
+
+
+//    private void apiCallTry1() {
+//        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+//        Log.i(TAG, "query" + query);
+//        query.include("location");
+//        query.findInBackground(new FindCallback<Opportunity>() {
+//            @Override
+//            public void done(List<Opportunity> opportunities, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting likes (display likes)", e);
+//                    return;
+//                } else {
+//                    Log.i(TAG, "size of likes (display likes)" + opportunities.size());
+//                    allOpps.addAll(opportunities);
+//                    Log.i(TAG, "size of likes (display likes)" + allOpps.size());
+//                    adapter.notifyDataSetChanged();
+//
+//                }
+//            }
+//        });
+//
+//        str_from = inputLocation;
+//        Log.i(TAG, "before for loop");
+//        for(Opportunity opp: allOpps) {
+//            str_to = opp.getLocation();
+//            //str_to = oppLocation.getText().toString();
+//            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str_from + "&destinations=" + str_to + "=" + API_KEY;
+//            new GeoTask(SearchResultsActivity.this).execute(url);
+//            Log.i(TAG, "url: " + url);
+//        }
+
+
 }
+
 
 
 

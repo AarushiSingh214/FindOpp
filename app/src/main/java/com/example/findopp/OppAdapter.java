@@ -87,7 +87,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         return opportunities.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public ImageView ivOpenHeart;
@@ -96,26 +95,10 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
-
         }
-
 
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
-//            try {
-//                tvTitle.setText(opportunity.getTitle());
-//                Log.i(TAG, "opportunity.getTitle()" + opportunity.getTitle());
-//
-//
-////                Intent intent = new Intent(context, HomeFragment.class);
-////                intent.putExtra("tvTitle", tvTitle.getText().toString());
-////
-////                tvTitle.setText(opportunity.getTitle());
-////                Intent intent2 = new Intent(context, ProfileFragment.class);
-////                intent.putExtra("tvTitle", tvTitle.getText().toString());
-//            }catch(IllegalStateException e){
-//                Log.i(TAG, "error with tvTitle" + e);
-//            }
 
             titleAction(opportunity);
             displayLikes(opportunity);
@@ -127,7 +110,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                     likes(opportunity);
                 }
             }));
-
         }
 
         //action after title of the opportunity is clicked to see more details
