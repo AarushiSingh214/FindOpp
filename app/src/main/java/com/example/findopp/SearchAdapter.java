@@ -95,6 +95,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             }));
         }
 
+
+
         //action after title of the opportunity is clicked to see more details
         private void titleAction(Opportunity opportunity) {
             tvTitle.setOnClickListener(new View.OnClickListener() {

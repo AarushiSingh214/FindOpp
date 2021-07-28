@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+
 public class OpeningActivity extends AppCompatActivity {
 
     public static final String TAG = "Opening Activity";
@@ -27,9 +29,18 @@ public class OpeningActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerBtn);
         tvFindOpp = findViewById(R.id.tvFindOpp);
 
+        userPersistence();
         loginAction();
         registerAction();
+    }
 
+    //allows user to use app without having to login each time
+    private void userPersistence(){
+        if (ParseUser.getCurrentUser() != null) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     //action after login button is clicked
@@ -42,9 +53,7 @@ public class OpeningActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-
         });
-
     }
 
     //action after register button is clicked
@@ -58,7 +67,5 @@ public class OpeningActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
 }
