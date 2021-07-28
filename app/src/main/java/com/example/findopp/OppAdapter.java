@@ -39,6 +39,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         this.context = context;
         this.opportunities = opportunities;
         saveHeart();
+
     }
 
     //gets all the opportunities that were liked by the user
@@ -90,11 +91,13 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public ImageView ivOpenHeart;
+        String likeObjectId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
+            //displayLikes();
         }
 
         public void bind(Opportunity opportunity) {
@@ -125,9 +128,51 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         }
 
         //saves the likes after a user logs in and in between switching screens
+//        private void displayLikes() {
+//            //problem is that its looping through or the number of opps no matter what the for loop is
+//            //sometimes its sets it for all and other times none filled
+//            ivOpenHeart.setTag(R.drawable.open_heart);
+//
+//            for (int i = 0; i < oppsLikes.size(); i++) {
+//                Log.i(TAG, "i " + i );
+//                likeObjectId = oppsLikes.get(i).getOpp().getObjectId();
+//                ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
+//                query.include(Opportunity.KEY_OBJECTID);
+//                query.whereEqualTo("objectId", oppsLikes.get(i).getOpp().getObjectId());
+//                int finalI = i;
+//                query.findInBackground(new FindCallback<Opportunity>() {
+//
+//                    @Override
+//                    public void done(List<Opportunity> opportunities, ParseException e) {
+//                        // check for errors
+//                        if (e != null) {
+//                            Log.e(TAG, "Issue with getting posts", e);
+//                            return;
+//                        } else {
+//                            Log.i(TAG, "size of opportunities " + opportunities.size());
+//                            // for debugging purposes let's print every post description to logcat
+//
+//                            Log.i(TAG, "opportunity.getObjectId " + opportunities.get(finalI).getObjectId());
+//                            Log.i(TAG, "oppsLikes.get(i).getObjectId() " + oppsLikes.get(finalI).getOpp().getObjectId());
+//
+//                            if (likeObjectId.equals(opportunities.get(finalI).getObjectId())) {
+//                                ivOpenHeart.setImageResource(R.drawable.filled_heart);
+//                                ivOpenHeart.setTag(R.drawable.filled_heart);
+//                            } else {
+//                                ivOpenHeart.setTag(R.drawable.open_heart);
+//
+//                            }
+//                        }
+//                    }
+//
+//                });
+
         private void displayLikes(Opportunity opportunity) {
             ivOpenHeart.setTag(R.drawable.open_heart);
+
+            //problem is taht before you were doing opplikes.size and when u have 1 it only does the for loop once so it doesn't loop through all the opp
             for (int i = 0; i < oppsLikes.size(); i++) {
+            //for (int i = 0; i < getItemCount(); i++) {
                 Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId());
                 Log.i(TAG, "oppsLikes.get(i).getObjectId() " + oppsLikes.get(i).getOpp().getObjectId());
 
@@ -140,6 +185,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             }
 
         }
+
 
         //action after like heart button is clicked
         private void likes(Opportunity opportunity) {

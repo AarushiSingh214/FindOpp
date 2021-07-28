@@ -21,6 +21,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".OpeningActivity">
+<!--        <activity android:name=".FeedActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
