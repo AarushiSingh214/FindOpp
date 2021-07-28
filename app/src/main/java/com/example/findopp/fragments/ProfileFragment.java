@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
 import com.example.findopp.models.Likes;
 import com.example.findopp.models.Opportunity;
@@ -103,7 +104,7 @@ public class ProfileFragment extends Fragment {
 
         rvOpps = view.findViewById(R.id.rvOpps);
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), allOpps);
+        adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
 
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);

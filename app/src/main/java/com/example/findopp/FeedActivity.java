@@ -30,7 +30,7 @@ public class FeedActivity extends AppCompatActivity {
         rvOpps = findViewById(R.id.rvOpps);
         // initialize the array that will hold posts and create a PostsAdapter
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(this, allOpps);
+        //adapter = new OppAdapter(this, allOpps, (MainActivity) getActivity());
 
         // set the adapter on the recycler view
         rvOpps.setAdapter(adapter);

@@ -29,54 +29,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     private Context context;
     private List<Opportunity> opportunities;
-    //private ArrayList<Likes> oppsLikes = new ArrayList<Likes>();
+    private ArrayList<Likes> oppsLikes = new ArrayList<Likes>();
 
-    //reference to main activity
-    private MainActivity mainActivity;
+    public static final String TAG = "Search Adapter";
 
-    public static final String TAG = "Opp Adapter";
-
-    public OppAdapter(Context context, List<Opportunity> opportunities, MainActivity mainActivity) {
+    public SearchAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
         this.opportunities = opportunities;
-        this.mainActivity = mainActivity;
-        //saveHeart();
+
     }
-
-    public OppAdapter(Context context, List<Opportunity> opportunities) {
-        this.context = context;
-        this.opportunities = opportunities;
-        //saveHeart();
-    }
-
-//    //gets all the opportunities that were liked by the user
-//    public void saveHeart() {
-//        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
-//
-//        //trying to query where the user equals the current user
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        query.whereEqualTo("user", currentUser);
-//
-//        query.findInBackground(new FindCallback<Likes>() {
-//            @Override
-//            public void done(List<Likes> likes, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
-//                    return;
-//                } else {
-//                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
-//                    oppsLikes.addAll(likes);
-//                    //displayLikes(opportunities);
-//
-//                }
-//            }
-//        });
-//    }
-
 
     @NonNull
     @Override
@@ -90,8 +54,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         Opportunity opportunity = opportunities.get(position);
         holder.bind(opportunity);
     }
-
-
 
     public void clear() {
         opportunities.clear();
@@ -199,14 +161,14 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         private void displayLikes(Opportunity opportunity) {
             ivOpenHeart.setTag(R.drawable.open_heart);
-            Log.i(TAG, "oppLikes: " + mainActivity.oppsLikes.size());
+            Log.i(TAG, "oppLikes SA: " + oppsLikes.size());
             //problem is that before you were doing opplikes.size and when u have 1 it only does the for loop once so it doesn't loop through all the opp
-            for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
-            //for (int i = 0; i < getItemCount(); i++) {
-                Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId());
-                Log.i(TAG, "oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
+            for (int i = 0; i < oppsLikes.size(); i++) {
+                //for (int i = 0; i < getItemCount(); i++) {
+                Log.i(TAG, "opportunity.getObjectId SA " + opportunity.getObjectId());
+                Log.i(TAG, "oppsLikes.get(i).getObjectId() SA " + oppsLikes.get(i).getOpp().getObjectId());
 
-                if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
+                if (oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
                     ivOpenHeart.setImageResource(R.drawable.filled_heart);
                     ivOpenHeart.setTag(R.drawable.filled_heart);
                 } else {
@@ -226,26 +188,26 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                 likes.saveInBackground(e -> {
                     if (e == null) {
                         //Save was done
-                        mainActivity.oppsLikes.add(likes);
+                        oppsLikes.add(likes);
                         ivOpenHeart.setImageResource(R.drawable.filled_heart);
                         ivOpenHeart.setTag(R.drawable.filled_heart);
-                        Log.i(TAG, "everything was successful- adding like");
+                        Log.i(TAG, "everything was successful- adding like SA");
                     } else {
                         //Something went wrong
-                        Log.i(TAG, "something went wrong-adding like");
+                        Log.i(TAG, "something went wrong-adding like SA");
 
                     }
                 });
             } else {
                 //checking tag to see if opportunity is liked and then unliking that opportunity
-                for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
-                    if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
+                for (int i = 0; i < oppsLikes.size(); i++) {
+                    if (oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
 
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Likes");
 
                         // Retrieve the object by id
                         int finalI = i;
-                        String objectId = mainActivity.oppsLikes.get(i).getObjectId();
+                        String objectId = oppsLikes.get(i).getObjectId();
                         query.getInBackground(objectId, (object, e) -> {
                             if (e == null) {
                                 //Object was fetched
@@ -253,7 +215,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                 object.deleteInBackground(e2 -> {
                                     if (e2 == null) {
                                         Log.i(TAG, "this is successful- removing like");
-                                        mainActivity.oppsLikes.remove(finalI);
+                                        oppsLikes.remove(finalI);
                                         ivOpenHeart.setImageResource(R.drawable.open_heart);
                                         ivOpenHeart.setTag(R.drawable.open_heart);
 

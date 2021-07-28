@@ -34,7 +34,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private RecyclerView rvSearchResults;
     private TextView tvSearch;
-    private OppAdapter adapter;
+    private SearchAdapter adapter;
     private ArrayList<Opportunity> searchOpps;
     public static final String TAG = "Search Results Activity";
     public ArrayList<Opportunity> filterOpps;
@@ -75,7 +75,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         oppLocation = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
-        adapter = new OppAdapter(this, filterOpps);
+        adapter = new SearchAdapter(this, filterOpps);
         //adapter = new OppAdapter(this, relatedOpps);
 
         rvSearchResults.setAdapter(adapter);

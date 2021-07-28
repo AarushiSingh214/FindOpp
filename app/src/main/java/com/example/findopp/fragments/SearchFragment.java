@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
 import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
@@ -77,7 +78,7 @@ public class SearchFragment extends Fragment {
         btnSearch = view.findViewById(R.id.btnSearch);
         filterOpps = new ArrayList<>();
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), filterOpps);
+        adapter = new OppAdapter(getContext(), filterOpps, (MainActivity) getActivity());
 
 
         defaultPreferences();

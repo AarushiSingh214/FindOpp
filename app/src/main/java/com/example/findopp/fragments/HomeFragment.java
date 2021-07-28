@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.findopp.MainActivity;
 import com.example.findopp.OpeningActivity;
 import com.example.findopp.OppAdapter;
 import com.example.findopp.models.Likes;
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
         rvOpps = view.findViewById(R.id.rvOpps);
         logoutButton = view.findViewById(R.id.btnLogout);
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), allOpps);
+        adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
         tvRecommendation = view.findViewById(R.id.tvRecommendation);
         tvRecommendation.setText("Recommendations");
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
