@@ -36,6 +36,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public static final String TAG = "Search Adapter";
 
+    //search adapter to seperate thelike feature in the activities and fragments
+    //opp adapter is like feature in fragments, requires main activity reference
     public SearchAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
         this.opportunities = opportunities;
@@ -104,60 +106,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 }
             });
         }
-
-        //saves the likes after a user logs in and in between switching screens
-        //private void displayLikes() {
-//            //problem is that its looping through or the number of opps no matter what the for loop is
-//            //sometimes its sets it for all and other times none filled
-//            ivOpenHeart.setTag(R.drawable.open_heart);
-//
-////            for (int i = 0; i < oppsLikes.size(); i++) {
-////                Log.i(TAG, "i " + i);
-////                likeObjectId = oppsLikes.get(i).getOpp().getObjectId();
-////                ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-////                query.include(Opportunity.KEY_OBJECTID);
-////                query.whereEqualTo("objectId", oppsLikes.get(i).getOpp().getObjectId());
-////                int finalI = i;
-//
-//            ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
-//
-//            //trying to query where the user equals the current user
-//            ParseUser currentUser = ParseUser.getCurrentUser();
-//            query.whereEqualTo("user", currentUser);
-//
-//                query.findInBackground(new FindCallback<Likes>() {
-//
-//                    @Override
-//                    public void done(List<Likes> likes, ParseException e) {
-//                        // check for errors
-//                        if (e != null) {
-//                            Log.e(TAG, "Issue with getting posts", e);
-//                            return;
-//                        } else {
-//                            Log.i(TAG, "size of opportunities " + likes.size());
-//                            // for debugging purposes let's print every post description to logcat
-//
-//
-//                        for (int i = 0; i < oppsLikes.size(); i++) {
-//                        //for (int i = 0; i < opportunities.size(); i++) {
-//                            likeObjectId = oppsLikes.get(i).getOpp().getObjectId();
-//
-//                            Log.i(TAG, "opportunity.getObjectId " + opportunities.get(i).getObjectId());
-//                            Log.i(TAG, "likeObjectId " + likeObjectId);
-//
-//                            if (likeObjectId.equals(opportunities.get(i).getObjectId())) {
-//                                ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                                ivOpenHeart.setTag(R.drawable.filled_heart);
-//                            } else {
-//                                ivOpenHeart.setTag(R.drawable.open_heart);
-//
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            });
-//        }
 
         private void displayLikes(Opportunity opportunity) {
             ivOpenHeart.setTag(R.drawable.open_heart);

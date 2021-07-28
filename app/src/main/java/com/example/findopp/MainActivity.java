@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //select default selection- only for Home
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+
     }
 
     //gets all the opportunities that were liked by the user
