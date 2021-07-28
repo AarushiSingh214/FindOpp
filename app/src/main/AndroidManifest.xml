@@ -16,12 +16,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SearchResultsActivity"></activity>
         <activity android:name=".OppDetailsActivity" />
-        <activity android:name=".FeedActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".OpeningActivity">
-<!--        <activity android:name=".FeedActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -135,6 +135,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                     Log.i(TAG, "oppLikes: " + mainActivity.oppsLikes.size());
 
                     for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
+                        //for (int i = 0; i < getItemCount(); i++) {
                         //Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId());
                         //Log.i(TAG, "oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
 
