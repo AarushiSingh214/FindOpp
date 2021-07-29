@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
+import com.example.findopp.Pop;
 import com.example.findopp.models.Opportunity;
 import com.example.findopp.R;
 import com.example.findopp.SearchResultsActivity;
@@ -41,6 +43,7 @@ public class SearchFragment extends Fragment {
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
     public static final String TAG = "Search Fragment";
+    RelativeLayout back_dim_layout;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -78,6 +81,8 @@ public class SearchFragment extends Fragment {
         filterOpps = new ArrayList<>();
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), filterOpps, (MainActivity) getActivity());
+        //setting background dim when showing popup
+       // back_dim_layout = (RelativeLayout) view.findViewById(R.id.bac_dim_layout);
 
 
         defaultPreferences();
@@ -94,6 +99,9 @@ public class SearchFragment extends Fragment {
                 if (location.equals("")){
                     Log.i(TAG, "inside of location is required if");
                     //etLocation.setError("Location is Required");
+                    //back_dim_layout.setVisibility(View.VISIBLE);
+                    startActivity(new Intent (getContext(), Pop.class));
+                    //back_dim_layout.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "home", Toast.LENGTH_SHORT).show();
                     return;
                 } else

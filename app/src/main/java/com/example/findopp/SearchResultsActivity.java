@@ -190,12 +190,13 @@ public class SearchResultsActivity extends AppCompatActivity {
                         return;
                     } else {
                         filterOpps.addAll(opportunities);
+                        Log.i(TAG, "filterOpps size" + opportunities.size());
 
                         if(filterOpps.size() == 0){
                             //tvNoResults.setText("No Results Found");
+                            //Log.i(TAG, "filterOpps size" + filterOpps.size());
                             tvNoResults.setVisibility(View.VISIBLE);
                         }
-                        //Log.i(TAG, "filterOpps size" + filterOpps.size());
                         adapter.notifyDataSetChanged();
                         pb.setVisibility(ProgressBar.INVISIBLE);
                     }
@@ -204,160 +205,3 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        ///////////////////////////////////////////////////////////////////////////////////
-//        ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-//        Log.i(TAG, "query posts");
-//        query.include(Opportunity.KEY_NAME);
-//        query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-//        ParseQuery<Opportunity> interest = query.whereEqualTo("interest", inputInterest);
-//        Log.i(TAG, "query interest " + interest);
-//
-//        //this works if everything matches exactly and if something is empty
-//        if (!inputLocation.equals("")) {
-//            query.whereEqualTo("location", inputLocation);
-//        }
-//        if (!inputAge.equals("")) {
-//            query.whereEqualTo("age", inputAge);
-//        }
-//        if (!inputDuration.equals("")) {
-//            query.whereEqualTo("duration", inputDuration);
-//        }
-//
-//        //if (!inputInterest.equals("")) {
-//        if(interest == null){
-//            Log.i(TAG, "inside if interest doesn't ");
-//            //query.whereEqualTo("location", inputLocation);
-//            //queryInterests();
-//            //return;
-//
-//        }else{
-//            //have text print that says sorry no results found
-//        }
-//
-//        //if interests doesn't equal what you searched for call anotehr query where you query intersts and get the relted
-//        //query.whereeualto("interst" input interet
-//        //getRelatedFields
-//        // go back to querySearch and do for loop there
-//        //for loop should be for each relactedinterest. wueryWhereequal to "interest", that related fiel
-//
-//        query.findInBackground(new FindCallback<Opportunity>() {
-//            @Override
-//            public void done(List<Opportunity> opportunities, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting posts", e);
-//                    return;
-//                } else {
-//                    Log.i(TAG, "size of opportunities " + opportunities.size());
-//                    // for debugging purposes let's print every post description to logcat
-////                    for (Opportunity opportunity : opportunities) {
-////                        Log.i(TAG, "Post: " + opportunity.getDescription() + ", username: " + opportunity.getName() + opportunity.getLocation());
-////                    }
-//
-//                    //all filtered data
-//                    filterOpps.addAll(opportunities);
-//                    adapter.notifyDataSetChanged();
-//                    Log.i(TAG, "size of allOpps IN method " + filterOpps.size());
-//
-//                    //after the posts have been queried and displayed, the visibility bar should be invisible
-//                    pb.setVisibility(ProgressBar.INVISIBLE);
-//
-//
-//                }
-//            }
-//        });
-//
-//    }
-
-//    private void queryInterests() {
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("Interests");
-//        query.include(Interests.KEY_OPPINTEREST);
-//        //query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
-//        query.whereEqualTo("oppInterest", inputInterest);
-//        Log.i(TAG, "query interests: " + query);
-//
-//        query.getFirstInBackground(new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject interest, ParseException e) {
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting interests", e);
-//                    return;
-//                } else {
-//
-//                    List<ParseObject> relatedInterest = interest.getList("relatedInterest");
-//                    Log.i(TAG, "oppInterest: " + relatedInterest);
-//                    //queryRelatedFields(relatedInterest);
-//
-//                }
-//            }
-//
-//        });
-//    }
-//
-//    private void queryRelatedFields(List relatedInterest) {
-//        for (Object related : relatedInterest) {
-//            Log.i(TAG, "related: " +related);
-//            ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-//            //Log.i(TAG, "query posts");
-//            query.include(Opportunity.KEY_NAME);
-//            query.whereEqualTo("interest", related);
-//            Log.i(TAG, "query related interest: " + query);
-//
-//            query.findInBackground(new FindCallback<Opportunity>() {
-//                @Override
-//                public void done(List<Opportunity> opportunities, ParseException e) {
-//                    if (e != null) {
-//                        Log.e(TAG, "Issue with getting posts", e);
-//                        return;
-//                    } else {
-//                        Log.i(TAG, "size of opportunities " + opportunities.size());
-//
-//                        //all filtered data
-//                        relatedOpps.addAll(opportunities);
-//                        adapter.notifyDataSetChanged();
-//                        Log.i(TAG, "relatedOpps " + relatedOpps);
-//
-//
-//                    }
-//                }
-//            });
-//        }
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

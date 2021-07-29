@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="findopp_green">#CCEFCE</color>
+    <color name="error_red">#ba160c</color>
+    <color name="light_grey">#d3d3d3</color>
+
 
 
 </resources>
