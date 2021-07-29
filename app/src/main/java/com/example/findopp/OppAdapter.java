@@ -32,8 +32,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
+    private List<Likes> likesList;
     private Context context;
     private List<Opportunity> opportunities;
+    public ArrayList<Likes> oppsLikes;
 
     //reference to main activity
     private MainActivity mainActivity;
@@ -45,6 +47,12 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         this.opportunities = opportunities;
         this.mainActivity = mainActivity;
     }
+
+//    public OppAdapter(Context context, List<Opportunity> opportunities, List<Likes> likes) {
+//        this.context = context;
+//        this.opportunities = opportunities;
+//        this.likesList = likes;
+//    }
 
 
     @NonNull
@@ -78,6 +86,8 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
+            oppsLikes = new ArrayList<Likes>();
+            int position = getBindingAdapterPosition();
 
             //gesture for double click to like and single click to see details activity
             itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -116,8 +126,8 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
-            //displayLikes(opportunity);
             displayLikes(opportunity);
+            //displayLikes(opportunity);
         }
 
         //action after title of the opportunity is clicked to see more details
@@ -150,6 +160,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         //this version is doing mainActivity.saveHeart()
         private void displayLikes(Opportunity opportunity) {
+            //mainActivity.saveHeart();
             ivOpenHeart.setTag(R.drawable.open_heart);
             Log.i(TAG, "oppLikes OPP ADAPTER: " + mainActivity.oppsLikes.size());
 

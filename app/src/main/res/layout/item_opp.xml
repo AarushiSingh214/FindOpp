@@ -3,69 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="364dp"
-        android:layout_height="wrap_content"
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvTitle"-->
+    <!--        android:layout_width="364dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginStart="3dp"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:layout_marginEnd="6dp"-->
+    <!--        android:layout_marginBottom="5dp"-->
+    <!--        android:layout_toStartOf="@+id/ivOpenHeart"-->
+    <!--        android:background="@color/findopp_green"-->
+    <!--        android:text="Title"-->
+    <!--        android:textAppearance="@style/TextAppearance.AppCompat.Large" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/ivOpenHeart"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginEnd="6dp"-->
+    <!--        android:layout_weight="1"-->
+    <!--        app:srcCompat="@drawable/open_heart" />-->
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toStartOf="@+id/ivOpenHeart"
-        android:background="@color/findopp_green"
-        android:text="Title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_alignParentTop="true"
+        app:cardBackgroundColor="@color/findopp_green"
+        app:cardCornerRadius="50dp">
 
-    <ImageView
-        android:id="@+id/ivOpenHeart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="6dp"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/open_heart" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@+id/ivOpenHeart"
+            android:background="@color/findopp_green"
+            android:fontFamily="@font/poppins_light"
+            android:text="Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        app:cardBackgroundColor="@color/findopp_green"-->
-<!--        app:cardCornerRadius="50dp">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvTitle"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_toStartOf="@+id/ivOpenHeart"-->
-<!--            android:background="@color/findopp_green"-->
-<!--            android:layout_marginEnd="15dp"-->
-<!--            android:layout_marginStart="15dp"-->
-<!--            android:layout_marginTop="25dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--            android:padding="5dp"-->
-<!--            android:textSize="25sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:text="Title"-->
-<!--            android:textAppearance="@style/TextAppearance.AppCompat.Large" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivOpenHeart"-->
-<!--            android:layout_width="39dp"-->
-<!--            android:layout_height="36dp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginStart="300dp"-->
-<!--            android:layout_marginTop="28dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:layout_weight="1"-->
-<!--            app:srcCompat="@drawable/open_heart" />-->
+        <ImageView
+            android:id="@+id/ivOpenHeart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="325dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/open_heart" />
 
 
-<!--    </androidx.cardview.widget.CardView>-->
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

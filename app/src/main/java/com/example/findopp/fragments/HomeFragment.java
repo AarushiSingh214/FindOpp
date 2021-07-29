@@ -52,6 +52,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<Likes> savedOpps;
     private Serializable openHeart;
     ProgressBar pb;
+    public ArrayList<Likes> oppsLikes;
+
 
 
     public HomeFragment() {
@@ -90,9 +92,11 @@ public class HomeFragment extends Fragment {
         logoutButton = view.findViewById(R.id.btnLogout);
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
+        //adapter = new OppAdapter(getContext(), allOpps, oppsLikes);
         tvRecommendation = view.findViewById(R.id.tvRecommendation);
         tvRecommendation.setText("Recommendations");
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
+        oppsLikes = new ArrayList<Likes>();
 
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
@@ -101,6 +105,7 @@ public class HomeFragment extends Fragment {
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
+        //saveHeart();
         logout();
     }
 
@@ -151,4 +156,30 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+//    //gets all the opportunities that were liked by the user
+//    public void saveHeart() {
+//        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+//
+//        //trying to query where the user equals the current user
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        query.whereEqualTo("user", currentUser);
+//
+//        query.findInBackground(new FindCallback<Likes>() {
+//            @Override
+//            public void done(List<Likes> likes, ParseException e) {
+//                // check for errors
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
+//                    return;
+//                } else {
+//                    Log.i(TAG, "size of likes (saveHeart MAIN)" + likes.size());
+//                    oppsLikes.addAll(likes);
+//                    adapter.notifyDataSetChanged();
+//                    //displayLikes(opportunities);
+//
+//                }
+//            }
+//        });
+//    }
 }

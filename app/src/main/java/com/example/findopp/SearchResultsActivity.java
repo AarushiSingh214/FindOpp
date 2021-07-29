@@ -58,7 +58,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_results);
 
         rvSearchResults = findViewById(R.id.rvSearchResults);
-        tvNoResults = findViewById(R.id.tvNoResults);
+        //tvNoResults = findViewById(R.id.tvNoResults);
         tvSearch = findViewById(R.id.tvSearch);
         tvSearch.setText("Here's What We Found!");
         pb = (ProgressBar) findViewById(R.id.pbLoading);
@@ -192,11 +192,11 @@ public class SearchResultsActivity extends AppCompatActivity {
                         filterOpps.addAll(opportunities);
                         Log.i(TAG, "filterOpps size" + opportunities.size());
 
-                        if(filterOpps.size() == 0){
-                            //tvNoResults.setText("No Results Found");
-                            //Log.i(TAG, "filterOpps size" + filterOpps.size());
-                            tvNoResults.setVisibility(View.VISIBLE);
-                        }
+//                        if(filterOpps.size() == 0){
+//                            //tvNoResults.setText("No Results Found");
+//                            //Log.i(TAG, "filterOpps size" + filterOpps.size());
+//                            //tvNoResults.setVisibility(View.VISIBLE);
+//                        }
                         adapter.notifyDataSetChanged();
                         pb.setVisibility(ProgressBar.INVISIBLE);
                     }

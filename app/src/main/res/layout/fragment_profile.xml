@@ -29,6 +29,7 @@
         <TextView
             android:id="@+id/findOpp"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/poppins_light"
             android:layout_height="wrap_content"
             android:text="FindOpp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -39,6 +40,7 @@
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
         android:layout_marginStart="0dp"
@@ -50,6 +52,7 @@
     <TextView
         android:id="@+id/tvEdit"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserName"
         android:layout_alignStart="@+id/tvUserName"
@@ -71,6 +74,7 @@
         android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_below="@+id/tvEdit"
         android:layout_alignStart="@+id/tvEdit"
         android:layout_marginStart="0dp"
@@ -80,6 +84,8 @@
     <TextView
         android:id="@+id/tvRealEmail"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvEmail"
         android:layout_alignStart="@+id/tvEmail"
@@ -90,6 +96,7 @@
     <TextView
         android:id="@+id/tvLocation2"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserName"
         android:layout_marginStart="157dp"
@@ -99,20 +106,23 @@
 
     <TextView
         android:id="@+id/tvRealLoc"
-        android:layout_width="82dp"
-        android:layout_height="wrap_content"
+        android:layout_width="119dp"
+        android:layout_height="39dp"
         android:layout_below="@+id/tvLocation2"
         android:layout_alignStart="@+id/tvLocation2"
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvRealEmail"
-        android:text="real location" />
+        android:fontFamily="@font/poppins_semibold"
+        android:text="real location"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tvInterests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRealEmail"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_alignStart="@+id/tvRealEmail"
         android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
@@ -121,6 +131,8 @@
     <TextView
         android:id="@+id/tvRealInterests"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvInterests"
         android:layout_alignStart="@+id/tvInterests"
@@ -131,6 +143,7 @@
     <TextView
         android:id="@+id/tvBirth"
         android:layout_width="121dp"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRealLoc"
         android:layout_alignStart="@+id/tvRealLoc"
@@ -142,6 +155,8 @@
         android:id="@+id/tvRealBirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/black"
         android:layout_below="@+id/tvBirth"
         android:layout_alignStart="@+id/tvBirth"
         android:layout_marginStart="0dp"
@@ -166,8 +181,9 @@
         android:layout_below="@+id/tvRealInterests"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="92dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Favorite Opportunities"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 

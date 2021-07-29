@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".OppDetailsActivity">
+
+<!--    <View-->
+<!--        android:id="@+id/greenrectangle"-->
+<!--        android:layout_width="357dp"-->
+<!--        android:layout_height="599dp"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_marginLeft="28dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginTop="165dp"-->
+<!--        android:background="@drawable/greenrectangle"-->
+<!--        android:elevation="60dp" />-->
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -19,16 +31,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/lightbulb3" />
 
+
     <TextView
         android:id="@+id/tvTitleDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivLogo"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="66dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/poppins_light"
         android:text="Title Details"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +51,8 @@
         android:layout_width="361dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitleDetails"
+
+        android:fontFamily="@font/poppins_light"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
@@ -49,6 +62,7 @@
         android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
         android:layout_below="@+id/tvDescription"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
@@ -58,6 +72,7 @@
     <TextView
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/poppins_light"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLocation"
         android:layout_alignParentStart="true"
@@ -70,6 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvAge"
+        android:fontFamily="@font/poppins_light"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
@@ -79,6 +95,7 @@
         android:id="@+id/tvDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
         android:layout_below="@+id/tvCost"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
@@ -90,6 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDuration"
+        android:fontFamily="@font/poppins_light"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
@@ -99,9 +117,11 @@
         android:id="@+id/tvContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
         android:layout_below="@+id/tvSupplies"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:text="Contact" />
+
 </RelativeLayout>

@@ -25,9 +25,10 @@
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ivLogo"
         android:layout_weight="1"
         android:ems='10'
-        android:layout_below="@id/ivLogo"
+        android:fontFamily="@font/poppins_light"
         android:hint="username" />
 
     <EditText
@@ -35,16 +36,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/poppins_light"
         android:ems='10'
         android:hint="password"
         android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnLogin"
-        android:backgroundTint="@color/findopp_green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/roundedbuttonwhite"
+        android:backgroundTint="@color/findopp_green"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingTop="10dp"
         android:text="Login" />
 
 

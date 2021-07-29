@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     public static final String TAG = "Main Activity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    public ArrayList<Likes> oppsLikes = new ArrayList<Likes>();
+    public ArrayList<Likes> oppsLikes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         saveHeart();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
+        oppsLikes = new ArrayList<Likes>();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
                         //saveHeart();
                         fragment = new HomeFragment();
-                        saveHeart();
+                        //saveHeart();
                         break;
                     case R.id.action_search:
                         //Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();

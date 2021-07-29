@@ -20,7 +20,8 @@
         android:id="@+id/tvSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_light"
         android:text="Here's What We Found"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,7 @@
             android:id="@+id/findOpp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
             android:text="FindOpp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -66,18 +68,6 @@
         android:layout_marginTop="115dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSearch" />
-
-    <TextView
-        android:id="@+id/tvNoResults"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="No Results Found"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSearch" />
 

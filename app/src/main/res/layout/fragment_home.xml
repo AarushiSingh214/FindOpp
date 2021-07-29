@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FindOpp"
+            android:fontFamily="@font/poppins_light"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <Button
@@ -42,6 +43,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="150dp"
+            android:fontFamily="@font/poppins_light"
+            android:background="@drawable/roundedbuttongrey"
             android:text="Logout" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -55,7 +58,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="-4dp"
         android:padding="3dp" />
 
@@ -65,8 +68,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins_light"
         android:text="Recommendation"
+        android:textSize="28sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <ProgressBar
