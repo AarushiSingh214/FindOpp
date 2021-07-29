@@ -153,7 +153,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             ivOpenHeart.setTag(R.drawable.open_heart);
             Log.i(TAG, "oppLikes OPP ADAPTER: " + mainActivity.oppsLikes.size());
 
-            for (int i = 0; i < getItemCount(); i++) {
+            for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
                 Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId() + "i: " + i);
                 Log.i(TAG, "mainactivity.oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
 
