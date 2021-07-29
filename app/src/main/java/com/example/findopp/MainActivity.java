@@ -44,22 +44,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
-                //saveHeart();
+                saveHeart();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
-                        saveHeart();
+                        //saveHeart();
                         fragment = new HomeFragment();
                         break;
                     case R.id.action_search:
                         //Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();
-                        saveHeart();
+                        //saveHeart();
                         fragment = new SearchFragment();
                         break;
                     case R.id.action_profile:
                     default:
                         //Toast.makeText(MainActivity.this, "profile", Toast.LENGTH_SHORT).show();
-                        saveHeart();
+                        //saveHeart();
                         fragment = new ProfileFragment();
                         break;
                 }
