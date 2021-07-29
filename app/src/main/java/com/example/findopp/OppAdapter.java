@@ -46,10 +46,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         this.mainActivity = mainActivity;
     }
 
-    public OppAdapter(Context context, List<Opportunity> opportunities) {
-        this.context = context;
-        this.opportunities = opportunities;
-    }
 
     @NonNull
     @Override
@@ -132,7 +128,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
                 private void displayLikes(Opportunity opportunity) {
                     ivOpenHeart.setTag(R.drawable.open_heart);
-                    Log.i(TAG, "oppLikes: " + mainActivity.oppsLikes.size());
+                    Log.i(TAG, "oppLikes OPP ADAPTER: " + mainActivity.oppsLikes.size());
 
                     for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
                         //for (int i = 0; i < getItemCount(); i++) {
@@ -183,19 +179,19 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                         //Deletes the fetched ParseObject from the database
                                         object.deleteInBackground(e2 -> {
                                             if (e2 == null) {
-                                                Log.i(TAG, "this is successful- removing like");
+                                                Log.i(TAG, "OP this is successful- removing like");
                                                 mainActivity.oppsLikes.remove(finalI);
                                                 ivOpenHeart.setImageResource(R.drawable.open_heart);
                                                 ivOpenHeart.setTag(R.drawable.open_heart);
 
                                             } else {
-                                                Log.i(TAG, "something went wrong with deleting- removing like");
+                                                Log.i(TAG, "OP something went wrong with deleting- removing like");
 
                                             }
                                         });
                                     } else {
                                         //Something went wrong
-                                        Log.i(TAG, "something went wrong with querying- removing like" + e);
+                                        Log.i(TAG, "OP something went wrong with querying- removing like" + e);
                                     }
                                 });
                             }

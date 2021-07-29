@@ -153,13 +153,13 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting likes (display likes)", e);
                     return;
                 } else {
-                    Log.i(TAG, "size of likes (display likes)" + likes.size());
+                    Log.i(TAG, "size of likes (display likes) PROFILE" + likes.size());
 
                     //Opportunity opportunity = new Opportunity();
                     for (int i = 0; i < likes.size(); i++) {
-                        Log.i(TAG, "oppsLikes.get(i).getObjectId() " + likes.get(i).getOpp().getClass().getSimpleName());
+                        Log.i(TAG, "oppsLikes.get(i).getObjectId() PROFILE " + likes.get(i).getOpp().getClass().getSimpleName());
                         allOpps.add(likes.get(i).getOpp());
-                        Log.i(TAG, "size of allOpps (display likes)" + allOpps.size());
+                        Log.i(TAG, "size of allOpps (display likes) PROFILE" + allOpps.size());
                         adapter.notifyDataSetChanged();
                         pb.setVisibility(ProgressBar.INVISIBLE);
 

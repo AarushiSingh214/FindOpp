@@ -37,25 +37,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        saveHeart();
+//        saveHeart();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
+                //saveHeart();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
+                        saveHeart();
                         fragment = new HomeFragment();
                         break;
                     case R.id.action_search:
                         //Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();
+                        saveHeart();
                         fragment = new SearchFragment();
                         break;
                     case R.id.action_profile:
                     default:
                         //Toast.makeText(MainActivity.this, "profile", Toast.LENGTH_SHORT).show();
+                        saveHeart();
                         fragment = new ProfileFragment();
                         break;
                 }
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting likes (saveHeart)", e);
                     return;
                 } else {
-                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
+                    Log.i(TAG, "size of likes (saveHeart MAIN)" + likes.size());
                     oppsLikes.addAll(likes);
                     //displayLikes(opportunities);
 

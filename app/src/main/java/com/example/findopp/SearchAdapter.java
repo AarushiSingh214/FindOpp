@@ -36,12 +36,37 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public static final String TAG = "Search Adapter";
 
-    //search adapter to seperate thelike feature in the activities and fragments
+    //search adapter to separate the like feature in the activities and fragments
     //opp adapter is like feature in fragments, requires main activity reference
     public SearchAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
         this.opportunities = opportunities;
+        saveHeart();
+    }
 
+    //gets all the opportunities that were liked by the user
+    public void saveHeart() {
+        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
+
+        //trying to query where the user equals the current user
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        query.whereEqualTo("user", currentUser);
+
+        query.findInBackground(new FindCallback<Likes>() {
+            @Override
+            public void done(List<Likes> likes, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
+                    return;
+                } else {
+                    Log.i(TAG, "size of likes (saveHeart)" + likes.size());
+                    oppsLikes.addAll(likes);
+                    //displayLikes(opportunities);
+
+                }
+            }
+        });
     }
 
     @NonNull
@@ -94,8 +119,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 }
             }));
         }
-
-
 
         //action after title of the opportunity is clicked to see more details
         private void titleAction(Opportunity opportunity) {

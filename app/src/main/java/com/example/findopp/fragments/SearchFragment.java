@@ -102,7 +102,7 @@ public class SearchFragment extends Fragment {
                     //back_dim_layout.setVisibility(View.VISIBLE);
                     startActivity(new Intent (getContext(), Pop.class));
                     //back_dim_layout.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "home", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "home", Toast.LENGTH_SHORT).show();
                     return;
                 } else
                     //trying to pass allOpps array to SearchResultsActivity
