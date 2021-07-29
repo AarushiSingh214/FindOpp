@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.findopp.MainActivity;
 import com.example.findopp.OppAdapter;
@@ -33,16 +35,12 @@ public class SearchFragment extends Fragment {
     private EditText etDuration;
     private EditText etAge;
     private EditText etInterests;
+    private EditText etRadius;
     private Button btnSearch;
+    Intent i;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
     public static final String TAG = "Search Fragment";
-    EditText edttxt_from,edttxt_to;
-    Button btn_get;
-    String str_from,str_to;
-    TextView tv_result1,tv_result2;
-    String oppLocation;
-    public static final String API_KEY = "AIzaSyDLQBSmsy3Xo2Py3swZQ6RtNt92wYwiP1U";
 
     public SearchFragment() {
         // Required empty public constructor
@@ -75,6 +73,7 @@ public class SearchFragment extends Fragment {
         etDuration = view.findViewById(R.id.etDuration);
         etAge = view.findViewById(R.id.etAge);
         etInterests = view.findViewById(R.id.etInterests);
+        etRadius = view.findViewById(R.id.etRadius);
         btnSearch = view.findViewById(R.id.btnSearch);
         filterOpps = new ArrayList<>();
         allOpps = new ArrayList<>();
@@ -82,22 +81,30 @@ public class SearchFragment extends Fragment {
 
 
         defaultPreferences();
-        //apiCall();
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //querySearch();
                 Log.i(TAG, "size of allOpps OUT METHOD " + filterOpps.size());
+                String location = etLocation.getText().toString();
 
-                //trying to pass allOpps array to SearchResultsActivity
-                Intent i = new Intent(getContext(), SearchResultsActivity.class);
-                i.putExtra("location", etLocation.getText().toString());
-                i.putExtra("age", etAge.getText().toString());
-                i.putExtra("duration", etDuration.getText().toString());
-                i.putExtra("interest", etInterests.getText().toString());
-                startActivity(i);
-
+                //ensures the user enters a location
+                if (location.equals("")){
+                    Log.i(TAG, "inside of location is required if");
+                    //etLocation.setError("Location is Required");
+                    Toast.makeText(getContext(), "home", Toast.LENGTH_SHORT).show();
+                    return;
+                } else
+                    //trying to pass allOpps array to SearchResultsActivity
+                    i = new Intent(getContext(), SearchResultsActivity.class);
+                    i.putExtra("location", etLocation.getText().toString());
+                    i.putExtra("age", etAge.getText().toString());
+                    i.putExtra("duration", etDuration.getText().toString());
+                    i.putExtra("interest", etInterests.getText().toString());
+                    i.putExtra("radius", etRadius.getText().toString());
+                    startActivity(i);
             }
         });
     }

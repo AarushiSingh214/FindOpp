@@ -49,12 +49,10 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
-    //private ImageView ivOpenHeart;
     private ArrayList<Likes> savedOpps;
     private Serializable openHeart;
     ProgressBar pb;
-//    private List<User> allUsers;
-//    Opportunity opportunity = new Opportunity();
+
 
     public HomeFragment() {
         // Required empty public constructor

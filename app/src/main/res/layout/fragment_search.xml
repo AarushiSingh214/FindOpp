@@ -90,12 +90,22 @@
         android:ems='10'
         android:hint="Interests" />
 
+    <EditText
+        android:id="@+id/etRadius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="15dp"
+        android:layout_below="@id/etInterests"
+        android:ems='10'
+        android:hint="Radius of Search" />
+
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_margin="15dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etInterests"
+        android:layout_below="@+id/etRadius"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
