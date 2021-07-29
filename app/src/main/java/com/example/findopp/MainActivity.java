@@ -37,19 +37,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        saveHeart();
+        saveHeart();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
-                saveHeart();
+                //saveHeart();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
                         //saveHeart();
                         fragment = new HomeFragment();
+                        saveHeart();
                         break;
                     case R.id.action_search:
                         //Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();
