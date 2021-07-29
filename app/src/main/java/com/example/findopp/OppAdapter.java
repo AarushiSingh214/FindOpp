@@ -168,7 +168,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                 Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId() + "i: " + i);
                 Log.i(TAG, "mainactivity.oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
 
-
                 if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
                     Log.i(TAG, "fill heart");
                     ivOpenHeart.setImageResource(R.drawable.filled_heart);

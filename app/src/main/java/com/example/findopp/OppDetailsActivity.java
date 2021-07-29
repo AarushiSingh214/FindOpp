@@ -62,5 +62,6 @@ public class OppDetailsActivity extends AppCompatActivity {
             tvSupplies.setText("Supplies: " + opportunity.getSupplies());
         }
 
+
     }
 }
