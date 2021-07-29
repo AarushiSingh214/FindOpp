@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvRealInterests;
     private TextView tvBirth;
     private TextView tvRealBirth;
+    private TextView tvNoFav;
     public static final String TAG = "Profile Fragment";
     private RecyclerView rvOpps;
     private OppAdapter adapter;
@@ -95,6 +96,7 @@ public class ProfileFragment extends Fragment {
         tvBirth = view.findViewById(R.id.tvBirth);
         tvRealBirth = view.findViewById(R.id.tvRealBirth);
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
+        tvNoFav = view.findViewById(R.id.tvNoFav);
 
         tvEdit.setText("Edit");
         tvEmail.setText("Email");
@@ -156,12 +158,20 @@ public class ProfileFragment extends Fragment {
                     Log.i(TAG, "size of likes (display likes) PROFILE" + likes.size());
 
                     //Opportunity opportunity = new Opportunity();
-                    for (int i = 0; i < likes.size(); i++) {
-                        Log.i(TAG, "oppsLikes.get(i).getObjectId() PROFILE " + likes.get(i).getOpp().getClass().getSimpleName());
-                        allOpps.add(likes.get(i).getOpp());
-                        Log.i(TAG, "size of allOpps (display likes) PROFILE" + allOpps.size());
-                        adapter.notifyDataSetChanged();
+                    if(likes.size() == 0){
+                        Log.i(TAG, "no favorite likes should appear" + likes.size());
                         pb.setVisibility(ProgressBar.INVISIBLE);
+                        tvNoFav.setVisibility(View.VISIBLE);
+                        tvNoFav.setText("No Favorite Opportunities");
+                    }else{
+                        tvNoFav.setVisibility(View.INVISIBLE);
+                        for (int i = 0; i < likes.size(); i++) {
+                            Log.i(TAG, "oppsLikes.get(i).getObjectId() PROFILE " + likes.get(i).getOpp().getClass().getSimpleName());
+                            allOpps.add(likes.get(i).getOpp());
+                            Log.i(TAG, "size of allOpps (display likes) PROFILE" + allOpps.size());
+                            adapter.notifyDataSetChanged();
+                            pb.setVisibility(ProgressBar.INVISIBLE);
+                        }
 
                     }
                 }
