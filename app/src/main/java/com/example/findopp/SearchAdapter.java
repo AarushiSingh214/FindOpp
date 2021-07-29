@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -102,34 +104,52 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
 
-            //displayLikes();
+            //gesture for double click to like and single click to see details activity
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e) {
+                        Log.i(TAG, "onDoubleTap");
+                        int position = getBindingAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Opportunity opportunity = opportunities.get(position);
+                            likes(opportunity);
+                        }
+                        return super.onDoubleTap(e);
+                    }
+
+                    @Override
+                    public boolean onSingleTapConfirmed(MotionEvent e) {
+                        Log.i(TAG, "onSingleTapConfirmed");
+                        int position = getBindingAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Opportunity opportunity = opportunities.get(position);
+                            titleAction(opportunity);
+                        }
+                        return super.onSingleTapConfirmed(e);
+                    }
+                });
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    gestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
-
-            titleAction(opportunity);
+            //displayLikes(opportunity);
             displayLikes(opportunity);
-
-            ivOpenHeart.setOnClickListener((new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i(TAG, "in ivopenheart");
-                    likes(opportunity);
-                }
-            }));
         }
 
         //action after title of the opportunity is clicked to see more details
         private void titleAction(Opportunity opportunity) {
-            tvTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, OppDetailsActivity.class);
-                    intent.putExtra("opportunity", Parcels.wrap(opportunity));
-                    context.startActivity(intent);
-                }
-            });
+            Intent intent = new Intent(context, OppDetailsActivity.class);
+            intent.putExtra("opportunity", Parcels.wrap(opportunity));
+            context.startActivity(intent);
         }
 
         private void displayLikes(Opportunity opportunity) {
