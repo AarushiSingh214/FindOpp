@@ -20,21 +20,12 @@ public class Pop  extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pop_up_window);
 
+        //getting metrics to create the size fo teh pop-up window
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-
         getWindow().setLayout((int)(width*.6), (int)(height*.2));
-        //animation = findViewById(R.id.progressBar);
-        //animation.speed = 2.0F // How fast does the animation play
-        //animation.progress = 50F // Starts the animation
-
-        //setting background dim when showing popup
-        back_dim_layout = (RelativeLayout) findViewById(R.id.bac_dim_layout);
-//        back_dim_layout.setVisibility(View.VISIBLE);
-//        back_dim_layout.setVisibility(View.GONE);
 
     }
 }

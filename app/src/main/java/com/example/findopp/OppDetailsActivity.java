@@ -35,9 +35,12 @@ public class OppDetailsActivity extends AppCompatActivity {
         tvSupplies = findViewById(R.id.tvSupplies);
         tvContact = findViewById(R.id.tvContact);
 
-        Opportunity opportunity = (Opportunity) Parcels.unwrap(getIntent().getParcelableExtra("opportunity"));
-        Log.i("oppdetailsactivity", "parceable");
+        setTextViews();
+    }
 
+    //sets the textViews for all the fields after getting an Intent
+    private void setTextViews(){
+        Opportunity opportunity = (Opportunity) Parcels.unwrap(getIntent().getParcelableExtra("opportunity"));
         tvTitleDetails.setText(opportunity.getTitle() + " Details");
         tvDescription.setText("Description: " + opportunity.getDescription());
         tvLocation.setText("Location: " + opportunity.getLocation());
@@ -49,19 +52,15 @@ public class OppDetailsActivity extends AppCompatActivity {
         }else{
             tvAge.setText("Age: " + opportunity.getAge());
         }
-
         if (opportunity.getCost() == null){
             tvCost.setText("Cost: no cost");
         }else{
             tvCost.setText("Cost: " + opportunity.getCost());
         }
-
         if (opportunity.getSupplies().equals("") ){
             tvSupplies.setText("Supplies: no supplies necessary");
         }else{
             tvSupplies.setText("Supplies: " + opportunity.getSupplies());
         }
-
-
     }
 }

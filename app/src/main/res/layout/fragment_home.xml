@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-
     <androidx.appcompat.widget.Toolbar
 
         android:id="@+id/toolbar"
@@ -46,7 +45,6 @@
             android:fontFamily="@font/poppins_light"
             android:background="@drawable/roundedbuttongrey"
             android:text="Logout" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -83,6 +81,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="162dp"
         android:visibility="invisible" />
-
 
 </RelativeLayout>

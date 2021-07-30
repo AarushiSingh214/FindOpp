@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //saveHeart();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         oppsLikes = new ArrayList<Likes>();
 
@@ -45,23 +43,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
-                //saveHeart();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
-                        //Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
-                        //saveHeart();
                         fragment = new HomeFragment();
-                        //saveHeart();
                         break;
                     case R.id.action_search:
-                        //Toast.makeText(MainActivity.this, "search", Toast.LENGTH_SHORT).show();
-                        //saveHeart();
                         fragment = new SearchFragment();
                         break;
                     case R.id.action_profile:
                     default:
-                        //Toast.makeText(MainActivity.this, "profile", Toast.LENGTH_SHORT).show();
-                        //saveHeart();
                         fragment = new ProfileFragment();
                         break;
                 }
@@ -72,32 +62,5 @@ public class MainActivity extends AppCompatActivity {
 
         //select default selection- only for Home
         bottomNavigationView.setSelectedItemId(R.id.action_home);
-
     }
-
-    //gets all the opportunities that were liked by the user
-//    public void saveHeart() {
-//        ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
-//
-//        //trying to query where the user equals the current user
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        query.whereEqualTo("user", currentUser);
-//
-//        query.findInBackground(new FindCallback<Likes>() {
-//            @Override
-//            public void done(List<Likes> likes, ParseException e) {
-//                // check for errors
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with getting likes (saveHeart)", e);
-//                    return;
-//                } else {
-//                    Log.i(TAG, "size of likes (saveHeart MAIN)" + likes.size());
-//                    oppsLikes.addAll(likes);
-//                    //displayLikes(opportunities);
-//
-//                }
-//            }
-//        });
-//    }
-
 }

@@ -71,20 +71,11 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public ImageView ivOpenHeart;
-        final RippleBackground rippleBackground;
-        MaterialShadowContainerView shadowView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
-            rippleBackground = (RippleBackground) itemView.findViewById(R.id.content);
-            //shadowView = (MaterialShadowContainerView) itemView.findViewById(R.id.shadow_item_container);
-
-//            float density = itemView.getResources().getDisplayMetrics().density;
-//            shadowView.setShadowTranslationZ(density * 2.0f); // 2.0 dp
-//            shadowView.setShadowElevation(density * 4.0f); // 4.0 dp
-
             oppsLikes = new ArrayList<Likes>();
             itemViewTouch();
 
@@ -135,11 +126,9 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
 
         //action after title of the opportunity is clicked to see more details
         private void titleAction(Opportunity opportunity) {
-            //rippleBackground.startRippleAnimation();
             Intent intent = new Intent(context, OppDetailsActivity.class);
             intent.putExtra("opportunity", Parcels.wrap(opportunity));
             context.startActivity(intent);
-            //rippleBackground.stopRippleAnimation();
         }
 
         //this method parses through the Likes class in the database and displays the opportunities liked
@@ -192,10 +181,8 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                 if (e == null) {
                     //Save was done
                     oppsLikes.add(likes);
-                    //rippleBackground.startRippleAnimation();
                     ivOpenHeart.setImageResource(R.drawable.filled_heart);
                     ivOpenHeart.setTag(R.drawable.filled_heart);
-                    //rippleBackground.stopRippleAnimation();
                     Log.i(TAG, "everything was successful- adding like");
                 } else {
                     //Something went wrong
@@ -224,7 +211,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                                     oppsLikes.remove(finalI);
                                     ivOpenHeart.setImageResource(R.drawable.open_heart);
                                     ivOpenHeart.setTag(R.drawable.open_heart);
-
                                 } else {
                                     Log.i(TAG, "OP something went wrong with deleting- removing like");
                                 }

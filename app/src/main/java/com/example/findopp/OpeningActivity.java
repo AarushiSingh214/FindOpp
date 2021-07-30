@@ -43,7 +43,7 @@ public class OpeningActivity extends AppCompatActivity {
         }
     }
 
-    //action after login button is clicked
+    //passes intent to LoginActivity.class after login button is clicked
     private void loginAction(){
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class OpeningActivity extends AppCompatActivity {
         });
     }
 
-    //action after register button is clicked
+    //passes intent to SignupActivity.class after register button is clicked
     private void registerAction(){
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

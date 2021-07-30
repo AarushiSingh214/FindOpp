@@ -36,7 +36,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     private RecyclerView rvSearchResults;
     private TextView tvSearch;
     private TextView tvNoResults;
-    //private SearchAdapter adapter;
     public static final String TAG = "Search Results Activity";
     public ArrayList<Opportunity> filterOpps;
     public ArrayList<Opportunity> relatedOpps;
@@ -48,10 +47,8 @@ public class SearchResultsActivity extends AppCompatActivity {
     String inputRadius;
     String destination = "";
     HashMap<String, String> map;
-
     private OppAdapter adapter;
     ProgressBar pb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +60,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         tvSearch = findViewById(R.id.tvSearch);
         tvSearch.setText("Here's What We Found!");
         pb = (ProgressBar) findViewById(R.id.pbLoading);
-
 
         Intent intent = getIntent();
         inputLocation = intent.getStringExtra("location");
@@ -85,7 +81,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
         adapter = new OppAdapter(this, filterOpps);
-        //adapter = new OppAdapter(this, relatedOpps);
 
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
@@ -124,7 +119,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             destination = destination + "|" + oppLocation.get(k);
         }
         destination = destination.substring(1);
-
         AsyncHttpClient client = new AsyncHttpClient();
 
         //right now the destinations are hardcoded, get destinations from query
@@ -134,7 +128,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void onSuccess(int i, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
-
                 try {
                     JSONArray locationData = jsonObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
 
@@ -199,8 +192,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                         //sets tvNoResults to Visible if the size of findOpps is 0
                         if(filterOpps.size() != 0){
                             Log.i(TAG, "inside no results IFF");
-                            //tvNoResults.setText("No Results Found");
-                            //Log.i(TAG, "filterOpps size" + filterOpps.size());
                             tvNoResults.setVisibility(View.INVISIBLE);
                         }else{
                             Log.i(TAG, "inside no results ELSE");

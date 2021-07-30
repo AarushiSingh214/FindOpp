@@ -8,9 +8,6 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-
-
-
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="83dp"
@@ -51,6 +48,5 @@
         android:fontFamily="@font/poppins_semibold"
         android:paddingTop="10dp"
         android:text="Login" />
-
 
 </LinearLayout>

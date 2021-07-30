@@ -26,11 +26,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //allows user to use app without having to login each time
-//        if (ParseUser.getCurrentUser() != null) {
-////            goMainActivity();
-////        }
-
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
