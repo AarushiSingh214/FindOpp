@@ -32,27 +32,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
-    private List<Likes> likesList;
     private Context context;
     private List<Opportunity> opportunities;
     public ArrayList<Likes> oppsLikes;
 
-    //reference to main activity
-    private MainActivity mainActivity;
-
     public static final String TAG = "Opp Adapter";
-
-//    public OppAdapter(Context context, List<Opportunity> opportunities, MainActivity mainActivity) {
-//        this.context = context;
-//        this.opportunities = opportunities;
-//        this.mainActivity = mainActivity;
-//    }
 
     public OppAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
         this.opportunities = opportunities;
     }
-
 
     @NonNull
     @Override
@@ -86,12 +75,16 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivOpenHeart = itemView.findViewById(R.id.ivOpenHeart);
             oppsLikes = new ArrayList<Likes>();
-            int position = getBindingAdapterPosition();
+            itemViewTouch();
 
-            //gesture for double click to like and single click to see details activity
+        }
+
+        //gesture for double click to like and single click to see details activity
+        private void itemViewTouch(){
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
+                    //if the user double taps on itemView, it calls the liks method
                     @Override
                     public boolean onDoubleTap(MotionEvent e) {
                         Log.i(TAG, "onDoubleTap");
@@ -103,6 +96,7 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                         return super.onDoubleTap(e);
                     }
 
+                    //if the user single taps on the itemView, it calls the titleAction method
                     @Override
                     public boolean onSingleTapConfirmed(MotionEvent e) {
                         Log.i(TAG, "onSingleTapConfirmed");
@@ -126,7 +120,6 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
         public void bind(Opportunity opportunity) {
             tvTitle.setText(opportunity.getTitle());
             displayLikes(opportunity);
-            //displayLikes(opportunity);
         }
 
         //action after title of the opportunity is clicked to see more details
@@ -136,30 +129,8 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             context.startActivity(intent);
         }
 
-//        private void displayLikes(Opportunity opportunity) {
-//            ivOpenHeart.setTag(R.drawable.open_heart);
-//            Log.i(TAG, "oppLikes OPP ADAPTER: " + mainActivity.oppsLikes.size());
-//
-//            for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
-//                //for (int i = 0; i < getItemCount(); i++) {
-//                Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId() + "i: " + i);
-//                Log.i(TAG, "mainactivity.oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
-//
-//
-//                if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
-//                    Log.i(TAG, "fill heart");
-//                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                    ivOpenHeart.setTag(R.drawable.filled_heart);
-//                } else {
-//                    Log.i(TAG, "open heart");
-//                    ivOpenHeart.setTag(R.drawable.open_heart);
-//                }
-//            }
-//        }
-
-        //this version is doing mainActivity.saveHeart()
+        //this method parses through the Likes class in the database and displays the opportunities liked
         private void displayLikes(Opportunity opportunity) {
-
             ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
             //trying to query where the user equals the current user
@@ -174,24 +145,14 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
                         Log.e(TAG, "Issue with getting likes (saveHeart)", e);
                         return;
                     } else {
-                        Log.i(TAG, "size of likes (saveHeart MAIN)" + likes.size());
                         oppsLikes.addAll(likes);
-                        //displayLikes(opportunities);
-
-                        //mainActivity.saveHeart();
                         ivOpenHeart.setTag(R.drawable.open_heart);
-                        Log.i(TAG, "oppLikes OPP ADAPTER: " + oppsLikes.size());
 
                         for (int i = 0; i < oppsLikes.size(); i++) {
-                            Log.i(TAG, "opportunity.getObjectId " + opportunity.getObjectId() + "i: " + i);
-                            Log.i(TAG, "mainactivity.oppsLikes.get(i).getObjectId() " + oppsLikes.get(i).getOpp().getObjectId());
-
                             if (oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
-                                Log.i(TAG, "fill heart");
                                 ivOpenHeart.setImageResource(R.drawable.filled_heart);
                                 ivOpenHeart.setTag(R.drawable.filled_heart);
                             } else {
-                                Log.i(TAG, "open heart");
                                 ivOpenHeart.setTag(R.drawable.open_heart);
                             }
                         }
@@ -200,111 +161,68 @@ public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
             });
         }
 
-//            private void displayLikes() {
-//                ParseQuery<Opportunity> query = ParseQuery.getQuery(Opportunity.class);
-//                query.include("objectId");
-//
-//                //trying to query where the user equals the current user
-//                //                    ParseUser currentUser = ParseUser.getCurrentUser();
-//                //                    query.whereEqualTo("user", currentUser);
-//
-//                query.findInBackground(new FindCallback<Opportunity>() {
-//                    @Override
-//                    public void done(List<Opportunity> opportunities, ParseException e) {
-//                        // check for errors
-//                        if (e != null) {
-//                            Log.e(TAG, "Issue with getting likes (saveHeart)", e);
-//                            return;
-//                        } else {
-//                            //Log.i(TAG, "size of likes (saveHeart MAIN)" + likes.size());
-//                            ivOpenHeart.setTag(R.drawable.open_heart);
-//                            Log.i(TAG, "oppLikes OPP ADAPTER: " + mainActivity.oppsLikes.size());
-//
-//                            for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
-//                                //for (int i = 0; i < getItemCount(); i++) {
-//                                Log.i(TAG, "opportunity.getObjectId " + opportunities.get(i).getObjectId() +"i: " + i);
-//                                Log.i(TAG, "oppsLikes.get(i).getObjectId() " + mainActivity.oppsLikes.get(i).getOpp().getObjectId());
-//
-//                                if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunities.get(i).getObjectId())) {
-//                                    Log.i(TAG, "fill heart");
-//                                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
-//                                    ivOpenHeart.setTag(R.drawable.filled_heart);
-//                                } else {
-//                                    Log.i(TAG, "open heart");
-//                                    ivOpenHeart.setTag(R.drawable.open_heart);
-//                                }
-//                            }
-//                        }
-//                    }
-//                });
-//            }
+        //action after like heart button is clicked
+        private void likes(Opportunity opportunity) {
+            //checking tag to see if opportunity is not liked and then liking that opportunity
+            if ((int) ivOpenHeart.getTag() == R.drawable.open_heart) {
+                addLike(opportunity);
+            } else {
+                removeLike(opportunity);
+            }
+        }
 
-    //
+        //adds likes to database and fills ivOpenHeart
+        private void addLike(Opportunity opportunity){
+            Likes likes = new Likes();
+            likes.setUpdate(ParseUser.getCurrentUser(), opportunity);
+            likes.saveInBackground(e -> {
+                if (e == null) {
+                    //Save was done
+                    oppsLikes.add(likes);
+                    ivOpenHeart.setImageResource(R.drawable.filled_heart);
+                    ivOpenHeart.setTag(R.drawable.filled_heart);
+                    Log.i(TAG, "everything was successful- adding like");
+                } else {
+                    //Something went wrong
+                    Log.i(TAG, "something went wrong-adding like");
 
-
-                //action after like heart button is clicked
-                private void likes(Opportunity opportunity) {
-                    //checking tag to see if opportunity is not liked and then liking that opportunity
-                    if ((int) ivOpenHeart.getTag() == R.drawable.open_heart) {
-                        Likes likes = new Likes();
-                        likes.setUpdate(ParseUser.getCurrentUser(), opportunity);
-                        likes.saveInBackground(e -> {
-                            if (e == null) {
-                                //Save was done
-                                //mainActivity.oppsLikes.add(likes);
-                                oppsLikes.add(likes);
-                                ivOpenHeart.setImageResource(R.drawable.filled_heart);
-                                ivOpenHeart.setTag(R.drawable.filled_heart);
-                                Log.i(TAG, "everything was successful- adding like");
-                            } else {
-                                //Something went wrong
-                                Log.i(TAG, "something went wrong-adding like");
-
-                            }
-                        });
-                    } else {
-                        //checking tag to see if opportunity is liked and then unliking that opportunity
-                        for (int i = 0; i < oppsLikes.size(); i++) {
-//                            for (int i = 0; i < mainActivity.oppsLikes.size(); i++) {
-                            //Log.i(TAG, "mainActivity.oppsLikes.size() " + mainActivity.oppsLikes.size());
-                            if (oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
-//                                if (mainActivity.oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
-
-                                ParseQuery<ParseObject> query = ParseQuery.getQuery("Likes");
-
-                                // Retrieve the object by id
-                                int finalI = i;
-                                //String objectId = mainActivity.oppsLikes.get(i).getObjectId();
-                                String objectId = oppsLikes.get(i).getObjectId();
-                                query.getInBackground(objectId, (object, e) -> {
-                                    if (e == null) {
-                                        //Object was fetched
-                                        //Deletes the fetched ParseObject from the database
-                                        object.deleteInBackground(e2 -> {
-                                            if (e2 == null) {
-                                                Log.i(TAG, "OP this is successful- removing like");
-                                                oppsLikes.remove(finalI);
-//                                                mainActivity.oppsLikes.remove(finalI);
-                                                ivOpenHeart.setImageResource(R.drawable.open_heart);
-                                                ivOpenHeart.setTag(R.drawable.open_heart);
-
-                                            } else {
-                                                Log.i(TAG, "OP something went wrong with deleting- removing like");
-
-                                            }
-                                        });
-                                    } else {
-                                        //Something went wrong
-                                        Log.i(TAG, "OP something went wrong with querying- removing like" + e);
-                                    }
-                                });
-                            }
-                        }
-                    }
                 }
+            });
+        }
+
+        //removes likes from database and makes ivOpenHeart open again
+        private void removeLike(Opportunity opportunity){
+            //checking tag to see if opportunity is liked and then unliking that opportunity
+            for (int i = 0; i < oppsLikes.size(); i++) {
+                if (oppsLikes.get(i).getOpp().getObjectId().equals(opportunity.getObjectId())) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Likes");
+                    // Retrieve the object by id
+                    int finalI = i;
+                    String objectId = oppsLikes.get(i).getObjectId();
+                    query.getInBackground(objectId, (object, e) -> {
+                        if (e == null) {
+                            //Object was fetched
+                            //Deletes the fetched ParseObject from the database
+                            object.deleteInBackground(e2 -> {
+                                if (e2 == null) {
+                                    Log.i(TAG, "OP this is successful- removing like");
+                                    oppsLikes.remove(finalI);
+                                    ivOpenHeart.setImageResource(R.drawable.open_heart);
+                                    ivOpenHeart.setTag(R.drawable.open_heart);
+                                } else {
+                                    Log.i(TAG, "OP something went wrong with deleting- removing like");
+                                }
+                            });
+                        } else {
+                            //Something went wrong
+                            Log.i(TAG, "OP something went wrong with querying- removing like" + e);
+                        }
+                    });
+                }
+            }
         }
     }
-
+}
 
 
 
