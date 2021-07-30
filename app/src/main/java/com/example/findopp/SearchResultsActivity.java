@@ -194,6 +194,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                         Log.i(TAG, "filterOpps size" + opportunities.size());
 
                         adapter.notifyDataSetChanged();
+                        pb.setVisibility(ProgressBar.INVISIBLE);
 
                         //sets tvNoResults to Visible if the size of findOpps is 0
                         if(filterOpps.size() != 0){
@@ -205,7 +206,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                             Log.i(TAG, "inside no results ELSE");
                             tvNoResults.setVisibility(View.VISIBLE);
                         }
-                        pb.setVisibility(ProgressBar.INVISIBLE);
                     }
                 }
             });

@@ -33,8 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
-
 public class OppAdapter extends RecyclerView.Adapter<OppAdapter.ViewHolder> {
     private Context context;
     private List<Opportunity> opportunities;
