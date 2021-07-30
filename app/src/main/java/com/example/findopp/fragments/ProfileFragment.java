@@ -160,18 +160,21 @@ public class ProfileFragment extends Fragment {
                     Log.i(TAG, "size of likes (display likes) PROFILE" + likes.size());
 
                     //Opportunity opportunity = new Opportunity();
+                    adapter.notifyDataSetChanged();
+
+
                     if(likes.size() == 0){
-                        Log.i(TAG, "no favorite likes should appear" + likes.size());
-                        pb.setVisibility(ProgressBar.INVISIBLE);
+                        Log.i(TAG, "no favorite likes should appear " + likes.size());
                         tvNoFav.setVisibility(View.VISIBLE);
-                        tvNoFav.setText("No Favorite Opportunities");
+                        pb.setVisibility(ProgressBar.INVISIBLE);
+                        //tvNoFav.setText("No Favorite Opportunities");
                     }else{
                         tvNoFav.setVisibility(View.INVISIBLE);
                         for (int i = 0; i < likes.size(); i++) {
                             Log.i(TAG, "oppsLikes.get(i).getObjectId() PROFILE " + likes.get(i).getOpp().getClass().getSimpleName());
                             allOpps.add(likes.get(i).getOpp());
                             Log.i(TAG, "size of allOpps (display likes) PROFILE" + allOpps.size());
-                            adapter.notifyDataSetChanged();
+//                            adapter.notifyDataSetChanged();
                             pb.setVisibility(ProgressBar.INVISIBLE);
                         }
 
