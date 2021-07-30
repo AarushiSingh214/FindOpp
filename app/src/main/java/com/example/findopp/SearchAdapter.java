@@ -35,6 +35,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     private Context context;
     private List<Opportunity> opportunities;
     private ArrayList<Likes> oppsLikes = new ArrayList<Likes>();
+    MainActivity mainActivity = new MainActivity();
+    Intent intent;
 
     public static final String TAG = "Search Adapter";
 
@@ -43,7 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public SearchAdapter(Context context, List<Opportunity> opportunities) {
         this.context = context;
         this.opportunities = opportunities;
-        saveHeart();
+        //saveHeart();
     }
 
     //gets all the opportunities that were liked by the user

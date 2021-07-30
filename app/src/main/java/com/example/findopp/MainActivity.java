@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        saveHeart();
+        //saveHeart();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         oppsLikes = new ArrayList<Likes>();
 

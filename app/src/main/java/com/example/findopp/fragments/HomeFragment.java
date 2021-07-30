@@ -91,8 +91,8 @@ public class HomeFragment extends Fragment {
         rvOpps = view.findViewById(R.id.rvOpps);
         logoutButton = view.findViewById(R.id.btnLogout);
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
-        //adapter = new OppAdapter(getContext(), allOpps, oppsLikes);
+        //adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
+        adapter = new OppAdapter(getContext(), allOpps);
         tvRecommendation = view.findViewById(R.id.tvRecommendation);
         tvRecommendation.setText("Recommendations");
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);

@@ -80,7 +80,8 @@ public class SearchFragment extends Fragment {
         btnSearch = view.findViewById(R.id.btnSearch);
         filterOpps = new ArrayList<>();
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), filterOpps, (MainActivity) getActivity());
+        //adapter = new OppAdapter(getContext(), filterOpps, (MainActivity) getActivity());
+        adapter = new OppAdapter(getContext(), filterOpps);
         //setting background dim when showing popup
        // back_dim_layout = (RelativeLayout) view.findViewById(R.id.bac_dim_layout);
 

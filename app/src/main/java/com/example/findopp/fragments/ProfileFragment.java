@@ -106,7 +106,9 @@ public class ProfileFragment extends Fragment {
 
         rvOpps = view.findViewById(R.id.rvOpps);
         allOpps = new ArrayList<>();
-        adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
+       // adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
+        adapter = new OppAdapter(getContext(), allOpps);
+
 
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);

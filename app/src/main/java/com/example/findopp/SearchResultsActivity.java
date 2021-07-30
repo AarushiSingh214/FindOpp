@@ -36,7 +36,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private RecyclerView rvSearchResults;
     private TextView tvSearch;
     private TextView tvNoResults;
-    private SearchAdapter adapter;
+    //private SearchAdapter adapter;
     public static final String TAG = "Search Results Activity";
     public ArrayList<Opportunity> filterOpps;
     public ArrayList<Opportunity> relatedOpps;
@@ -49,6 +49,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     String destination = "";
     HashMap<String, String> map;
 
+    private OppAdapter adapter;
     ProgressBar pb;
 
 
@@ -83,7 +84,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         oppLocation = new ArrayList<>();
         filterOpps = new ArrayList<>();
         relatedOpps = new ArrayList<>();
-        adapter = new SearchAdapter(this, filterOpps);
+        adapter = new OppAdapter(this, filterOpps);
         //adapter = new OppAdapter(this, relatedOpps);
 
         rvSearchResults.setAdapter(adapter);
