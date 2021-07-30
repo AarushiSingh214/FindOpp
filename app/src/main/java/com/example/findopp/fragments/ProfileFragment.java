@@ -49,15 +49,13 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
-    private String currentUserName = ParseUser.getCurrentUser().getUsername();
-    private ArrayList<Opportunity> profileLikes = new ArrayList<Opportunity>();
+    //private String currentUserName = ParseUser.getCurrentUser().getUsername();
+    //private ArrayList<Opportunity> profileLikes = new ArrayList<Opportunity>();
     ProgressBar pb;
-
 
     public ProfileFragment() {
         // Required empty public constructor
     }
-
 
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
@@ -69,9 +67,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,13 +102,10 @@ public class ProfileFragment extends Fragment {
 
         rvOpps = view.findViewById(R.id.rvOpps);
         allOpps = new ArrayList<>();
-       // adapter = new OppAdapter(getContext(), allOpps, (MainActivity) getActivity());
         adapter = new OppAdapter(getContext(), allOpps);
-
 
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
-
 
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -125,7 +118,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    //uses ParseUser to get the data about the current user
+    //uses ParseUser to get the data about the current user and display it
     private void getUserInfo() throws ParseException {
         String location = ParseUser.getCurrentUser().getString("location");
         String interests = ParseUser.getCurrentUser().getString("interests");
@@ -136,10 +129,9 @@ public class ProfileFragment extends Fragment {
         tvRealLoc.setText(location);
         tvRealInterests.setText(interests);
         tvRealBirth.setText(yearBirth.toString());
-
     }
 
-    //this needs to be an opportunity class
+    //queries the likes based on the current user
     private void displayLikes() {
         ParseQuery<Likes> query = ParseQuery.getQuery(Likes.class);
 
@@ -157,27 +149,19 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "Issue with getting likes (display likes)", e);
                     return;
                 } else {
-                    Log.i(TAG, "size of likes (display likes) PROFILE" + likes.size());
-
-                    //Opportunity opportunity = new Opportunity();
-                    adapter.notifyDataSetChanged();
-
-
+                    //sets tvNoFav to visible if no opportunity has been liked
                     if(likes.size() == 0){
                         Log.i(TAG, "no favorite likes should appear " + likes.size());
                         tvNoFav.setVisibility(View.VISIBLE);
                         pb.setVisibility(ProgressBar.INVISIBLE);
-                        //tvNoFav.setText("No Favorite Opportunities");
                     }else{
                         tvNoFav.setVisibility(View.INVISIBLE);
                         for (int i = 0; i < likes.size(); i++) {
-                            Log.i(TAG, "oppsLikes.get(i).getObjectId() PROFILE " + likes.get(i).getOpp().getClass().getSimpleName());
                             allOpps.add(likes.get(i).getOpp());
                             Log.i(TAG, "size of allOpps (display likes) PROFILE" + allOpps.size());
-//                            adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                             pb.setVisibility(ProgressBar.INVISIBLE);
                         }
-
                     }
                 }
             }
