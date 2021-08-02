@@ -61,7 +61,7 @@
         android:layout_below="@id/tvChange"
         android:layout_margin="15dp"
         android:ems='10'
-        android:hint="Location" />
+        android:hint="Location (city, state abbreviation)" />
 
     <EditText
         android:id="@+id/etDuration"

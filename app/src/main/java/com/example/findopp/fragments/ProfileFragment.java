@@ -121,6 +121,7 @@ public class ProfileFragment extends Fragment {
     //uses ParseUser to get the data about the current user and display it
     private void getUserInfo() throws ParseException {
         String location = ParseUser.getCurrentUser().getString("location");
+        Log.i(TAG, "user location: " + location);
         String interests = ParseUser.getCurrentUser().getString("interests");
         Integer yearBirth = ParseUser.getCurrentUser().getInt("year_of_birth");
 

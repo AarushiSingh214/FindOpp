@@ -120,6 +120,7 @@ public class HomeFragment extends Fragment {
         query.include(Opportunity.KEY_NAME);
         query.addDescendingOrder(Opportunity.KEY_CREATED_AT);
         String userLoc = ParseUser.getCurrentUser().getString("location");
+        Log.i(TAG, "user location " + userLoc);
         query.whereEqualTo("location", userLoc);
         query.findInBackground(new FindCallback<Opportunity>() {
 
