@@ -10,12 +10,12 @@
     <androidx.appcompat.widget.Toolbar
 
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginEnd="0dp"
         android:background="@color/findopp_green"
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white">
@@ -24,15 +24,15 @@
             android:id="@+id/logo"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="50dp"
-            android:layout_marginStart="0dp"
+            android:padding="1dp"
             android:src="@drawable/lightbulb3" />
 
         <TextView
             android:id="@+id/findOpp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FindOpp"
             android:fontFamily="@font/poppins_light"
+            android:text="FindOpp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <Button
@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="150dp"
-            android:fontFamily="@font/poppins_light"
+            android:layout_marginLeft="125dp"
             android:background="@drawable/roundedbuttongrey"
+            android:fontFamily="@font/poppins_light"
             android:text="Logout" />
     </androidx.appcompat.widget.Toolbar>
 

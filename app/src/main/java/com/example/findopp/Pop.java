@@ -1,6 +1,7 @@
 package com.example.findopp;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -26,6 +27,8 @@ public class Pop  extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int)(width*.6), (int)(height*.2));
+        //getWindow().setBackgroundDrawable(R.drawable.gray_background);
+
 
     }
 }

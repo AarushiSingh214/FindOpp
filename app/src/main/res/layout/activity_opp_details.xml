@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="150dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,9 +44,11 @@
         android:layout_below="@+id/tvTitleDetails"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/greenrectangle"
-        android:elevation="60dp"
-        android:layout_margin="15dp">
+        android:elevation="60dp">
 
         <TextView
             android:id="@+id/tvDescription"
@@ -61,7 +64,6 @@
 
         <TextView
             android:id="@+id/tvLocation"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDescription"
@@ -70,11 +72,11 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Location"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tvAge"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvLocation"
@@ -83,11 +85,11 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Age"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tvCost"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAge"
@@ -96,11 +98,11 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Cost"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tvDuration"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCost"
@@ -109,11 +111,11 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Duration"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tvSupplies"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDuration"
@@ -122,11 +124,11 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Supplies"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/tvContact"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSupplies"
@@ -135,8 +137,22 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
             android:text="Contact"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17dp" />
 
     </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="382dp"
+        android:layout_height="192dp"
+        android:layout_alignStart="@+id/greenBackground"
+        android:layout_alignEnd="@+id/greenBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="6dp" />
 
 </RelativeLayout>
