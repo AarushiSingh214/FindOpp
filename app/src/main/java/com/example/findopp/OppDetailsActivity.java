@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.findopp.models.Opportunity;
+import com.example.findopp.models.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -69,9 +70,11 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvSupplies = findViewById(R.id.tvSupplies);
         tvContact = findViewById(R.id.tvContact);
         btnDirections = findViewById(R.id.btnDirections);
-        //currentUserLoc = ParseUser.getCurrentUser().getString("location");
         currentUserLoc = ParseUser.getCurrentUser().getString("location");
-        Log.i(TAG, "user address: " + currentUserLoc);
+        //currentUserLoc = ParseUser.getCurrentUser().getString("address");
+        //User user = new User();
+        //currentUserLoc = user.getAddress();
+//        Log.i(TAG, "user address: " + currentUserLoc);
 
         setTextViews();
         getDirections();
@@ -91,11 +94,13 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         Opportunity opportunity = (Opportunity) Parcels.unwrap(getIntent().getParcelableExtra("opportunity"));
         tvTitleDetails.setText(opportunity.getTitle() + " Details");
         tvDescription.setText("Description: " + opportunity.getDescription());
-        tvLocation.setText("Location: " + opportunity.getLocation());
+        tvLocation.setText("Location: " + opportunity.getAddress());
         tvDuration.setText("Duration: " + opportunity.getDuration());
         tvContact.setText("Point of Contact: " + opportunity.getPointOfContact());
         //oppAddress = opportunity.getLocation();
         oppAddress = opportunity.getAddress();
+//        currentUserLoc = ParseUser.getCurrentUser().getString("location");
+//        Log.i(TAG, "user address: " + currentUserLoc);
 
         if (opportunity.getAge() == null) {
             tvAge.setText("Age: no age requirement");
@@ -103,7 +108,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
             tvAge.setText("Age: " + opportunity.getAge());
         }
         if (opportunity.getCost() == null) {
-            tvCost.setText("Coxst: no cost");
+            tvCost.setText("Cost: no cost");
         } else {
             tvCost.setText("Cost: " + opportunity.getCost());
         }
