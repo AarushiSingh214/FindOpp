@@ -131,15 +131,28 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
-        android:layout_height="219dp"
+        android:layout_height="165dp"
+        android:layout_above="@+id/btnDirections"
         android:layout_below="@+id/greenBackground"
         android:layout_alignStart="@+id/greenBackground"
         android:layout_alignEnd="@+id/greenBackground"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="27dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="45dp" />
+        android:layout_marginBottom="26dp" />
+
+    <Button
+        android:id="@+id/btnDirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="23dp"
+        android:text="Get DIrections" />
 
 </RelativeLayout>
