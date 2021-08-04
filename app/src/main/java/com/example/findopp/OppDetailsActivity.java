@@ -1,6 +1,5 @@
 package com.example.findopp;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -9,17 +8,20 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.airbnb.lottie.L;
 import com.example.findopp.models.Opportunity;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -33,6 +35,11 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     private TextView tvContact;
     public String address;
     String currentUserLoc;
+    Polyline polyline1;
+
+    ArrayList<LatLng> markerArrayList;
+    //declare Marker list namespace
+
     public static final String TAG = "Opportunity Details";
 
     GoogleMap map;
@@ -41,6 +48,9 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opp_details);
+
+        // init MarkerArray here
+        markerArrayList = new ArrayList<LatLng>();
 
         tvTitleDetails = findViewById(R.id.tvTitleDetails);
         tvDescription = findViewById(R.id.tvDescription);
@@ -58,13 +68,16 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         geoLocation.getAddress(tvLocation.getText().toString(), getApplicationContext(), new GeoHandler());
         geoLocation.getAddress(currentUserLoc, getApplicationContext(), new GeoHandler());
 
+        // call the draw polyline function
+//        drawPolylines();
+
         //initialize map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     //sets the textViews for all the fields after getting an Intent
-    private void setTextViews(){
+    private void setTextViews() {
         Opportunity opportunity = (Opportunity) Parcels.unwrap(getIntent().getParcelableExtra("opportunity"));
         tvTitleDetails.setText(opportunity.getTitle() + " Details");
         tvDescription.setText("Description: " + opportunity.getDescription());
@@ -72,19 +85,19 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvDuration.setText("Duration: " + opportunity.getDuration());
         tvContact.setText("Point of Contact: " + opportunity.getPointOfContact());
 
-        if (opportunity.getAge() == null){
+        if (opportunity.getAge() == null) {
             tvAge.setText("Age: no age requirement");
-        }else{
+        } else {
             tvAge.setText("Age: " + opportunity.getAge());
         }
-        if (opportunity.getCost() == null){
-            tvCost.setText("Cost: no cost");
-        }else{
+        if (opportunity.getCost() == null) {
+            tvCost.setText("Coxst: no cost");
+        } else {
             tvCost.setText("Cost: " + opportunity.getCost());
         }
-        if (opportunity.getSupplies().equals("") ){
+        if (opportunity.getSupplies().equals("")) {
             tvSupplies.setText("Supplies: no supplies necessary");
-        }else{
+        } else {
             tvSupplies.setText("Supplies: " + opportunity.getSupplies());
         }
     }
@@ -99,7 +112,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
 
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     Bundle bundle = msg.getData();
                     address = bundle.getString("address");
@@ -107,21 +120,59 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                     Float longitude = Float.parseFloat(address.substring(address.indexOf("\n")));
                     Log.i(TAG, "address: " + address);
                     markers(latitude, longitude);
+//                    if(markerArrayList.size() == 2) {
+//                        drawPolylines();
+//                    }
 
                     break;
-                    default:
-                        address = null;
+                default:
+                    address = null;
             }
         }
     }
 
     //adds markers of the user's current search and the location of the opportunity
-    private void markers(Float latitude, Float longitude ){
+    private void markers(Float latitude, Float longitude) {
         Log.i(TAG, "inside markers method");
-        LatLng userInput = new LatLng(latitude,longitude);
-        map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
-        map.addMarker(new MarkerOptions().position(userInput).title(currentUserLoc));
-        map.moveCamera(CameraUpdateFactory.newLatLng(userInput));
+        LatLng userInput = new LatLng(latitude, longitude);
+        Marker loc = map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
+        markerArrayList.add(userInput);
 
+//        if(markerArrayList.size() == 2) {
+//            drawPolylines();
+//        }
+        Log.i(TAG, "size: " + markerArrayList.size());
+    }
+
+    private void drawPolylines() {
+        for(int i = 0; i < markerArrayList.size(); i++) {
+            polyline1 = map.addPolyline(new PolylineOptions()
+                    .clickable(true)
+                    .add(
+                            new LatLng(markerArrayList.get(i).latitude, markerArrayList.get(i).longitude)));
+            //new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
+
+            //map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
+        }
     }
 }
+
+
+        // lets create an array of markers
+        // add to the array of markers, Marker objects -> [Marker@Object, Marker@Object]
+        // .add (MarkerList.get[0].latitude, ...)
+
+// private void drawPolylines()
+//        polyline1 = map.addPolyline(new PolylineOptions()
+//                .clickable(true)
+//                .add(
+//                        new LatLng(MarkerList.get[0].latitude, MarkerList.get[0].longitude),
+//                        new LatLng(MarkerList.get[1].latitude, MarkerList.get[1].longitude)));
+
+
+       // map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
+        //map.setOnPolylineClickListener(this);
+
+
+
+
