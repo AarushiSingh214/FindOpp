@@ -25,6 +25,8 @@ public class Opportunity extends ParseObject implements Serializable {
     public static final String KEY_LIKES = "likes";
     public static final String KEY_OBJECTID = "objectId";
     public static final String KEY_INTERESTS = "interest";
+    public static final String KEY_ADDRESS = "address";
+
 
     //getter and setter for name
     public String getName(){
@@ -124,6 +126,12 @@ public class Opportunity extends ParseObject implements Serializable {
     public String getInterest(){ return getString(KEY_INTERESTS); }
     public void setInterest(String interest){
         put(KEY_INTERESTS, interest);
+    }
+
+    //getter and setter for address
+    public String getAddress(){ return getString(KEY_ADDRESS); }
+    public void setAddress(String address){
+        put(KEY_ADDRESS, address);
     }
 
 }

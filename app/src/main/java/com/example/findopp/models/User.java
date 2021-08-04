@@ -20,6 +20,7 @@ public class User extends ParseObject {
     public static final String KEY_INTERESTS = "interests";
     public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_OBJECTID = "objectId";
+    public static final String KEY_ADDRESS = "address";
     private String currentUserName = ParseUser.getCurrentUser().getUsername();
     public static ArrayList<String> likedId = new ArrayList<String>();
 
@@ -51,6 +52,12 @@ public class User extends ParseObject {
     }
     public void setInterests(String interests){
         put(KEY_INTERESTS, interests);
+    }
+
+    //getter and setter for address
+    public String getAddress(){ return getString(KEY_ADDRESS); }
+    public void setAddress(String address){
+        put(KEY_ADDRESS, address);
     }
 
 }

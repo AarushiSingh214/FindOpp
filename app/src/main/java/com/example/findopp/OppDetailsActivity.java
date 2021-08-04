@@ -40,6 +40,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     private TextView tvSupplies;
     private TextView tvContact;
     private Button btnDirections;
+    public String oppAddress;
     public String address;
     String currentUserLoc;
     Polyline polyline1;
@@ -68,13 +69,16 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvSupplies = findViewById(R.id.tvSupplies);
         tvContact = findViewById(R.id.tvContact);
         btnDirections = findViewById(R.id.btnDirections);
+        //currentUserLoc = ParseUser.getCurrentUser().getString("location");
         currentUserLoc = ParseUser.getCurrentUser().getString("location");
+        Log.i(TAG, "user address: " + currentUserLoc);
 
         setTextViews();
         getDirections();
 
         GeoLocation geoLocation = new GeoLocation();
-        geoLocation.getAddress(tvLocation.getText().toString(), getApplicationContext(), new GeoHandler());
+        //geoLocation.getAddress(tvLocation.getText().toString(), getApplicationContext(), new GeoHandler());
+        geoLocation.getAddress(oppAddress, getApplicationContext(), new GeoHandler());
         geoLocation.getAddress(currentUserLoc, getApplicationContext(), new GeoHandler());
 
         //initialize map fragment
@@ -90,6 +94,8 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvLocation.setText("Location: " + opportunity.getLocation());
         tvDuration.setText("Duration: " + opportunity.getDuration());
         tvContact.setText("Point of Contact: " + opportunity.getPointOfContact());
+        //oppAddress = opportunity.getLocation();
+        oppAddress = opportunity.getAddress();
 
         if (opportunity.getAge() == null) {
             tvAge.setText("Age: no age requirement");
@@ -144,7 +150,8 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         markerArrayList.add(userInput);
 
         if (markerArrayList.size() == 1) {
-            map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
+            //map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
+            map.addMarker(new MarkerOptions().position(userInput).title(oppAddress));
         } else {
             map.addMarker(new MarkerOptions().position(userInput).title(currentUserLoc));
         }
@@ -164,7 +171,8 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisplayTrack(currentUserLoc, tvLocation.getText().toString());
+                DisplayTrack(currentUserLoc, oppAddress);
+                //DisplayTrack(currentUserLoc, tvLocation.getText().toString());
             }
         });
     }
