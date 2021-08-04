@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.findopp.models.Opportunity;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -120,9 +121,9 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                     Float longitude = Float.parseFloat(address.substring(address.indexOf("\n")));
                     Log.i(TAG, "address: " + address);
                     markers(latitude, longitude);
-//                    if(markerArrayList.size() == 2) {
-//                        drawPolylines();
-//                    }
+                    if(markerArrayList.size() == 2) {
+                        drawPolylines();
+                    }
 
                     break;
                 default:
@@ -137,25 +138,22 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         LatLng userInput = new LatLng(latitude, longitude);
         Marker loc = map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
         markerArrayList.add(userInput);
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
 
-//        if(markerArrayList.size() == 2) {
-//            drawPolylines();
-//        }
         Log.i(TAG, "size: " + markerArrayList.size());
     }
 
     private void drawPolylines() {
-        for(int i = 0; i < markerArrayList.size(); i++) {
-            polyline1 = map.addPolyline(new PolylineOptions()
-                    .clickable(true)
-                    .add(
-                            new LatLng(markerArrayList.get(i).latitude, markerArrayList.get(i).longitude)));
-            //new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
+        //for(int i = 0; i < markerArrayList.size(); i++) {
+        polyline1 = map.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+                        new LatLng(markerArrayList.get(0).latitude, markerArrayList.get(0).longitude),
+                        new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
 
-            //map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
         }
     }
-}
+
 
 
         // lets create an array of markers
