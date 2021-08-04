@@ -69,9 +69,6 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         geoLocation.getAddress(tvLocation.getText().toString(), getApplicationContext(), new GeoHandler());
         geoLocation.getAddress(currentUserLoc, getApplicationContext(), new GeoHandler());
 
-        // call the draw polyline function
-//        drawPolylines();
-
         //initialize map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -121,7 +118,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                     Float longitude = Float.parseFloat(address.substring(address.indexOf("\n")));
                     Log.i(TAG, "address: " + address);
                     markers(latitude, longitude);
-                    if(markerArrayList.size() == 2) {
+                    if (markerArrayList.size() == 2) {
                         drawPolylines();
                     }
 
@@ -136,23 +133,28 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     private void markers(Float latitude, Float longitude) {
         Log.i(TAG, "inside markers method");
         LatLng userInput = new LatLng(latitude, longitude);
-        Marker loc = map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
         markerArrayList.add(userInput);
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
 
-        Log.i(TAG, "size: " + markerArrayList.size());
+        if (markerArrayList.size() == 1) {
+            map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
+        } else {
+            map.addMarker(new MarkerOptions().position(userInput).title(currentUserLoc));
+        }
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
     }
 
+    //draws the lines between the cities
     private void drawPolylines() {
-        //for(int i = 0; i < markerArrayList.size(); i++) {
         polyline1 = map.addPolyline(new PolylineOptions()
                 .clickable(true)
                 .add(
                         new LatLng(markerArrayList.get(0).latitude, markerArrayList.get(0).longitude),
                         new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
-
-        }
     }
+}
+
+
+
 
 
 
