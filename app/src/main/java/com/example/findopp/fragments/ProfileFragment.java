@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment {
 
         tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
         tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
-        tvRealLoc.setText(location);
+        tvRealLoc.setText(ParseUser.getCurrentUser().getString("address"));
         tvRealInterests.setText(interests);
         tvRealBirth.setText(yearBirth.toString());
     }

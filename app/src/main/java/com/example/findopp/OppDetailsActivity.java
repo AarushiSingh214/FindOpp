@@ -70,7 +70,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvSupplies = findViewById(R.id.tvSupplies);
         tvContact = findViewById(R.id.tvContact);
         btnDirections = findViewById(R.id.btnDirections);
-        currentUserLoc = ParseUser.getCurrentUser().getString("location");
+        currentUserLoc = ParseUser.getCurrentUser().getString("address");
         //currentUserLoc = ParseUser.getCurrentUser().getString("address");
         //User user = new User();
         //currentUserLoc = user.getAddress();

@@ -102,12 +102,12 @@
         android:layout_marginStart="157dp"
         android:layout_marginTop="38dp"
         android:layout_toEndOf="@+id/tvEmail"
-        android:text="Location" />
+        android:text="Address" />
 
     <TextView
         android:id="@+id/tvRealLoc"
-        android:layout_width="119dp"
-        android:layout_height="39dp"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/tvLocation2"
         android:layout_alignStart="@+id/tvLocation2"
         android:layout_marginStart="0dp"
