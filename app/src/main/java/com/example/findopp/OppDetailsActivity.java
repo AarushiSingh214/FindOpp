@@ -112,11 +112,10 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        Log.i(TAG, "made map");
     }
 
+    //gets latitude and longitude of locations based on the msg it receives from the GeoLocation class
     private class GeoHandler extends Handler {
-
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -125,12 +124,12 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                     address = bundle.getString("address");
                     Float latitude = Float.parseFloat(address.substring(0, address.indexOf("\n")));
                     Float longitude = Float.parseFloat(address.substring(address.indexOf("\n")));
-                    Log.i(TAG, "address: " + address);
                     markers(latitude, longitude);
+
+                    //makes sure to draw line between user location and opportunity location after getting adding both markers
                     if (markerArrayList.size() == 2) {
                         drawPolylines();
                     }
-
                     break;
                 default:
                     address = null;
@@ -138,12 +137,10 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
 
-    //adds markers of the user's current search and the location of the opportunity
+    //adds markers and sets titles of the user's current search and the location of the opportunity
     private void markers(Float latitude, Float longitude) {
-        Log.i(TAG, "inside markers method");
         LatLng userInput = new LatLng(latitude, longitude);
         markerArrayList.add(userInput);
-
         if (markerArrayList.size() == 1) {
             map.addMarker(new MarkerOptions().position(userInput).title(oppAddress));
         } else {
@@ -152,7 +149,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
     }
 
-    //draws the lines between the cities
+    //draws the lines between the two markers
     private void drawPolylines() {
         polyline1 = map.addPolyline(new PolylineOptions()
                 .clickable(true)
@@ -161,8 +158,8 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                         new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
     }
 
-    //calls DisplayTracl after clicking on "get directions" button
-    private void getDirections(){
+    //calls DisplayTracK after clicking on "get directions" button
+    private void getDirections() {
         btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,12 +170,9 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
 
     //opens google maps and displays the time it takes to travel between the two locations
     private void DisplayTrack(String currentUserLoc, String oppLoc) {
-        Log.i(TAG, "user loc: " + currentUserLoc);
-        Log.i(TAG, "opp loc: " + oppLoc);
         //When google map is installed
         //initialize uri
         Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + currentUserLoc + "/" + oppLoc);
-
         //initialize intent with action view
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         //set package
@@ -187,55 +181,5 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //start activity
         startActivity(intent);
-
-
-//        try {
-//            //When google map is installed
-//            //initialize uri
-//            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + currentUserLoc + "/" + oppLoc);
-//
-//            //initialize intent with action view
-//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//            //set package
-//            intent.setPackage("com.google.android.apps.maps");
-//            //set flag
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            //start activity
-//            startActivity(intent);
-//        }catch(ActivityNotFoundException e){
-//            //when google map is not installed
-//            //initialize uri
-//            Uri uri = Uri.parse("https://play.google,com/store/apps/details?id=com.google.android.apps.maps");
-//            //initialize intent with action view
-//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//            //set flag
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            //start activity
-//            startActivity(intent);
-//        }
     }
 }
-
-
-
-
-
-
-        // lets create an array of markers
-        // add to the array of markers, Marker objects -> [Marker@Object, Marker@Object]
-        // .add (MarkerList.get[0].latitude, ...)
-
-// private void drawPolylines()
-//        polyline1 = map.addPolyline(new PolylineOptions()
-//                .clickable(true)
-//                .add(
-//                        new LatLng(MarkerList.get[0].latitude, MarkerList.get[0].longitude),
-//                        new LatLng(MarkerList.get[1].latitude, MarkerList.get[1].longitude)));
-
-
-       // map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-        //map.setOnPolylineClickListener(this);
-
-
-
-

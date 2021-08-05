@@ -14,18 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class GeoLocation {
-
-//    private static MapCallBack mapCallBack;
-//    //MapCallBack mapCallBack;
-//
-//    public interface MapCallBack{
-//        void getLatLongCallBack();
-//    }
-//
-//    public void setMapCallBack(MapCallBack mapCallBack){
-//        this.mapCallBack = mapCallBack;
-//    }
-
+    //gets the latitude and longitude of the locations passed into this method from OppDetailsActivity Class
     public static void getAddress(final String locationAddress, final Context context, Handler handler){
         Thread thread = new Thread(){
             @Override
@@ -49,13 +38,8 @@ public class GeoLocation {
                     if(result != null){
                         message.what = 1;
                         Bundle bundle = new Bundle();
-                        Log.i("Geohandler", "lat/long: " + result.substring(result.indexOf("\n")));
                         bundle.putString("address", result);
                         message.setData(bundle);
-
-//                        if(mapCallBack != null){
-//                            mapCallBack.getLatLongCallBack();
-//                        }
                     }
                     message.sendToTarget();
                 }
@@ -63,6 +47,4 @@ public class GeoLocation {
         };
         thread.start();
     }
-
-
 }
