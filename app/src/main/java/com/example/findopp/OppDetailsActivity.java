@@ -45,12 +45,8 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
     public String address;
     String currentUserLoc;
     Polyline polyline1;
-
     ArrayList<LatLng> markerArrayList;
-    //declare Marker list namespace
-
     public static final String TAG = "Opportunity Details";
-
     GoogleMap map;
 
     @Override
@@ -71,16 +67,12 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvContact = findViewById(R.id.tvContact);
         btnDirections = findViewById(R.id.btnDirections);
         currentUserLoc = ParseUser.getCurrentUser().getString("address");
-        //currentUserLoc = ParseUser.getCurrentUser().getString("address");
-        //User user = new User();
-        //currentUserLoc = user.getAddress();
-//        Log.i(TAG, "user address: " + currentUserLoc);
 
         setTextViews();
         getDirections();
 
+        //sends the addresses of the opportunity and user to the GeoLocation class
         GeoLocation geoLocation = new GeoLocation();
-        //geoLocation.getAddress(tvLocation.getText().toString(), getApplicationContext(), new GeoHandler());
         geoLocation.getAddress(oppAddress, getApplicationContext(), new GeoHandler());
         geoLocation.getAddress(currentUserLoc, getApplicationContext(), new GeoHandler());
 
@@ -97,10 +89,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvLocation.setText("Location: " + opportunity.getAddress());
         tvDuration.setText("Duration: " + opportunity.getDuration());
         tvContact.setText("Point of Contact: " + opportunity.getPointOfContact());
-        //oppAddress = opportunity.getLocation();
         oppAddress = opportunity.getAddress();
-//        currentUserLoc = ParseUser.getCurrentUser().getString("location");
-//        Log.i(TAG, "user address: " + currentUserLoc);
 
         if (opportunity.getAge() == null) {
             tvAge.setText("Age: no age requirement");
@@ -119,6 +108,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
 
+    //displays the map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -155,7 +145,6 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         markerArrayList.add(userInput);
 
         if (markerArrayList.size() == 1) {
-            //map.addMarker(new MarkerOptions().position(userInput).title(tvLocation.getText().toString()));
             map.addMarker(new MarkerOptions().position(userInput).title(oppAddress));
         } else {
             map.addMarker(new MarkerOptions().position(userInput).title(currentUserLoc));
@@ -172,16 +161,17 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
                         new LatLng(markerArrayList.get(1).latitude, markerArrayList.get(1).longitude)));
     }
 
+    //calls DisplayTracl after clicking on "get directions" button
     private void getDirections(){
         btnDirections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DisplayTrack(currentUserLoc, oppAddress);
-                //DisplayTrack(currentUserLoc, tvLocation.getText().toString());
             }
         });
     }
 
+    //opens google maps and displays the time it takes to travel between the two locations
     private void DisplayTrack(String currentUserLoc, String oppLoc) {
         //If the device does not have a map installed, then redirect it to play store
         try {

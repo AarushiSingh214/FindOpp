@@ -15,16 +15,16 @@ import java.util.Locale;
 
 public class GeoLocation {
 
-    private static MapCallBack mapCallBack;
-    //MapCallBack mapCallBack;
-
-    public interface MapCallBack{
-        void getLatLongCallBack();
-    }
-
-    public void setMapCallBack(MapCallBack mapCallBack){
-        this.mapCallBack = mapCallBack;
-    }
+//    private static MapCallBack mapCallBack;
+//    //MapCallBack mapCallBack;
+//
+//    public interface MapCallBack{
+//        void getLatLongCallBack();
+//    }
+//
+//    public void setMapCallBack(MapCallBack mapCallBack){
+//        this.mapCallBack = mapCallBack;
+//    }
 
     public static void getAddress(final String locationAddress, final Context context, Handler handler){
         Thread thread = new Thread(){
@@ -49,22 +49,16 @@ public class GeoLocation {
                     if(result != null){
                         message.what = 1;
                         Bundle bundle = new Bundle();
-                        //result = "Address  :   " + locationAddress + "\n\n\nLatitude And Longitude\n" + result;
-                        //result = "\n\n\nLatitude And Longitude\n" + result;
                         Log.i("Geohandler", "lat/long: " + result.substring(result.indexOf("\n")));
                         bundle.putString("address", result);
                         message.setData(bundle);
 
-                        if(mapCallBack != null){
-                            mapCallBack.getLatLongCallBack();
-                        }
-//                        Intent intent = new Intent(GeoLocation.class, OppDetailsActivity.class);
-//                        intent.putExtra("address", result);
+//                        if(mapCallBack != null){
+//                            mapCallBack.getLatLongCallBack();
+//                        }
                     }
                     message.sendToTarget();
-
                 }
-
             }
         };
         thread.start();

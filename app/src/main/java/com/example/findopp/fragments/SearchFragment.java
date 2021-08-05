@@ -1,6 +1,9 @@
 package com.example.findopp.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +47,8 @@ public class SearchFragment extends Fragment {
     private List<Opportunity> allOpps;
     public static final String TAG = "Search Fragment";
 
+    Dialog mDialog;
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -81,6 +86,8 @@ public class SearchFragment extends Fragment {
         allOpps = new ArrayList<>();
         adapter = new OppAdapter(getContext(), filterOpps);
 
+        mDialog = new Dialog(getContext());
+
         defaultPreferences();
         searchBtn();
     }
@@ -95,6 +102,8 @@ public class SearchFragment extends Fragment {
                 //ensures the user enters a location
                 if (location.equals("")){
                     startActivity(new Intent (getContext(), Pop.class));
+//                    mDialog.setContentView(R.layout.pop_up_window);
+//                    mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     return;
                 } else
                     //trying to pass allOpps array to SearchResultsActivity
