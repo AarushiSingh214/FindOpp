@@ -16,9 +16,6 @@ import com.airbnb.lottie.LottieAnimationView;
 
 public class Pop  extends Activity {
 
-    RelativeLayout back_dim_layout;
-    LottieAnimationView animation;
-    FrameLayout layout_MainMenu;
     Dialog mDialog;
 
     @Override
@@ -26,13 +23,10 @@ public class Pop  extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pop_up_window);
 
+        //sets the layout of the pop_up window
         mDialog = new Dialog(this);
-
         mDialog.setContentView(R.layout.pop_up_window);
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        //layout_MainMenu = (FrameLayout) findViewById(R.id.pop_up);
-        //layout_MainMenu.getForeground().setAlpha( 0);
 
         //getting metrics to create the size of the pop-up window
         DisplayMetrics dm = new DisplayMetrics();
@@ -40,13 +34,6 @@ public class Pop  extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int)(width*.6), (int)(height*.2));
-
-//        layout_MainMenu.getForeground().setAlpha( 220); // dim
-//
-//        layout_MainMenu.getForeground().setAlpha( 0); // restore
-
-
-
 
     }
 }

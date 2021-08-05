@@ -173,31 +173,46 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
 
     //opens google maps and displays the time it takes to travel between the two locations
     private void DisplayTrack(String currentUserLoc, String oppLoc) {
-        //If the device does not have a map installed, then redirect it to play store
-        try {
-            //When google map is installed
-            //initialize uri
-            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + currentUserLoc + "/" + oppLoc);
+        Log.i(TAG, "user loc: " + currentUserLoc);
+        Log.i(TAG, "opp loc: " + oppLoc);
+        //When google map is installed
+        //initialize uri
+        Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + currentUserLoc + "/" + oppLoc);
 
-            //initialize intent with action view
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            //set package
-            intent.setPackage("com.google.android.apps.maps");
-            //set flag
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //start activity
-            startActivity(intent);
-        }catch(ActivityNotFoundException e){
-            //when google map is not installed
-            //initialize uri
-            Uri uri = Uri.parse("https://play.google,com/store/apps/details?id=com.google.android.apps.maps");
-            //initialize intent with action view
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            //set flag
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //start activity
-            startActivity(intent);
-        }
+        //initialize intent with action view
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        //set package
+        intent.setPackage("com.google.android.apps.maps");
+        //set flag
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //start activity
+        startActivity(intent);
+
+
+//        try {
+//            //When google map is installed
+//            //initialize uri
+//            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + currentUserLoc + "/" + oppLoc);
+//
+//            //initialize intent with action view
+//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//            //set package
+//            intent.setPackage("com.google.android.apps.maps");
+//            //set flag
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            //start activity
+//            startActivity(intent);
+//        }catch(ActivityNotFoundException e){
+//            //when google map is not installed
+//            //initialize uri
+//            Uri uri = Uri.parse("https://play.google,com/store/apps/details?id=com.google.android.apps.maps");
+//            //initialize intent with action view
+//            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//            //set flag
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            //start activity
+//            startActivity(intent);
+//        }
     }
 }
 
