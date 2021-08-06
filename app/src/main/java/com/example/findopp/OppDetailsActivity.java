@@ -66,7 +66,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         tvSupplies = findViewById(R.id.tvSupplies);
         tvContact = findViewById(R.id.tvContact);
         btnDirections = findViewById(R.id.btnDirections);
-        currentUserLoc = ParseUser.getCurrentUser().getString("address");
+        currentUserLoc = ParseUser.getCurrentUser().getString("location");
 
         setTextViews();
         getDirections();
@@ -148,7 +148,7 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         }
 
         //zooms into the map based on zoomLevel
-        float zoomLevel = 7.5f; //This goes up to 21
+        float zoomLevel = 11f; //This goes up to 21
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(userInput, zoomLevel));
 
     }

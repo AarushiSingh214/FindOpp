@@ -50,17 +50,6 @@
         android:text="Username Profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/tvEdit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:fontFamily="@font/poppins_semibold"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/tvUserName"-->
-<!--        android:layout_alignStart="@+id/tvUserName"-->
-<!--        android:layout_marginStart="1dp"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        android:text="Edit" />-->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="73dp"

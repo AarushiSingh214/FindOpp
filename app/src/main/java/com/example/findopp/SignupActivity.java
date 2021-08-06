@@ -22,7 +22,6 @@ import java.util.Arrays;
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "Signup Activity";
-    private ImageView ivLogo;
     private EditText etUsername;
     private EditText etPassword;
     private EditText etEmail;

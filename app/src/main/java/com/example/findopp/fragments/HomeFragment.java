@@ -94,20 +94,6 @@ public class HomeFragment extends Fragment {
         //before the opportunities are displayed, the loading symbol should be displayed for waiting period
         pb.setVisibility(ProgressBar.VISIBLE);
 
-
-//        Runnable r = new Runnable() {
-//            @Override
-//            public void run(){
-//                //opportunities are being added and displayed to recyclerview by setting adapter
-//                rvOpps.setAdapter(adapter);
-//                rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));
-//                queryPosts();
-//            }
-//        };
-//
-//        Handler h = new Handler();
-//        h.postDelayed(r, 2000);
-
 //        //opportunities are being added and displayed to recyclerview by setting adapter
         rvOpps.setAdapter(adapter);
         rvOpps.setLayoutManager(new LinearLayoutManager(getContext()));

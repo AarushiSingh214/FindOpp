@@ -13,12 +13,9 @@ import android.widget.TextView;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.findopp.models.Interests;
 import com.example.findopp.models.Opportunity;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
@@ -49,7 +46,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     HashMap<String, String> map;
     private OppAdapter adapter;
     ProgressBar pb;
-    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +82,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         rvSearchResults.setAdapter(adapter);
         rvSearchResults.setLayoutManager(new LinearLayoutManager(this));
         queryOpps();
-
     }
 
     //parses through the Opportunity class and gets the locations of the opportunities

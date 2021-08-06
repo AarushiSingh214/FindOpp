@@ -14,10 +14,6 @@ public class Likes extends ParseObject {
     public static final String KEY_OPP = "opportunity";
     public static final String KEY_USER = "user";
 
-    //default constructor
-//    public Likes(){
-//    }
-
     //getter and setter for opportunity
     public Opportunity getOpp(){
         return (Opportunity) getParseObject(KEY_OPP);

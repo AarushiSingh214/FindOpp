@@ -49,8 +49,6 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvOpps;
     private OppAdapter adapter;
     private List<Opportunity> allOpps;
-    //private String currentUserName = ParseUser.getCurrentUser().getUsername();
-    //private ArrayList<Opportunity> profileLikes = new ArrayList<Opportunity>();
     ProgressBar pb;
 
     public ProfileFragment() {
@@ -82,7 +80,6 @@ public class ProfileFragment extends Fragment {
 
         allUsers = new ArrayList<>();
         tvUserName = view.findViewById(R.id.tvUserName);
-        //tvEdit = view.findViewById(R.id.tvEdit);
         tvEmail = view.findViewById(R.id.tvEmail);
         tvRealEmail = view.findViewById(R.id.tvRealEmail);
         tvLocation2 = view.findViewById(R.id.tvLocation2);
@@ -94,7 +91,6 @@ public class ProfileFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         tvNoFav = view.findViewById(R.id.tvNoFav);
 
-        //tvEdit.setText("Edit");
         tvEmail.setText("Email");
         tvLocation2.setText("Location");
         tvInterests.setText("Interests");
@@ -127,7 +123,7 @@ public class ProfileFragment extends Fragment {
 
         tvUserName.setText(ParseUser.getCurrentUser().getUsername() + " Profile");
         tvRealEmail.setText(ParseUser.getCurrentUser().getEmail());
-        tvRealLoc.setText(ParseUser.getCurrentUser().getString("address"));
+        tvRealLoc.setText(ParseUser.getCurrentUser().getString("location"));
         tvRealInterests.setText(interests);
         tvRealBirth.setText(yearBirth.toString());
     }
