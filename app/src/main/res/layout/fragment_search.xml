@@ -23,6 +23,7 @@
             android:id="@+id/logo"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="50dp"
+            android:padding="1dp"
             android:layout_marginStart="0dp"
             android:src="@drawable/lightbulb3" />
 

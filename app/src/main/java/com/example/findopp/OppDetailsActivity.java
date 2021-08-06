@@ -146,7 +146,11 @@ public class OppDetailsActivity extends FragmentActivity implements OnMapReadyCa
         } else {
             map.addMarker(new MarkerOptions().position(userInput).title(currentUserLoc));
         }
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
+
+        //zooms into the map based on zoomLevel
+        float zoomLevel = 7.5f; //This goes up to 21
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userInput, zoomLevel));
+
     }
 
     //draws the lines between the two markers

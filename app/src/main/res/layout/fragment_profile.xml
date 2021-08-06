@@ -21,6 +21,7 @@
 
         <ImageView
             android:id="@+id/logo"
+            android:padding="1dp"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="50dp"
             android:layout_marginStart="0dp"
@@ -49,16 +50,16 @@
         android:text="Username Profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <TextView
-        android:id="@+id/tvEdit"
-        android:layout_width="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
-        android:layout_alignStart="@+id/tvUserName"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
-        android:text="Edit" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvEdit"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:fontFamily="@font/poppins_semibold"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/tvUserName"-->
+<!--        android:layout_alignStart="@+id/tvUserName"-->
+<!--        android:layout_marginStart="1dp"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:text="Edit" />-->
 
     <ImageView
         android:id="@+id/imageView"
@@ -75,8 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
-        android:layout_below="@+id/tvEdit"
-        android:layout_alignStart="@+id/tvEdit"
+        android:layout_below="@+id/tvUserName"
+        android:layout_alignStart="@+id/tvUserName"
         android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
         android:text="Email" />
@@ -96,12 +97,12 @@
     <TextView
         android:id="@+id/tvLocation2"
         android:layout_width="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
+        android:layout_alignTop="@+id/tvEmail"
         android:layout_marginStart="157dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvEmail"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Address" />
 
     <TextView
@@ -143,12 +144,12 @@
     <TextView
         android:id="@+id/tvBirth"
         android:layout_width="121dp"
-        android:fontFamily="@font/poppins_semibold"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvRealLoc"
         android:layout_alignStart="@+id/tvRealLoc"
+        android:layout_alignTop="@+id/tvInterests"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Year of Birth" />
 
     <TextView
@@ -196,13 +197,15 @@
 
     <TextView
         android:id="@+id/tvFav"
-        android:layout_width="wrap_content"
+        android:layout_width="299dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRealInterests"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="38dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="Favorite Opportunities"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />

@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
 
         allUsers = new ArrayList<>();
         tvUserName = view.findViewById(R.id.tvUserName);
-        tvEdit = view.findViewById(R.id.tvEdit);
+        //tvEdit = view.findViewById(R.id.tvEdit);
         tvEmail = view.findViewById(R.id.tvEmail);
         tvRealEmail = view.findViewById(R.id.tvRealEmail);
         tvLocation2 = view.findViewById(R.id.tvLocation2);
@@ -94,7 +94,7 @@ public class ProfileFragment extends Fragment {
         pb = (ProgressBar) view.findViewById(R.id.pbLoading);
         tvNoFav = view.findViewById(R.id.tvNoFav);
 
-        tvEdit.setText("Edit");
+        //tvEdit.setText("Edit");
         tvEmail.setText("Email");
         tvLocation2.setText("Location");
         tvInterests.setText("Interests");

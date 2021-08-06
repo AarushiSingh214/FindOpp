@@ -49,6 +49,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     HashMap<String, String> map;
     private OppAdapter adapter;
     ProgressBar pb;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
