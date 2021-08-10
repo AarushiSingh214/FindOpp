@@ -1,10 +1,7 @@
 Final App Design Project - README Template
 ===
-# Final App Idea
-1. An app that allows students to find opportunities based on their year, field or location. For example, a student could say they are a junior in high school interested in the field of computer science and location could be US. So then it could list all of the internships, programs, camps that are offered. And if you want a more specific location then it could find more opportunities in your local area. 
-
-
-# FindOpp (STILL Thinking)
+# FindOpp
+An app that allows students to find opportunities based on their year, field or location. For example, a student could say they are a junior in high school interested in the field of computer science and location could be US. So then it could list all of the internships, programs, camps that are offered. And if you want a more specific location then it could find more opportunities in your local area. 
 
 ## Table of Contents
 1. [Overview](#Overview)
