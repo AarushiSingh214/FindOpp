@@ -39,7 +39,7 @@ For example, a student could say they are a junior in high school interested in 
 
 **Optional Nice-to-have Stories**
 
-* User can write reviews for opportunities
+* User can see map in opportunity details and get taken to Google Maps where they get the time and directions to get from the user's location to the opportunitiy's location
 
 
 ### 2. Screen Archetypes
@@ -56,9 +56,7 @@ For example, a student could say they are a junior in high school interested in 
 
 * Fourth Screen
     * After choosing an opportunity, this takes the user to another screen where they can see more information about that place  
-
-* Fifth Screen
-    * if they star it, then it gets added to a folder
+    * 
 
 ### 3. Navigation
 
