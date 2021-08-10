@@ -80,7 +80,38 @@ For example, a student could say they are a junior in high school interested in 
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
+Users
+| Property | Type | Condition |
+| -------- | -------- | -------- |
+| objectId | String | unique id for the user(default) |
+|updatedAt | Date | date when account of the user is updated(default)|
+| createdAt | Date | date when the usermakes an account(default)|
+| username | String | username of the user |
+|password| String| password of the user's account|
+|email | String | user's email|
+|year_of_birth| Number| user's birthday to calculate age|
+|interests| String | what fields or area the user is interested in|
+|location| String | the activity that the user is trying to find an activity in|
+
+
+Opportunities
+| Property | Type | Condition |
+| -------- | -------- | -------- |
+| objectId | String | unique id for the user(default) |
+|updatedAt | Date | date when account of the user is updated(default)|
+| createdAt | Date | date when the usermakes an account(default)|
+|name | String| the person/organization that mpost about this opportunity|
+|point of contact| String| who to contact if interested(email)|
+|location| String| where this opportunity takes place|
+|age| String| age requirments for opportunity|
+|duration| String| how long this opportunity is/ start date and end date|
+|description| String| description of the opportunity|
+|supplies| String| if anything is needed for this opportunity|
+|image| File| an image shocasing something about the opportunity|
+|title| String| title of the opportunity(this is what shows up in user's feeds)|
+|Cost| String| cost of the opportunity|
+
+
 ### Models
 * opportunity- this will be each opportunity
 ### Networking
