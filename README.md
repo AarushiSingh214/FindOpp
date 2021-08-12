@@ -6,7 +6,7 @@ FindOpp - README Template
 2. [Product Spec](#Product-Spec)
 3. [Wireframes](#Wireframes)
 4. [Schema](#Schema)
-5. [Demo Video](#Demo Video)
+5. [Demo Video](#Demo-Video)
 
 ## Overview
 ### Description 
