@@ -1,7 +1,5 @@
-Final App Design Project - README Template
+FindOpp - README Template
 ===
-# FindOpp
-An app that allows students to find opportunities based on their year, field or location. For example, a student could say they are a junior in high school interested in the field of computer science and location could be US. So then it could list all of the internships, programs, camps that are offered. And if you want a more specific location then it could find more opportunities in your local area. 
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -11,16 +9,15 @@ An app that allows students to find opportunities based on their year, field or 
 
 ## Overview
 ### Description 
-For example, a student could say they are a junior in high school interested in the field of computer science and location could be US. So then it could list all of the internships, programs, camps that are offered. And if you want a more specific location then it could, find more opportunities in your local area. If you like an opportunitiy, then you could click it to get more information(specific location, money...). Maybe you could write a review on the program(extra).   
+FindOpp is an app that allows users to find opportunities for their interests based on the user's location. From computer science to art to any other interest, this app displays opportunities related to the user’s interests and location. 
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
 - **Category:** Opportunities
 - **Mobile:** Mobile is essential so that users can easily find the opportunities that they are interested in. 
-- **Story:** Allows users to find the extracurricular opportunities in the area they are looking for depending on age, field ad location
-- **Market:** High schoolers who are finding opportunities in their field of interest.
+- **Story:** Allows users to find the extracurricular opportunities in the area they are looking for depending on age, interest, and location
+- **Market:** Any student who is finding opportunities in their field of interest.
 - **Habit:** People would be using this app constantly when trying to find opportunities for themselves whether that's in the summer or year round.
-- **Scope:** V1 would be the sign up or login page. V2 would be the page you get taken to depending on if you click sign up or login. V3 could be a get started page where you have to enter your year in high school, age, field of interest, location your looking for opportunities in, and when you're looking for these opportunities(summer, all year). V4 could show you all of the opportunities that are available to you and there could be a star feature so if you like an opportunity it will be added to your favorities in that folder. V5 couldd maybe be like folders that contain all of the fields and then when you click on the folder, inside is all of the favorities that you liked. So if you have another area that your interested in, then it would make another folder. V6 is if you like a folder than you can click on an opportunity and get more information.   
+- **Scope:** V1 would be the sign up or login page. V2 would be the page you get taken to depending on if you click sign up or login. V3 would be the home screen/fragment which is a recommended list of all the opportunities in the user’s local area. The user's location is determined by the location they enter when they first register. V4 would be the search screen/fragment which allows the user to search for opportunities outside of their default location and interest. V5 is the profile screen/fragment where the user can see all of their registered information, and this page also displays all of the opportunities that the user liked. V6 would be the screen that opens up when the user clicks on the opportunity. They are given more details about that specific opportunity and they can get directions to that opportunity throgh Google Maps.
 
 
 ## Product Spec
@@ -30,54 +27,49 @@ For example, a student could say they are a junior in high school interested in 
 **Required Must-have Stories**
 
 * User can login
-* User can make a new account
-* User can get started and type their information 
-* User can see a list of opportunities for the info they specified
-* User can star opportunities they liked and it will be added to that folder
-* User can click on an opportunity and see more info
+* User can make a new account and enter their information
+* User can see a list of opportunities based off the location they entered on the home screen
+* User can search for opportunities outside of their registered information
+* User can like opportunities and it will be added to their porfile screen
+* User can click on an opportunity and see more information
 
 
 **Optional Nice-to-have Stories**
 
-* User can see map in opportunity details and get taken to Google Maps where they get the time and directions to get from the user's location to the opportunitiy's location
+* User can see a map and click a get directions button to get the time it takes to travel between the user's lcoation and the opportunities location through Google Maps
+* User will see a pop-up window if they try to search for an opportunity without entering a location
 
 
 ### 2. Screen Archetypes
 
 * First screen
    * Login and Signup page
-   * if user clicks sign up then it would take to a second screen where it would ask for information
+   * User sees buttons to either login or register
    
 * Second screen
-   * Search bar where they can enter information and search opportunities
+   * Either the login screen or register screen
 
 * Third Screen
-    * Shows a list of opportunities
+    * After the user logs in or registers, they are taken to teh home screen where they see a list of opportunities that are in the user's location
 
 * Fourth Screen
-    * After choosing an opportunity, this takes the user to another screen where they can see more information about that place  
-    * 
+    * After choosing an opportunity, this takes the user to another screen where they can see more information about that opportunity
+    
+ * Fift screen
+    * If the user clicks on the "Get Directions" button, then they are taken to Google Maps where they can see the time and preview the directions   
 
-### 3. Navigation
+* Sixth Screen
+    * The search screen allows the user to search for other opportunities
 
-**Tab Navigation** (Tab to Screen)
+* Seventh Screen
+    * After the user clicks on the search button, they are taken to another screen that will display their search results
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* Eighth Screen 
+    * The profile screen allows the users to see their registered information and the opportunities they have liked
 
-**Flow Navigation** (Screen to Screen)
+## Digital Wireframes & Mockups
 
-* Sign up/login page
-   
-* 
-## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
-
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
+* https://www.figma.com/file/3WsNLnnSsORTW1ArTAq5sD/FINAL-APP-WIREFRAME-2?node-id=0%3A1
 
 ## Schema 
 Users
@@ -107,14 +99,25 @@ Opportunities
 |duration| String| how long this opportunity is/ start date and end date|
 |description| String| description of the opportunity|
 |supplies| String| if anything is needed for this opportunity|
-|image| File| an image shocasing something about the opportunity|
 |title| String| title of the opportunity(this is what shows up in user's feeds)|
-|Cost| String| cost of the opportunity|
+|cost| String| cost of the opportunity|
+|address| String| address of the opportunity|
 
+Likes
+| Property | Type | Condition |
+| -------- | -------- | -------- |
+| objectId | String | unique id for the user(default) |
+|updatedAt | Date | date when account of the user is updated(default)|
+| createdAt | Date | date when the usermakes an account(default)|
+|opportunity| Pointer to Opportunity| contains the objectId of the opportunity that was liked|
+|user| Pointer to User| contains the objectId of the user that liked the opportunity|
 
-### Models
-* opportunity- this will be each opportunity
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+* Recommendations Screen/Home Feed
+ -(Read/GET) query all the opportunities that match the user's location
+ -(Update/PUT) add favorited opportunities to user profile
+ 
+ * Search Results Screen
+ -(Read/GET) query all the opportunities that match the user's search fields
+
+
