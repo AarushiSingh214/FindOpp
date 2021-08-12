@@ -121,7 +121,7 @@ Likes
  * Search Results Screen
  -(Read/GET) query all the opportunities that match the user's search fields
  
- ### Demo
+ ### Demo Video
 https://user-images.githubusercontent.com/70385317/129235032-c88a97cb-203e-4916-9747-0b111b2df9c3.mp4
 
 
